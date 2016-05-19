@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?><?import javafx.scene.paint.*?><?import javafx.scene.shape.SVGPath?>
+<Pane xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg" id='_root'>
+    <Pane opacity="1.0">
+        <children>
+            <SVGPath
+                    content="M126.863,1.05l-31.489,18.18L63.886,1.05     l-31.489,18.18v36.36h0L0.909,73.769v36.36l31.489,18.18l31.488-18.18l31.489,18.18l31.488-18.18v-36.36h0l31.488-18.18v-36.36     L126.863,1.05z"
+                    opacity="1" strokeMiterLimit="10.0" strokeWidth="1.818">
+                <fill>
+                    <Color red="0.5607843137254902" green="0.8156862745098039" blue="0.8901960784313725"/>
+                </fill>
+                <stroke>
+                    <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                </stroke>
+            </SVGPath>
+        </children>
+    </Pane>
+</Pane>

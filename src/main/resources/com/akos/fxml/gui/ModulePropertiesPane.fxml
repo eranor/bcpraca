@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.PropertySheet?>
+<TitledPane fx:id="modulePropertiesPaneView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            text="Module properties" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.akos.gui.controllers.right_panel.ModulePropertiesPaneController">
+    <content>
+        <AnchorPane>
+            <children>
+                <PropertySheet fx:id="modulePropertySheet" minWidth="260.0" modeSwitcherVisible="false" searchBoxVisible="false"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            </children>
+            <padding>
+                <Insets top="1.0"/>
+            </padding>
+        </AnchorPane>
+    </content>
+</TitledPane>

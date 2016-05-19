@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<Pane xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg" id='_root'>
+    <Pane opacity="1.0" id="RollModule">
+        <children>
+            <Polygon
+                    points="253.36,58.945,253.36,22.757,222.02,4.663,190.68,22.757,159.34,4.663,128,22.757,128,58.945,96.661,77.039,65.321,58.945,33.981,77.039,33.981,113.227,2.641,131.321,2.641,167.509,33.981,185.603,65.321,167.509,96.661,185.603,128,167.509,159.34,185.603,190.68,167.509,222.02,185.603,253.36,167.509,253.36,131.321,222.02,113.227,222.02,77.039"
+                    opacity="1" strokeMiterLimit="10.0" strokeWidth="5.4282">
+                <fill>
+                    <Color red="0.6549019607843137" green="0.8313725490196079" blue="0.5725490196078431"/>
+                </fill>
+                <stroke>
+                    <Color red="0.3764705882352941" green="0.7137254901960784" blue="0.34509803921568627" opacity="0.5"/>
+                </stroke>
+
+            </Polygon>
+            <Pane opacity="1.0">
+                <children>
+                    <Polygon points="26.146,72.553,18.311,77.077,18.311,86.124,26.146,90.647,33.981,86.124,33.981,77.077" opacity="1"
+                             strokeMiterLimit="10.0" strokeWidth="1.3571">
+                        <fill>
+                            <Color red="0.3215686274509804" green="0.5647058823529412" blue="0.3764705882352941"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                        </stroke>
+
+                    </Polygon>
+                    <Polygon points="26.146,99.66,18.311,104.183,18.311,113.23,26.146,117.754,33.981,113.23,33.981,104.183" opacity="1"
+                             strokeMiterLimit="10.0" strokeWidth="1.3571">
+                        <fill>
+                            <Color red="0.3215686274509804" green="0.5647058823529412" blue="0.3764705882352941"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                        </stroke>
+
+                    </Polygon>
+                    <Polygon points="33.981,86.086,26.146,90.609,26.146,99.656,33.981,104.18,41.816,99.656,41.816,90.609" opacity="1"
+                             strokeMiterLimit="10.0" strokeWidth="1.3571">
+                        <fill>
+                            <Color red="0.3215686274509804" green="0.5647058823529412" blue="0.3764705882352941"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                        </stroke>
+
+                    </Polygon>
+                </children>
+            </Pane>
+            <Pane opacity="1.0">
+                <children>
+                    <Polygon points="229.878,117.733,237.713,113.21,237.713,104.162,229.878,99.639,222.043,104.162,222.043,113.21" opacity="1"
+                             strokeMiterLimit="10.0" strokeWidth="1.3571">
+                        <fill>
+                            <Color red="0.3215686274509804" green="0.5647058823529412" blue="0.3764705882352941"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                        </stroke>
+
+                    </Polygon>
+                    <Polygon points="229.878,90.627,237.713,86.103,237.713,77.056,229.878,72.533,222.043,77.056,222.043,86.103" opacity="1"
+                             strokeMiterLimit="10.0" strokeWidth="1.3571">
+                        <fill>
+                            <Color red="0.3215686274509804" green="0.5647058823529412" blue="0.3764705882352941"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                        </stroke>
+
+                    </Polygon>
+                    <Polygon points="222.043,104.201,229.878,99.677,229.878,90.63,222.043,86.106,214.208,90.63,214.208,99.677" opacity="1"
+                             strokeMiterLimit="10.0" strokeWidth="1.3571">
+                        <fill>
+                            <Color red="0.3215686274509804" green="0.5647058823529412" blue="0.3764705882352941"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                        </stroke>
+
+                    </Polygon>
+                </children>
+            </Pane>
+            <Polygon
+                    points="96.66,4.663,65.32,22.757,33.981,4.663,2.641,22.757,2.641,58.945,33.981,77.039,65.32,58.945,96.66,77.039,128,58.945,128,22.757"
+                    opacity="1" strokeMiterLimit="10.0" strokeWidth="5.4282">
+                <fill>
+                    <Color red="0.17647058823529413" green="0.5490196078431373" blue="0.2901960784313726"/>
+                </fill>
+                <stroke>
+                    <Color red="0.2549019607843137" green="0.6274509803921569" blue="0.16862745098039217" opacity="0.5"/>
+                </stroke>
+
+            </Polygon>
+        </children>
+    </Pane>
+</Pane>

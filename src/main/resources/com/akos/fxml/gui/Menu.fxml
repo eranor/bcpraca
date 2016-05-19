@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+
+<MenuBar fx:id="menuView" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.MenuController">
+    <menus>
+        <Menu text="%menu.menuFile">
+            <items>
+                <MenuItem fx:id="newProjectMenuItem" onAction="#onNewProjectAction" text="%menu.newProjectMenuItem" />
+                <MenuItem fx:id="saveProjectMenuItem" onAction="#onSaveProjectAction" text="%menu.saveProjectMenuItem" />
+                <MenuItem fx:id="saveAsProjectMenuItem" onAction="#onSaveAsProjectAction" text="%menu.saveAsProjectMenuItem" />
+                <MenuItem fx:id="loadProjectMenuItem" onAction="#onLoadProjectAction" text="%menu.loadProjectMenuItem" />
+                <MenuItem fx:id="closeProjectMenuItem" onAction="#onCloseProjectAction" text="%menu.closeProjectMenuItem" />
+                <SeparatorMenuItem />
+                <MenuItem fx:id="exitProgramMenuItem" onAction="#onExitProgramAction" text="%menu.exitProgramMenuItem" />
+            </items>
+        </Menu>
+        <Menu text="Edit">
+            <items>
+                <MenuItem fx:id="undoStepMenuItem" text="Undo" />
+                <MenuItem fx:id="redoStepMenuItem" text="Redo" />
+                <MenuItem fx:id="deleteMenuItem" text="Delete" />
+            </items>
+        </Menu>
+        <Menu text="Window">
+            <items>
+                <MenuItem onAction="#spheroOrbbasicWindowClick" text="Orbbasic Console" />
+                <MenuItem onAction="#spheroConnectionScreenMenuButtonClick" text="Connection Screen" />
+                <MenuItem text="Calibration" />
+            </items>
+        </Menu>
+        <Menu text="Settings">
+            <items>
+                <MenuItem text="Sphero Settings" />
+            </items>
+        </Menu>
+        <Menu text="Help">
+            <items>
+                <MenuItem fx:id="aboutMenuItem" text="About" />
+                <MenuItem fx:id="documentationMenuItem" text="Documentation" />
+                <MenuItem fx:id="helpMenuItem" text="Help" />
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>

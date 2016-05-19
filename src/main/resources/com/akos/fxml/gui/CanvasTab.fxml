@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-stylesheet D:\projects\java\bcpraca2\src\main\resources\com\akos\css\gui\CanvasTabPane.css?>
+
+<?import com.akos.gui.controllers.canvas.GriddedPane?><?import javafx.scene.control.*?><?import javafx.scene.*?><?import javafx.scene.layout.*?>
+<fx:root closable="true" type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+    <content>
+        <ScrollPane id="scrollPane" fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="AS_NEEDED" pannable="true"
+                    style="-fx-background-color: whitesmoke" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
+            <StackPane>
+                <Group fx:id="contentGroup">
+                    <Group fx:id="zoomGroup">
+                        <StackPane fx:id="innerStackPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="3840.0" prefWidth="3840.0">
+                            <GriddedPane fx:id="backgroundGrid" mouseTransparent="true"/>
+                            <AnchorPane id="canvas-tab-content" fx:id="contentPane"/>
+                        </StackPane>
+                    </Group>
+                </Group>
+            </StackPane>
+        </ScrollPane>
+    </content>
+</fx:root>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectCodeStyleSettingsManager">
+    <option name="PER_PROJECT_SETTINGS">
+      <value>
+        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="2" />
+        <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="2" />
+        <option name="RIGHT_MARGIN" value="150" />
+        <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="true" />
+        <MultiMarkdownCodeStyleSettings>
+          <option name="RIGHT_MARGIN" value="72" />
+        </MultiMarkdownCodeStyleSettings>
+        <XML>
+          <option name="XML_KEEP_LINE_BREAKS_IN_TEXT" value="false" />
+          <option name="XML_KEEP_BLANK_LINES" value="1" />
+          <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
+        </XML>
+        <codeStyleSettings language="JAVA">
+          <arrangement>
+            <groups>
+              <group>
+                <type>GETTERS_AND_SETTERS</type>
+                <order>KEEP</order>
+              </group>
+              <group>
+                <type>OVERRIDDEN_METHODS</type>
+                <order>KEEP</order>
+              </group>
+              <group>
+                <type>DEPENDENT_METHODS</type>
+                <order>BREADTH_FIRST</order>
+              </group>
+            </groups>
+          </arrangement>
+        </codeStyleSettings>
+      </value>
+    </option>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
+  </component>
+</project>

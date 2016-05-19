@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.akos.gui.controllers.ModulesPanel?><?import javafx.geometry.*?><?import javafx.scene.control.*?><?import javafx.scene.layout.*?>
+<AnchorPane fx:id="mainView" prefHeight="768" prefWidth="1366"
+            style="-fx-background-color: linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white);"
+            xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.MainController">
+
+    <children>
+        <BorderPane fx:id="rootBorderPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                    AnchorPane.topAnchor="0.0">
+            <top>
+                <fx:include fx:id="menu" source="Menu.fxml"/>
+            </top>
+            <center>
+                <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+                    <children>
+                        <SplitPane fx:id="splitPane" id="splitPane" dividerPositions="0.10410557184750734, 0.8027859237536656"
+                                   AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <HBox fx:id="leftPanelHBox">
+                                    <children>
+                                        <ModulesPanel fx:id="modulesPanel" BorderPane.alignment="CENTER" minWidth="200"/>
+                                        <AnchorPane>
+                                            <children>
+                                                <Button fx:id="collapseLeftPanelButton" mnemonicParsing="false" onAction="#collapseLeftPanel"
+                                                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </HBox>
+                                <TabPane id="canvas-tab-pane" fx:id="canvasTabPane" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE"/>
+                                <HBox fx:id="rightPanelHBox" fillHeight="true">
+                                    <children>
+                                        <AnchorPane>
+                                            <children>
+                                                <Button fx:id="collapseRightPanelButton" mnemonicParsing="false" onAction="#collapseRightPanel"
+                                                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                        <VBox fx:id="rightPanel" fillWidth="true">
+                                            <children>
+                                                <fx:include fx:id="modulePropertiesPane" source="ModulePropertiesPane.fxml"/>
+                                                <fx:include fx:id="robotStatusPane" source="RobotStatusPane.fxml"/>
+                                                <fx:include fx:id="robotConsolePane" source="RobotConsolePane.fxml"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </center>
+            <bottom>
+                <HBox fx:id="statusBarHBox" prefHeight="18.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label text="%main.programStatusLabel">
+                            <HBox.margin>
+                                <Insets left="20.0"/>
+                            </HBox.margin>
+                        </Label>
+                        <HBox>
+                            <Label text="%main.mouseCursorPos">
+                                <HBox.margin>
+                                    <Insets left="20.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <Label fx:id="cursorPosLabel"/>
+                        </HBox>
+                        <Label text="%main.programStatusText">
+                            <HBox.margin>
+                                <Insets left="20.0"/>
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                </HBox>
+            </bottom>
+        </BorderPane>
+    </children>
+
+
+</AnchorPane>

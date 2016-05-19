@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.akos.gui.modules.AbstractVariableModule?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root type="AbstractVariableModule" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox spacing="10.0">
+        <children>
+            <Label text="Type" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Label>
+            <Label fx:id="typeLabel"/>
+        </children>
+    </HBox>
+    <HBox spacing="5.0">
+        <children>
+            <Label text="Value"/>
+            <Label fx:id="valueLabel"/>
+        </children>
+    </HBox>
+</fx:root>

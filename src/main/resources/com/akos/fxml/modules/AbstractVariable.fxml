@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<fx:root fx:id="view" style="-fx-background-color: #ffffff;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#d4dee8" height="62.964" mouseTransparent="true" stroke="BLACK"
+                   strokeType="INSIDE"
+                   width="85.3"/>
+        <VBox fx:id="extension" alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+            </padding>
+        </VBox>
+    </children>
+</fx:root>
