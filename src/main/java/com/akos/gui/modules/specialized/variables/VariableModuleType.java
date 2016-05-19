@@ -9,7 +9,7 @@ public enum VariableModuleType implements Type {
     VariableModule;
 
     @Override
-    public String getName() {
+    public String getDisplayName() {
         return "VariableModuleType";
     }
 }

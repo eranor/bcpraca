@@ -6,7 +6,7 @@ package com.akos.gui.modules;
  */
 public interface Type {
 
-    String getName();
+    String getDisplayName();
 
     String name();
 }

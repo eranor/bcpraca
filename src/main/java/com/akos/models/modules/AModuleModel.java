@@ -18,7 +18,7 @@ public abstract class AModuleModel implements IModuleModel, Serializable {
 
 
     public AModuleModel(Type type) {
-        this(type, String.format("%s-%s", type.name(), ModuleCounter.getNext(type)));
+        this(type, String.format("%s %s", type.getDisplayName(), ModuleCounter.getNext(type)));
     }
 
     public AModuleModel(Type type, String name) {

@@ -87,7 +87,7 @@ public class ModuleFactory {
         registry.register(ModuleType.StartModule, StartFunctionModule.class, StartModuleModel.class);
         registry.register(ModuleType.ConditionModule, ConditionFunctionModule.class, ConditionModuleModel.class);
         registry.register(ModuleType.ForLoopModule, ForLoopFunctionModule.class, ForLoopModuleModel.class);
-        registry.register(ModuleType.BackLEDModule, RGBLedFunctionModule.class, RGBLedModuleModel.class);
+        registry.register(ModuleType.LEDModule, RGBLedFunctionModule.class, RGBLedModuleModel.class);
         registry.register(ModuleType.SleepModule, SleepFunctionModule.class, SleepModuleModel.class);
         registry.register(ModuleType.TimerModule, TimerFunctionModule.class, TimerModuleModel.class);
         registry.register(ModuleType.EndModule, EndFunctionModule.class, EndModuleModel.class);

@@ -6,7 +6,6 @@ import com.akos.models.modules.ModuleType;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import org.controlsfx.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,8 +49,8 @@ public class ModulesPanel extends Accordion implements Initializable {
             module.deactivate();
             module.setMaxSize(64, 47.223);
             modulesContainer.getChildren().add(module);
-            //module.setScaleX(module.getScaleX() * 3 / 4);
-            //module.setScaleY(module.getScaleY() * 3 / 4);
+            module.setScaleX(module.getScaleX() * 3 / 4);
+            module.setScaleY(module.getScaleY() * 3 / 4);
 
         }
         for (VariableModuleType type : VariableModuleType.values()) {

@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.*;
+import javafx.geometry.Side;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;

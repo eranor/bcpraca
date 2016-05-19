@@ -19,7 +19,7 @@ public class RGBLedModuleModel extends AModuleModel {
     private int intensity;
 
     public RGBLedModuleModel() {
-        super(ModuleType.BackLEDModule);
+        super(ModuleType.LEDModule);
         setIntensity(0);
     }
 
