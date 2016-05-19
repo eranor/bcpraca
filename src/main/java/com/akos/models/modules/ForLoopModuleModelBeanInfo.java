@@ -32,6 +32,7 @@ public class ForLoopModuleModelBeanInfo extends AModuleModelBeanInfo {
             PropertyDescriptor endValue = new PropertyDescriptor("endValue", ForLoopModuleModel.class, "getEndValue", "setEndValue");
             endValue.setDisplayName("End Value");
             PropertyDescriptor stepValue = new PropertyDescriptor("stepValue", ForLoopModuleModel.class, "getStepValue", "setStepValue");
+
             stepValue.setDisplayName("Step Value");
             propDescriptors.addAll(Arrays.asList(variable, startValue, endValue, stepValue));
         } catch (IntrospectionException e) {
