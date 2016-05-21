@@ -27,6 +27,7 @@ public class DragUtils {
             module.setDragOffset(newOffset);
 
             relocateToPoint(module, point);
+
             SelectionModel sm = App.mainService.getSelectionModel();
             if (sm.selectedCount() > 1) {
                 sm.getSelection().stream().filter(n -> n != module).forEach(node -> {
