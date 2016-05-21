@@ -4,6 +4,7 @@ import com.akos.gui.modules.*;
 import com.akos.gui.modules.specialized.variables.VariableModuleType;
 import com.akos.models.modules.ModuleType;
 import javafx.fxml.*;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -45,12 +46,12 @@ public class ModulesPanel extends Accordion implements Initializable {
             AbstractModule module = factory.getModule(type);
             if (module instanceof AbstractFunctionModule)
                 ((AbstractFunctionModule) module).labelModuleName.setText(type.toString());
-
             module.deactivate();
-            module.setMaxSize(64, 47.223);
             modulesContainer.getChildren().add(module);
-            module.setScaleX(module.getScaleX() * 3 / 4);
-            module.setScaleY(module.getScaleY() * 3 / 4);
+            VBox.setMargin(module, new Insets(-20, -30, -10, -30));
+
+            module.setScaleX(module.getScaleX() * 2 / 3);
+            module.setScaleY(module.getScaleY() * 2 / 3);
 
         }
         for (VariableModuleType type : VariableModuleType.values()) {

@@ -41,7 +41,7 @@ public abstract class AbstractFunctionModule extends AbstractModule {
     @FXML
     public Pane moduleTitlePane;
     @FXML
-    public Pane moduleBackgroundGreen;
+    public AnchorPane moduleBackgroundGreen;
     @FXML
     public Pane moduleBackgroundBlue;
     @FXML
@@ -67,6 +67,10 @@ public abstract class AbstractFunctionModule extends AbstractModule {
     public void initialize(URL location, ResourceBundle resources) {
         DragUtils.buildNodeDragHandlers(this);
         moduleBackgroundGreen.setMouseTransparent(true);
+        moduleBackgroundGreen.minWidthProperty().bind(minWidthProperty());
+        moduleBackgroundGreen.minHeightProperty().bind(minHeightProperty());
+        moduleBackgroundGreen.maxWidthProperty().bind(maxWidthProperty());
+        moduleBackgroundGreen.maxHeightProperty().bind(maxHeightProperty());
         extension.setMouseTransparent(true);
         labelModuleName.textProperty().addListener((observable, oldValue, newValue) -> {
             model.setName(newValue);
@@ -97,10 +101,12 @@ public abstract class AbstractFunctionModule extends AbstractModule {
             }
         });
 
+
         parentProperty().addListener((observable, oldValue, newValue) -> {
             if (getParent() instanceof AnchorPane)
                 helper_pane = (AnchorPane) getParent();
         });
+
 
     }
 
@@ -108,19 +114,22 @@ public abstract class AbstractFunctionModule extends AbstractModule {
         mLinkIds.add(linkId);
     }
 
-    public void removeLink() {
+    public void removeLink(String id) {
         AnchorPane parent = (AnchorPane) this.getParent();
-        for (ListIterator<String> iterId = mLinkIds.listIterator(); iterId.hasNext(); ) {
-            String id1 = iterId.next();
-            for (ListIterator<Node> iterNode = parent.getChildren().listIterator(); iterNode.hasNext(); ) {
-                Node node = iterNode.next();
-                if (node.getId() == null)
-                    continue;
-                if (node.getId().equals(id1)) {
-                    iterNode.remove();
-                    App.mainService.getCurrentProgram().removeEdge(((ModuleLink) node).start.getModel(), ((ModuleLink) node).end.getModel());
-                }
+        for (ListIterator<Node> iterNode = parent.getChildren().listIterator(); iterNode.hasNext(); ) {
+            Node node = iterNode.next();
+            if (node.getId() == null)
+                continue;
+            if (node.getId().equals(id)) {
+                iterNode.remove();
+                App.mainService.getCurrentProgram().removeEdge(((ModuleLink) node).start.getModel(), ((ModuleLink) node).end.getModel());
             }
+        }
+    }
+
+    public void removeLinks() {
+        for (ListIterator<String> iterId = mLinkIds.listIterator(); iterId.hasNext(); ) {
+            removeLink(iterId.next());
             iterId.remove();
         }
     }

@@ -21,17 +21,20 @@ public class DragUtils {
             module.getParent().setOnDragOver(module.mCtxDragOver);
             module.getParent().setOnDragDropped(module.mCtxDragDropped);
 
-            module.setDragOffset(new Point2D(event.getX(), event.getY()));
+            final Point2D newOffset = new Point2D(event.getX(), event.getY());
+            final Point2D point = new Point2D(event.getSceneX(), event.getSceneY());
 
+            module.setDragOffset(newOffset);
 
+            relocateToPoint(module, point);
             SelectionModel sm = App.mainService.getSelectionModel();
             if (sm.selectedCount() > 1) {
-                sm.getSelection().stream().filter(node1 -> node1 != module).forEach(node -> {
-                    Point2D offset = new Point2D(module.getLayoutX() - node.getLayoutX(), module.getLayoutY() - node.getLayoutY());
-                    relocateAnotherToPoint(module, (Draggable) node, offset, new Point2D(event.getSceneX(), event.getSceneY()));
+                sm.getSelection().stream().filter(n -> n != module).forEach(node -> {
+                    Point2D moduleOffset = new Point2D(node.getLayoutX() - module.getLayoutX(), node.getLayoutY() - module.getLayoutY());
+                    ((Draggable) node).setDragOffset(newOffset.subtract(moduleOffset));
+                    relocateToPoint((Draggable) node, point);
                 });
             }
-            relocateToPoint(module, new Point2D(event.getSceneX(), event.getSceneY()));
 
             ClipboardContent content = new ClipboardContent();
             DragDropContainer container = new DragDropContainer();
@@ -47,14 +50,16 @@ public class DragUtils {
 
         module.mCtxDragOver = event -> {
             event.acceptTransferModes(TransferMode.ANY);
+
+            final Point2DSerial scenePoint = new Point2DSerial(event.getSceneX(), event.getSceneY());
+            relocateToPoint(module, scenePoint);
+
             SelectionModel sm = App.mainService.getSelectionModel();
             if (sm.selectedCount() > 1) {
-                sm.getSelection().stream().filter(node1 -> node1 != module).forEach(node -> {
-                    Point2D offset = new Point2D(module.getLayoutX() - node.getLayoutX(), module.getLayoutY() - node.getLayoutY());
-                    relocateAnotherToPoint(module, (Draggable) node, offset, new Point2D(event.getSceneX(), event.getSceneY()));
-                });
+                sm.getSelection().stream()
+                        .filter(n -> n != module)
+                        .forEach((node) -> relocateToPoint((Draggable) node, scenePoint));
             }
-            relocateToPoint(module, new Point2DSerial(event.getSceneX(), event.getSceneY()));
             event.consume();
         };
 
@@ -70,15 +75,9 @@ public class DragUtils {
 
     public static void relocateToPoint(Draggable node, Point2D point) {
         Point2D localCoords = node.getParent().sceneToLocal(point);
-        node.relocate((int) (localCoords.getX() - node.getDragOffset().getX()),
-                (int) (localCoords.getY() - node.getDragOffset().getY()));
+        node.relocate(localCoords.subtract(node.getDragOffset()));
     }
 
-    public static void relocateAnotherToPoint(Draggable anchor, Draggable node, Point2D offset, Point2D point) {
-        Point2D localCoords = anchor.getParent().sceneToLocal(point);
-        node.relocate((int) (localCoords.getX() + offset.getX()),
-                (int) (localCoords.getY() + offset.getY()));
-    }
 
     public static void buildLinkDragHandlers(AbstractFunctionModule module) {
         ModuleLink mLink = new ModuleLink();

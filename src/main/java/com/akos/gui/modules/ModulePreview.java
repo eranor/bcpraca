@@ -37,6 +37,7 @@ public class ModulePreview extends ImageView {
         this.setMouseTransparent(true);
     }
 
+
     public void hide() {
         this.setImage(null);
         this.setVisible(false);

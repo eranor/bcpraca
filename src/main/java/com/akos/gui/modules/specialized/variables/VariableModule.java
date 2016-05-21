@@ -2,11 +2,8 @@ package com.akos.gui.modules.specialized.variables;
 
 
 import com.akos.gui.modules.*;
-import javafx.fxml.*;
-import javafx.scene.control.*;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 /**
  * Created by Ákos on 2015. 12. 10.
@@ -23,6 +20,16 @@ public class VariableModule extends AbstractVariableModule {
     public VariableModule() {
         super();
         CFXMLLoader.load("com/akos/fxml/modules/VariableModule.fxml", this);
+    }
+
+    @Override
+    public void removeLink(String id) {
+
+    }
+
+    @Override
+    public void removeLinks() {
+
     }
 
 

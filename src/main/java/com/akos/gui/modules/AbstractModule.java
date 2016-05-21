@@ -64,4 +64,9 @@ public abstract class AbstractModule extends AnchorPane implements IGraphicModul
     public void setDragOffset(Point2D newOffset) {
         this.dragOffset = newOffset;
     }
+
+    @Override
+    public void relocate(Point2D point) {
+        relocate(point.getX(), point.getY());
+    }
 }

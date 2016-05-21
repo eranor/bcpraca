@@ -2,7 +2,10 @@
 
 <?scenebuilder-stylesheet D:\projects\java\bcpraca2\src\main\resources\com\akos\css\gui\CanvasTabPane.css?>
 
-<?import com.akos.gui.controllers.canvas.GriddedPane?><?import javafx.scene.control.*?><?import javafx.scene.*?><?import javafx.scene.layout.*?>
+<?import com.akos.gui.controllers.canvas.GriddedPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
 <fx:root closable="true" type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
     <content>
         <ScrollPane id="scrollPane" fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="AS_NEEDED" pannable="true"

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.akos.gui.controllers.ModulesPanel?><?import javafx.geometry.*?><?import javafx.scene.control.*?><?import javafx.scene.layout.*?>
+<?import com.akos.gui.controllers.ModulesPanel?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <AnchorPane fx:id="mainView" prefHeight="768" prefWidth="1366"
             style="-fx-background-color: linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white);"
             xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.MainController">
@@ -20,7 +23,7 @@
                             <items>
                                 <HBox fx:id="leftPanelHBox">
                                     <children>
-                                        <ModulesPanel fx:id="modulesPanel" BorderPane.alignment="CENTER" minWidth="200"/>
+                                        <ModulesPanel fx:id="modulesPanel" BorderPane.alignment="CENTER" minWidth="220"/>
                                         <AnchorPane>
                                             <children>
                                                 <Button fx:id="collapseLeftPanelButton" mnemonicParsing="false" onAction="#collapseLeftPanel"
@@ -78,6 +81,5 @@
             </bottom>
         </BorderPane>
     </children>
-
 
 </AnchorPane>

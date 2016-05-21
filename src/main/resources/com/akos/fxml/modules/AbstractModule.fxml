@@ -5,13 +5,13 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<fx:root fx:id="view" maxHeight="188.892" maxWidth="256.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65"
+<fx:root fx:id="view" maxHeight="188.892" maxWidth="256.0" type="AnchorPane" xmlns="http://javafx.com/javafx/"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <fx:include fx:id="moduleBackgroundGreen" source="modules2_BG_Green.fxml"/>
         <fx:include fx:id="moduleBackgroundBlue" source="modules2_BG_Blue.fxml"/>
         <Group fx:id="extension" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-        <StackPane fx:id="moduleTitlePane" layoutX="7.0" layoutY="124.0" prefHeight="42.0">
+        <StackPane fx:id="moduleTitlePane" layoutX="12.0" layoutY="129.0">
             <children>
                 <TextField fx:id="labelTextField" mouseTransparent="true" visible="false"/>
                 <Label fx:id="labelModuleName" focusTraversable="false" mouseTransparent="true" text="Label" StackPane.alignment="CENTER_LEFT">
@@ -19,7 +19,7 @@
                         <Insets left="5.0"/>
                     </StackPane.margin>
                     <font>
-                        <Font name="OCR A Extended" size="20.0"/>
+                        <Font name="OCR A Extended" size="12.0"/>
                     </font>
                 </Label>
             </children>

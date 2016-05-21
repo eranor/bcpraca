@@ -3,8 +3,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
-<Pane xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg" id='_root'>
-    <Pane opacity="1.0" id="RollModule">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg" id='_root'>
+    <Pane opacity="1.0" id="RollModule" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0">
         <children>
             <Polygon
                     points="253.36,58.945,253.36,22.757,222.02,4.663,190.68,22.757,159.34,4.663,128,22.757,128,58.945,96.661,77.039,65.321,58.945,33.981,77.039,33.981,113.227,2.641,131.321,2.641,167.509,33.981,185.603,65.321,167.509,96.661,185.603,128,167.509,159.34,185.603,190.68,167.509,222.02,185.603,253.36,167.509,253.36,131.321,222.02,113.227,222.02,77.039"
@@ -98,4 +99,4 @@
             </Polygon>
         </children>
     </Pane>
-</Pane>
+</AnchorPane>

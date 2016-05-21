@@ -43,23 +43,10 @@ public class ModuleConnector extends Pane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.setOnMouseEntered(event -> {
-            this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 4, 4, 0, 0);");
-            event.consume();
-        });
-        this.setOnMouseExited(event -> {
-            this.setStyle(null);
-            event.consume();
-        });
-
-        this.setOnDragOver(event -> {
-            this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 3, 3, 0, 0);");
-            //event.consume();
-        });
-        this.setOnDragDone(event -> {
-            this.setStyle(null);
-            //event.consume();
-        });
+        this.setOnMouseEntered(event -> this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 4, 4, 0, 0);"));
+        this.setOnMouseExited(event -> this.setStyle(null));
+        this.setOnDragOver(event -> this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 4, 4, 0, 0);"));
+        this.setOnDragDone(event -> this.setStyle(null));
 
     }
 

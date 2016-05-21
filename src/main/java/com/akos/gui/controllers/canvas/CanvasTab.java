@@ -95,7 +95,7 @@ public class CanvasTab extends Tab implements Initializable {
                     AbstractFunctionModule node1 = (AbstractFunctionModule) node;
                     getProgram().getElements().remove(node1.getModel());
                     getProgram().getModuleGraph().removeNode(node1.getModel());
-                    node1.removeLink();
+                    node1.removeLinks();
                     contentPane.getChildren().remove(node);
                 });
             }

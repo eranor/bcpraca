@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.PropertySheet?>
 <TitledPane fx:id="modulePropertiesPaneView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            text="Module properties" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+            text="Module properties" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.akos.gui.controllers.right_panel.ModulePropertiesPaneController">
     <content>
         <AnchorPane>

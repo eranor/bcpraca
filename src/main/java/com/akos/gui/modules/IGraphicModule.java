@@ -17,5 +17,9 @@ public interface IGraphicModule extends Initializable {
 
     Node getView();
 
+    void removeLink(String id);
+
+    void removeLinks();
+
 
 }

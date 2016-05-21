@@ -16,4 +16,6 @@ public interface Draggable {
     Node getParent();
 
     void relocate(double x, double y);
+
+    void relocate(Point2D point);
 }

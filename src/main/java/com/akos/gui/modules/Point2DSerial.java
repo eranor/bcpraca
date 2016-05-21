@@ -13,6 +13,5 @@ public class Point2DSerial extends Point2D implements Serializable {
 
     public Point2DSerial(double x, double y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
     }
 }

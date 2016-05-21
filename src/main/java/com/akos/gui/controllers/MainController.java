@@ -138,71 +138,61 @@ public class MainController extends AbstractController implements Initializable 
 
             preview.hide();
             CanvasTab tab = (CanvasTab) canvasTabPane.getTabs().stream().filter(Tab::isSelected).findAny().orElse(null);
-
-            DragDropContainer container = (DragDropContainer) event.getDragboard().getContent(DragDropContainer.AddNode);
-            if (tab != null)
-                if (container != null) {
-                    if (container.getValue("scene_coords") != null) {
-                        AbstractModule droppedModule = moduleFactory.getModule((Type) container.getValue("type"));
-
-                        if (droppedModule != null) {
-                            tab.contentPane.getChildren().add(droppedModule);
-                        }
-
-                        Point2D cursorPoint = (Point2D) container.getValue("scene_coords");
-
-                        if (droppedModule != null) {
-                            DragUtils.relocateToPoint(droppedModule, new Point2D(cursorPoint.getX() - 64, cursorPoint.getY() - 64));
-                            droppedModule.toFront();
-                            mainService.getCurrentProgram().updateElements(droppedModule.getModel());
-                        }
-
-                    }
-                    if (container.getValue("type") != null)
-                        System.out.println("Moved node " + container.getValue("type"));
-                }
-
-            container = (DragDropContainer) event.getDragboard().getContent(DragDropContainer.AddLink);
-            if (tab != null)
-                if (container != null) {
-
-                    String[] sourceId = (String[]) container.getValue("source");
-                    String[] targetId = (String[]) container.getValue("target");
-
-                    if (sourceId != null && targetId != null) {
-                        ModuleLink link = new ModuleLink();
-
-                        tab.contentPane.getChildren().add(0, link);
-                        AbstractFunctionModule srcMod = null;
-                        AbstractFunctionModule tarMod = null;
-                        ModuleConnector srcConn = null;
-                        ModuleConnector tarConn = null;
-
-                        for (Node n : tab.contentPane.getChildren()) {
-                            if (n.getId().equals(sourceId[0])) {
-                                srcMod = (AbstractFunctionModule) n;
-                                srcConn = (ModuleConnector) srcMod.getChildren().stream().filter(node -> node.getId().equals
-                                        (sourceId[1])).findFirst().orElse(null);
-                            } else if (n.getId().equals(targetId[0])) {
-                                tarMod = (AbstractFunctionModule) n;
-                                tarConn = (ModuleConnector) tarMod.getChildren().stream().filter(node -> node.getId().equals
-                                        (targetId[1])).findFirst().orElse(null);
-                            }
-                        }
-
-                        if (srcConn != null && tarConn != null) {
-                            if (srcConn.getConnectorType() != tarConn.getConnectorType())
-                                if (srcConn.getConnectorType() == ConnectorType.IN && tarConn.getConnectorType() == ConnectorType.OUT)
-                                    configureLink(link, tarMod, srcMod, tarConn, srcConn);
-                                else
-                                    configureLink(link, srcMod, tarMod, srcConn, tarConn);
-                        }
-
-                    }
-                }
+            if (tab != null) {
+                onNodeAdded(tab, (DragDropContainer) event.getDragboard().getContent(DragDropContainer.AddNode));
+                onLinkAdded(tab, (DragDropContainer) event.getDragboard().getContent(DragDropContainer.AddLink));
+            }
             event.consume();
         });
 
+    }
+
+    private void onNodeAdded(CanvasTab tab, DragDropContainer container) {
+        if (container != null && container.getValue("scene_coords") != null) {
+            AbstractModule droppedModule = moduleFactory.getModule((Type) container.getValue("type"));
+            if (droppedModule != null)
+                tab.contentPane.getChildren().add(droppedModule);
+            Point2D cursorPoint = (Point2D) container.getValue("scene_coords");
+            if (droppedModule != null) {
+                DragUtils.relocateToPoint(droppedModule, new Point2D(cursorPoint.getX() - 64, cursorPoint.getY() - 64));
+                droppedModule.toFront();
+                mainService.getCurrentProgram().updateElements(droppedModule.getModel());
+            }
+        }
+    }
+
+    private void onLinkAdded(CanvasTab tab, DragDropContainer container) {
+        if (container != null) {
+            String[] sourceId = (String[]) container.getValue("source");
+            String[] targetId = (String[]) container.getValue("target");
+
+            if (sourceId != null && targetId != null) {
+                ModuleLink link = new ModuleLink();
+                tab.contentPane.getChildren().add(0, link);
+                AbstractFunctionModule srcMod = null, tarMod = null;
+                ModuleConnector srcConn = null, tarConn = null;
+
+                for (Node n : tab.contentPane.getChildren()) {
+                    if (n.getId().equals(sourceId[0])) {
+                        srcMod = (AbstractFunctionModule) n;
+                        srcConn = (ModuleConnector) srcMod.getChildren().stream().filter(node -> node.getId().equals
+                                (sourceId[1])).findFirst().orElse(null);
+                    } else if (n.getId().equals(targetId[0])) {
+                        tarMod = (AbstractFunctionModule) n;
+                        tarConn = (ModuleConnector) tarMod.getChildren().stream().filter(node -> node.getId().equals
+                                (targetId[1])).findFirst().orElse(null);
+                    }
+                }
+
+                if (srcConn != null && tarConn != null) {
+                    if (srcConn.getConnectorType() != tarConn.getConnectorType())
+                        if (srcConn.getConnectorType() == ConnectorType.IN && tarConn.getConnectorType() == ConnectorType.OUT)
+                            configureLink(link, tarMod, srcMod, tarConn, srcConn);
+                        else
+                            configureLink(link, srcMod, tarMod, srcConn, tarConn);
+                }
+            }
+        }
     }
 
     private void configureLink(ModuleLink link, AbstractModule srcMod, AbstractModule tarMod, ModuleConnector srcConn, ModuleConnector tarConn) {
@@ -210,6 +200,7 @@ public class MainController extends AbstractController implements Initializable 
         link.setEndSide(tarConn.getSide());
         link.bindDirection();
         link.bindEnds(srcConn, tarConn);
+        srcConn.setOnMouseClicked(event -> tarMod.removeLink(link.getId()));
         mainService.getCurrentProgram().makeConnection(srcMod.getModel(), tarMod.getModel());
     }
 
