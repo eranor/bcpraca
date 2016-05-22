@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<Pane xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg" id='_root'>
+    <children>
+        <Pane opacity="1.0" id="Connector">
+            <children></children>
+        </Pane>
+        <Pane opacity="1.0" id="Modules">
+            <children>
+                <Pane opacity="1.0" id="RollModule">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="VariableModule">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="ListModule">
+                    <children></children>
+                </Pane>
+            </children>
+        </Pane>
+        <Pane opacity="1.0" id="Icons">
+            <children>
+                <Pane opacity="1.0" id="PrintIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="RGBLedIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="LocationIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="SensorIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="TimerIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="SleepIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="SplitterIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="JoinerIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="IfIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="ForLoopIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="WhileLoopIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="EndIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="StartIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="RollIcon">
+                    <children></children>
+                </Pane>
+                <Pane opacity="1.0" id="VariableIcon">
+                    <children>
+                        <Pane opacity="1.0">
+                            <children>
+                                <SVGPath
+                                        content="M127.179,1.05L95.69,19.229L64.202,1.05     l-31.489,18.18v36.36h0L1.225,73.769v36.36l31.489,18.18l31.488-18.18l31.489,18.18l31.488-18.18v-36.36h0l31.488-18.18v-36.36     L127.179,1.05z"
+                                        opacity="1" strokeMiterLimit="10.0" strokeWidth="1.818">
+                                    <fill>
+                                        <Color red="0.1803921568627451" green="0.39215686274509803" blue="0.6705882352941176"/>
+                                    </fill>
+                                    <stroke>
+                                        <Color red="0.8117647058823529" green="0.27058823529411763" blue="0.03137254901960784"/>
+                                    </stroke>
+                                </SVGPath>
+                            </children>
+                        </Pane>
+                        <Pane opacity="1.0">
+                            <children>
+                                <Polyline points="81.991,47.367,81.991,86.5,52.56,58.019," opacity="1">
+                                    <fill>
+                                        <Color red="0.4235294117647059" green="0.2627450980392157" blue="0.11764705882352941"/>
+                                    </fill>
+
+                                </Polyline>
+                                <Polygon points="107.47,59.802,107.225,92.459,77.74,103.41,77.825,70.549," opacity="1">
+                                    <fill>
+                                        <Color red="0.43529411764705883" green="0.2627450980392157" blue="0.11764705882352941"/>
+                                    </fill>
+
+                                </Polygon>
+                                <Polygon points="77.825,70.549,77.74,103.41,52.614,90.471,52.56,57.847," opacity="1">
+                                    <fill>
+                                        <Color red="0.7568627450980392" green="0.596078431372549" blue="0.3843137254901961"/>
+                                    </fill>
+
+                                </Polygon>
+                                <Polygon
+                                        points="107.29,60.651,122.952,51.127,97.426,38.535,81.991,48.117,67.245,42.117,37.376,52.769,52.38,58.684,36.102,64.408,61.181,77.017,77.627,71.372,52.38,58.679,81.951,48.134,107.29,60.634,77.652,71.378,91.798,78.415,121.171,67.767,"
+                                        opacity="1">
+                                    <fill>
+                                        <Color red="0.43529411764705883" green="0.2627450980392157" blue="0.11764705882352941"/>
+                                    </fill>
+
+                                </Polygon>
+                                <Polygon
+                                        points="107.29,59.9,122.952,50.376,97.426,37.784,81.991,47.367,67.245,41.367,37.376,52.018,52.38,57.934,36.102,63.657,61.181,76.266,77.627,70.621,52.38,57.928,81.951,47.383,107.29,59.884,77.652,70.628,91.798,77.665,121.171,67.017,"
+                                        opacity="1">
+                                    <fill>
+                                        <Color red="0.43529411764705883" green="0.2627450980392157" blue="0.11764705882352941"/>
+                                    </fill>
+
+                                </Polygon>
+                                <Polygon
+                                        points="107.46,59.787,123.122,50.263,97.597,37.671,82.162,47.253,67.415,41.253,37.547,51.904,52.551,57.82,36.272,63.544,61.351,76.152,77.798,70.508,52.551,57.815,82.121,47.27,107.46,59.77,77.822,70.514,91.969,77.551,121.341,66.903,"
+                                        opacity="1">
+                                    <fill>
+                                        <Color red="0.7568627450980392" green="0.596078431372549" blue="0.3843137254901961"/>
+                                    </fill>
+
+                                </Polygon>
+                                <Polygon points="107.29,59.884,81.991,47.367,91.978,65.434," opacity="1">
+                                    <fill>
+                                        <Color red="0.4235294117647059" green="0.2627450980392157" blue="0.11764705882352941"/>
+                                    </fill>
+
+                                </Polygon>
+                                <Polygon points="81.991,47.253,81.991,69.003,91.978,65.434," opacity="1">
+                                    <fill>
+                                        <Color red="0.3607843137254902" green="0.24705882352941178" blue="0.12156862745098039"/>
+                                    </fill>
+
+                                </Polygon>
+                            </children>
+                        </Pane>
+                        <Rectangle x="56.065" y="12.314" width="22.422" height="18.483" opacity="1">
+                            <fill>
+                                TRANSPARENT
+                            </fill>
+
+                        </Rectangle>
+                        <!-- Unhandled type 'SvgTextElement' -->
+                        <!-- Unhandled type 'SvgTextElement' -->
+                        <!-- Unhandled type 'SvgTextElement' -->
+                        <!-- Unhandled type 'SvgTextElement' -->
+                    </children>
+                </Pane>
+                <Pane opacity="1.0" id="ListIcon">
+                    <children></children>
+                </Pane>
+            </children>
+        </Pane>
+    </children>
+</Pane>

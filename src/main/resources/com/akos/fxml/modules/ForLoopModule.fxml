@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.akos.gui.modules.AbstractFunctionModule?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<fx:root type="AbstractFunctionModule" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane opacity="1.0" id="ForLoopIcon">
+        <children>
+            <Pane opacity="1.0">
+                <children>
+                    <SVGPath
+                            content="M126.863,1.05l-31.489,18.18L63.886,1.05     l-31.489,18.18v36.36h0L0.909,73.769v36.36l31.489,18.18l31.488-18.18l31.489,18.18l31.488-18.18v-36.36h0l31.488-18.18v-36.36     L126.863,1.05z"
+                            opacity="1" strokeMiterLimit="10.0" strokeWidth="1.818">
+                        <fill>
+                            <Color red="0.5607843137254902" green="0.8156862745098039" blue="0.8901960784313725"/>
+                        </fill>
+                        <stroke>
+                            <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                        </stroke>
+                    </SVGPath>
+                </children>
+            </Pane>
+            <Pane opacity="1.0">
+                <children>
+                    <Pane opacity="1.0">
+                        <children>
+                            <Polyline points="46.167,84.679,46.167,92.846,113.093,92.846,113.093,72.944," opacity="1"
+                                      strokeMiterLimit="10.0" strokeWidth="9.6649">
+                                <fill>
+                                    TRANSPARENT
+                                </fill>
+                                <stroke>
+                                    <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                                </stroke>
+
+                            </Polyline>
+                            <Pane opacity="1.0">
+                                <children>
+                                    <Polygon points="125.623,76.61,113.093,54.911,100.563,76.61," opacity="1">
+                                        <fill>
+                                            <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                                        </fill>
+
+                                    </Polygon>
+                                </children>
+                            </Pane>
+                        </children>
+                    </Pane>
+                </children>
+            </Pane>
+            <Pane opacity="1.0">
+                <children>
+                    <Pane opacity="1.0">
+                        <children>
+                            <Polyline points="113.093,50.352,113.093,42.185,46.167,42.185,46.167,62.087," opacity="1"
+                                      strokeMiterLimit="10.0" strokeWidth="9.6649">
+                                <fill>
+                                    TRANSPARENT
+                                </fill>
+                                <stroke>
+                                    <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                                </stroke>
+
+                            </Polyline>
+                            <Pane opacity="1.0">
+                                <children>
+                                    <Polygon points="33.637,58.421,46.167,80.12,58.697,58.421," opacity="1">
+                                        <fill>
+                                            <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                                        </fill>
+
+                                    </Polygon>
+                                </children>
+                            </Pane>
+                        </children>
+                    </Pane>
+                </children>
+            </Pane>
+            <Pane opacity="1.0">
+                <children>
+                    <SVGPath
+                            content="M65.123,86.303c-1.94-2.448-3.581-5.312-4.921-8.593c-1.34-3.281-2.012-6.679-2.012-10.194     c0-3.098,0.501-6.066,1.504-8.905c1.172-3.293,2.981-6.574,5.429-9.843h2.519c-1.575,2.707-2.617,4.641-3.125,5.8     c-0.794,1.797-1.419,3.671-1.875,5.624c-0.559,2.434-0.84,4.882-0.84,7.343c0,6.262,1.946,12.518,5.839,18.767H65.123z"
+                            opacity="1">
+                        <fill>
+                            <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                        </fill>
+                    </SVGPath>
+                    <SVGPath
+                            content="M69.381,77.885l7.577-10.78l-7.011-9.96h4.394l3.183,4.863c0.598,0.925,1.081,1.699,1.445,2.324     c0.573-0.859,1.101-1.621,1.582-2.285l3.496-4.902h4.199l-7.167,9.765l7.714,10.975h-4.316l-4.257-6.445l-1.133-1.738     l-5.449,8.183H69.381z"
+                            opacity="1">
+                        <fill>
+                            <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                        </fill>
+                    </SVGPath>
+                    <SVGPath
+                            content="M94.027,86.303h-2.519c3.893-6.249,5.839-12.506,5.839-18.767c0-2.448-0.281-4.875-0.84-7.284     c-0.442-1.953-1.062-3.828-1.855-5.624c-0.508-1.172-1.555-3.125-3.144-5.859h2.519c2.448,3.268,4.257,6.549,5.429,9.843     c1.003,2.839,1.504,5.807,1.504,8.905c0,3.515-0.675,6.913-2.02,10.194C97.59,80.991,95.953,83.854,94.027,86.303z"
+                            opacity="1">
+                        <fill>
+                            <Color red="0.08627450980392157" green="0.03137254901960784" blue="0.4470588235294118"/>
+                        </fill>
+                    </SVGPath>
+                </children>
+            </Pane>
+        </children>
+    </Pane>
+</fx:root>

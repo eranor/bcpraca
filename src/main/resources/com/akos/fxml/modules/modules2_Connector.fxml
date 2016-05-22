@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.Polygon?>
+<fx:root type="Pane" xmlns:fx="http://javafx.com/fxml">
+
+    <Pane opacity="1.0" id="Connector">
+        <children>
+            <Polygon fx:id="connector" points="1,14.814,1,42.036,18.681,55.647,36.362,42.036,36.362,14.814,18.681,1.203," opacity="1"
+                     strokeMiterLimit="10.0"
+                     strokeWidth="5.4282">
+                <fill>
+                    <Color fx:id="fillColor" red="0.6549019607843137" green="0.8313725490196079" blue="0.5725490196078431"/>
+                </fill>
+                <stroke>
+                    <Color fx:id="strokeColor" red="0.3764705882352941" green="0.7137254901960784" blue="0.34509803921568627" opacity="0.5"/>
+                </stroke>
+            </Polygon>
+        </children>
+    </Pane>
+
+</fx:root>

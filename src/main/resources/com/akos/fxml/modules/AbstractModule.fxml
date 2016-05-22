@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<fx:root fx:id="view" maxHeight="188.892" maxWidth="256.0" type="AnchorPane" xmlns="http://javafx.com/javafx/"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Group fx:id="extension" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <StackPane fx:id="moduleTitlePane" layoutX="12.0" layoutY="129.0">
+            <children>
+                <TextField fx:id="labelTextField" mouseTransparent="true" visible="false"/>
+                <Label fx:id="labelModuleName" focusTraversable="false" mouseTransparent="true" text="Label" StackPane.alignment="CENTER_LEFT">
+                    <StackPane.margin>
+                        <Insets left="5.0"/>
+                    </StackPane.margin>
+                    <font>
+                        <Font name="OCR A Extended" size="12.0"/>
+                    </font>
+                </Label>
+            </children>
+        </StackPane>
+    </children>
+</fx:root>

@@ -1,0 +1,30 @@
+#canvas-tab-pane {
+    -fx-background-color: lightseagreen;
+}
+
+.tab-pane {
+    -fx-skin: "com.sun.javafx.scene.control.skin.TabPaneSkin";
+    /* -fx-tab-min-width: 4.583em;  55 */
+    /* -fx-tab-max-width: 4.583em; 55 */
+    -fx-tab-min-height: 2em; /* 24 */
+    -fx-tab-max-height: 2em; /* 24 */
+    -fx-tab-min-width: 5em;
+}
+
+.tab .tab-label {
+    -fx-skin: "com.sun.javafx.scene.control.skin.LabelSkin";
+    -fx-background-color: lavender;
+    -fx-alignment: CENTER;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+
+}
+
+#canvas-tab-content {
+    /*-fx-background-color: #246 25%;*/
+    -fx-background-color: transparent;
+
+}
