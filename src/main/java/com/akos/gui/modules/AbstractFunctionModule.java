@@ -40,16 +40,13 @@ public abstract class AbstractFunctionModule extends AbstractModule {
     public TextField labelTextField;
     @FXML
     public Pane moduleTitlePane;
-    @FXML
-    public AnchorPane moduleBackgroundGreen;
-    @FXML
-    public Pane moduleBackgroundBlue;
+
     @FXML
     Group extension;
 
     protected AnchorPane helper_pane = null;
 
-    public Map<Side, List<ModuleConnector>> connectorMap = new HashMap<>();
+    public ConnectorMap connectorMap = new ConnectorMap();
 
     protected EventHandler<MouseEvent> mLinkHandleDragDetected;
     protected EventHandler<DragEvent> mLinkHandleDragDropped;
@@ -66,11 +63,7 @@ public abstract class AbstractFunctionModule extends AbstractModule {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DragUtils.buildNodeDragHandlers(this);
-        moduleBackgroundGreen.setMouseTransparent(true);
-        moduleBackgroundGreen.minWidthProperty().bind(minWidthProperty());
-        moduleBackgroundGreen.minHeightProperty().bind(minHeightProperty());
-        moduleBackgroundGreen.maxWidthProperty().bind(maxWidthProperty());
-        moduleBackgroundGreen.maxHeightProperty().bind(maxHeightProperty());
+
         extension.setMouseTransparent(true);
         labelModuleName.textProperty().addListener((observable, oldValue, newValue) -> {
             model.setName(newValue);

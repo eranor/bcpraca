@@ -1,11 +1,9 @@
 package com.akos.gui.modules.specialized;
 
 import com.akos.gui.modules.*;
-import javafx.fxml.*;
+import javafx.fxml.FXML;
 import javafx.geometry.Side;
-import javafx.scene.control.*;
-
-import java.util.*;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)
@@ -20,14 +18,10 @@ public class StartFunctionModule extends AbstractFunctionModule {
 
     public StartFunctionModule() {
         super();
-        moduleBackgroundGreen.setVisible(true);
-        moduleBackgroundGreen.setDisable(false);
-        moduleBackgroundBlue.setVisible(false);
-        moduleBackgroundBlue.setDisable(true);
-
         CFXMLLoader.load("com/akos/fxml/modules/StartModule.fxml", this);
-        List<ModuleConnector> bottomConnectors = Collections.singletonList(new ModuleConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM));
-        connectorMap.put(Side.BOTTOM, bottomConnectors);
+        setBackgroundType(BackgroundType.BLUE);
+
+        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM);
 
         buildConnectors();
         DragUtils.buildLinkDragHandlers(this);

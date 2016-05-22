@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.*;
 
 import java.net.URL;
 import java.util.*;
@@ -21,7 +22,7 @@ import java.util.*;
 
 public class RobotConsolePaneController extends AbstractController implements Initializable {
 
-
+    private static final Logger logger = LogManager.getLogger(RobotConsolePaneController.class);
     public TitledPane robotConsoleView;
     public VBox rightPaneTabBody;
     public TextArea consoleTextArea;
@@ -35,7 +36,7 @@ public class RobotConsolePaneController extends AbstractController implements In
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Thread t = new Thread(() -> {
-            System.out.println("Watcher started");
+            logger.debug("Watcher started");
             while (true) {
                 if (mainService.getRobot() != null) {
                     ArrayList<DeviceResponse> responses = mainService.getRobot().getAllPackets();

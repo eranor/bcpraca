@@ -26,9 +26,9 @@ public class ModuleConnector extends Pane implements Initializable {
     public ModuleConnector(ConnectorType type, Side side) {
         CFXMLLoader.load("com/akos/fxml/modules/modules2_Connector.fxml", this);
         this.connectorType = type;
+        this.side = side;
         connector.setFill(connectorType.fillColor);
         connector.setStroke(connectorType.strokeColor);
-        this.side = side;
         setId(UUID.randomUUID().toString());
     }
 
@@ -43,8 +43,13 @@ public class ModuleConnector extends Pane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.setOnMouseEntered(event -> this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 4, 4, 0, 0);"));
-        this.setOnMouseExited(event -> this.setStyle(null));
+        this.setOnMouseEntered(event -> {
+            this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 4, 4, 0, 0);");
+
+        });
+        this.setOnMouseExited(event -> {
+            this.setStyle(null);
+        });
         this.setOnDragOver(event -> this.setStyle("-fx-effect: dropshadow(three-pass-box, #ffb82a, 4, 4, 0, 0);"));
         this.setOnDragDone(event -> this.setStyle(null));
 
