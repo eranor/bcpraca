@@ -58,6 +58,7 @@ public class Program implements IProgram, Comparable {
     }
 
     public String compile() {
+        counter = 1;
         return compile((StartModuleModel) startNodes.get(0));
     }
 

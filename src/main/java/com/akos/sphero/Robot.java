@@ -5,21 +5,38 @@ import com.akos.sphero.commands.robot.OrbBasicController;
 import com.akos.sphero.common.internal.*;
 import org.apache.logging.log4j.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)
  */
 public class Robot extends BluetoothDevice {
+
     private static final Logger logger = LogManager.getLogger(Robot.class);
+    public static final String SPHERO_IEEE_OUI = "000666"; // IEEE OUI for Roving Networks
+
     private String identifier;
 
-    public Robot(String address, String name, int sppChannel) {
-        super(address, name, sppChannel);
+    public Robot(List<String> args) {
+        this(args.get(0), args.get(1), args.size() > 2 ? args.get(3) : null);
     }
 
-    public Robot(BluetoothDevice device) {
-        super(device.getAddress(), device.getName(), device.sppChannel);
+    public Robot(String name, String address, String url) {
+        super(name, address);
+        setSpheroUrl(url != null ? url : "btspp://" + address + ":1;authenticate=false;encrypt=false;master=false");
+    }
+
+    public void setSpheroUrl(String url) {
+        if (!isConnected) {
+            if (url.matches("btspp://" + this.getBluetoothAddress() + ":" +
+                    "([1-9]|[1-3]?[0-9]);authenticate=(true|false);encrypt=(true|false);master=(true|false)")) {
+                deviceURL = url;
+            } else {
+                logger.log(Level.WARN, "New Device service URL is not properly formatted.");
+            }
+        } else {
+            logger.log(Level.WARN, "Unable to change Device (" + name + ") URL while connected.");
+        }
     }
 
 
@@ -34,7 +51,7 @@ public class Robot extends BluetoothDevice {
         if (this.dataChannel.numberOfQueuedResponses() > 0) {
             return this.dataChannel.receive();
         }
-        logger.info("No packets from Sphero (" + getFriendlyName() + ") are currently in the queue.");
+        logger.info("No packets from Sphero (" + getName() + ") are currently in the queue.");
         return null;
     }
 
@@ -57,4 +74,6 @@ public class Robot extends BluetoothDevice {
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
+
+
 }

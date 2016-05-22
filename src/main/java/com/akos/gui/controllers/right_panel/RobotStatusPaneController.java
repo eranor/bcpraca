@@ -8,6 +8,7 @@ import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.SetChangeListener;
+import javafx.concurrent.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -54,8 +55,8 @@ public class RobotStatusPaneController extends AbstractController implements Ini
         mainService.robotProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 robotNameLabel.setText(newValue.getName());
-                robotAddressLabel.setText(newValue.getAddress());
-                robotConnectionAddressLabel.setText(newValue.getConnectionURL().substring(0, 15) + "...");
+                robotAddressLabel.setText(newValue.getFormattedAddress());
+                robotConnectionAddressLabel.setText(newValue.getDeviceURL().substring(0, 15) + "...");
             }
         });
     }
@@ -79,13 +80,6 @@ public class RobotStatusPaneController extends AbstractController implements Ini
                 r.connect();
                 controller.eraseStorage();
                 String p = mainService.getCurrentProgram().compile();
-                /*String s1 = "10 X = 1\n" +
-                        "20 backLED X\n" +
-                        "30 delay 100\n" +
-                        "40 X = X + 1\n" +
-                        "45 print accelX, accelY, accelZ\n" +
-                        "50 if X < 256 then goto 20\n" +
-                        "60 goto 10";*/
                 System.out.println(p);
                 controller.setProgram(p.getBytes());
                 controller.loadProgram();
@@ -97,18 +91,28 @@ public class RobotStatusPaneController extends AbstractController implements Ini
     public void abortCurrentProgram(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
         if (mainService.getRobot() != null) {
-            Platform.runLater(() -> {
-                OrbBasicController controller = new OrbBasicController(r);
-                r.connect();
-                controller.eraseStorage();
-                controller.abortProgram();
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            OrbBasicController controller = new OrbBasicController(r);
+            Service<?> service = new Service<Void>() {
+                @Override
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            if (!r.isConnected())
+                                r.connect();
+                            controller.eraseStorage();
+                            controller.abortProgram();
+                            return null;
+                        }
+                    };
                 }
-                r.disconnect();
+            };
+            service.setOnSucceeded(event -> {
+                if (r.isConnected())
+                    r.disconnect();
             });
+            service.reset();
+            service.start();
         }
     }
 

@@ -66,7 +66,8 @@ public class SetDataStreamingCommand extends DeviceCommand implements ResponseLi
     }
 
     public String toString() {
-        return String.format("SetDataStreamingCommand{Divisor=%d, PacketFrames=%d, SensorMask=%s, PacketCount=%s}", this.divisor, this.packetFrames, String.format("%16X", this.mask), this.packetCount);
+        return String.format("SetDataStreamingCommand{Divisor=%d, PacketFrames=%d, SensorMask=%s, PacketCount=%s}",
+                this.divisor, this.packetFrames, String.format("%16X", this.mask), this.packetCount);
     }
 
     private static class StreamingPacket {

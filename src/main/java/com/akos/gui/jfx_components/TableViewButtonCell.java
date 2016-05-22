@@ -1,7 +1,7 @@
 package com.akos.gui.jfx_components;
 
 
-import com.akos.bluetooth.BluetoothDevice;
+import com.akos.sphero.Robot;
 import javafx.event.*;
 import javafx.scene.control.*;
 
@@ -44,8 +44,7 @@ public class TableViewButtonCell<S, T> extends TableCell<S, T> {
 
         TableRow currentRow = getTableRow();
         if (currentRow.getItem() != null) {
-            BluetoothDevice d = (BluetoothDevice) currentRow.getItem();
-            if (!(d.getAddress().startsWith("00066"))) {
+            if (!(currentRow.getItem() instanceof Robot)) {
                 setGraphic(null);
             }
         }

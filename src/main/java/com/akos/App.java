@@ -20,6 +20,7 @@ public class App extends Application {
 
     public static MainService mainService = new InMemoryMainService();
     public static final ResourceBundle localization = ResourceBundle.getBundle("Localization");
+    public static Stage primaryStage;
 
     @BeforeClass
     public static void installSvgLoader() {
@@ -42,14 +43,15 @@ public class App extends Application {
     };
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
+        primaryStage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/akos/fxml/gui/Main.fxml"), localization);
         loader.setControllerFactory(callback);
         Scene scene = new Scene(loader.load());
-        primaryStage.setTitle(localization.getString("main.screenTitle"));
+        stage.setTitle(localization.getString("main.screenTitle"));
         scene.getStylesheets().add(getCSS(getClass(), "com/akos/css/gui/Main.css"));
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static String getCSS(Class clazz, String uri) {
