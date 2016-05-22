@@ -10,7 +10,6 @@ import java.util.EventListener;
  */
 
 
-
 public interface ResponseListener extends EventListener {
 
     void handleResponse(DeviceResponse response);

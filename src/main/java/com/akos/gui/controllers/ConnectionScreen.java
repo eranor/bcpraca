@@ -6,11 +6,12 @@ import com.akos.gui.dialogs.PopupDialog;
 import com.akos.gui.jfx_components.TableViewButtonCell;
 import com.akos.models.services.MainService;
 import com.akos.sphero.Robot;
-import javafx.application.Platform;
-import javafx.beans.property.*;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableMap;
+import javafx.concurrent.*;
 import javafx.event.*;
-import javafx.fxml.*;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,7 +21,7 @@ import javafx.util.Callback;
 
 import javax.bluetooth.*;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Ákos on 2015. 12. 06.
@@ -41,20 +42,30 @@ public class ConnectionScreen extends AbstractController implements Initializabl
     public TableColumn buttonColumn;
     public BorderPane view;
 
-    public BluetoothDiscovery discoveryThread;
-
     public ConnectionScreen(MainService mainService) {
         super(mainService);
-        this.discoveryThread = new BluetoothDiscovery();
     }
 
     public void discoverDeviceAction(ActionEvent actionEvent) {
         try {
+
             LocalDevice localDevice = LocalDevice.getLocalDevice();
             labelDeviceName.setText(localDevice.getFriendlyName());
             labelDeviceAddress.setText(localDevice.getBluetoothAddress());
             labelDeviceStatus.setText(String.valueOf(localDevice.getDiscoverable()));
-            new Thread(discoveryThread).start();
+            Service<?> bt = new Service<ObservableMap<String, List<String>>>() {
+                @Override
+                protected Task<ObservableMap<String, List<String>>> createTask() {
+                    return new ServiceSearch();
+                }
+            };
+            bt.setOnSucceeded(event -> {
+                ObservableMap<String, List<String>> map = (ObservableMap<String, List<String>>) event.getSource().getValue();
+                System.out.println(map);
+                tableDiscoveredDevices.setItems(null);
+            });
+            bt.reset();
+            bt.start();
         } catch (BluetoothStateException e) {
             Stage dialog = new PopupDialog(((Node) actionEvent.getTarget()).getScene().getWindow());
             dialog.show();
@@ -85,7 +96,6 @@ public class ConnectionScreen extends AbstractController implements Initializabl
                     return t;
                 };
         buttonColumn.setCellFactory(cellFactory);
-        tableDiscoveredDevices.setItems(discoveryThread.discoveredDevices);
     }
 
 

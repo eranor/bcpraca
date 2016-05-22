@@ -82,7 +82,7 @@
                 </stroke>
 
             </Polyline>
-            <Line  stroke="#160872" strokeWidth="5.454" strokeMiterLimit="10" startX="129.329" startY="44.379" endX="147.258"
+            <Line stroke="#160872" strokeWidth="5.454" strokeMiterLimit="10" startX="129.329" startY="44.379" endX="147.258"
                   endY="22.291"/>
 
             <Line stroke="#160872" strokeWidth="5.454" strokeMiterLimit="10" startX="127.25" startY="24.371" endX="149.338" endY="42.3"/>

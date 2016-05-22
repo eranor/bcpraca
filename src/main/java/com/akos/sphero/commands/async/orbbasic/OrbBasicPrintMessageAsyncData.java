@@ -14,6 +14,7 @@ public class OrbBasicPrintMessageAsyncData extends AsyncResponse {
     public OrbBasicPrintMessageAsyncData(byte[] packet) {
         super(packet);
     }
+
     protected void parseData() {
         super.parseData();
         this.message = new String(this.getData());

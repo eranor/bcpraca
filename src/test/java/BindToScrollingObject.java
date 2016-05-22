@@ -6,13 +6,9 @@
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
@@ -27,11 +23,11 @@ public class BindToScrollingObject extends Application {
         scroller.setContent(vbox);
         Label bindingLabel = new Label("Binding here");
         for (int i = 0; i < 4; i++) {
-            vbox.getChildren().add(new Label("Item "+(i+1)));
+            vbox.getChildren().add(new Label("Item " + (i + 1)));
         }
         vbox.getChildren().add(bindingLabel);
         for (int i = 0; i < 4; i++) {
-            vbox.getChildren().add(new Label("Item "+(i+6)));
+            vbox.getChildren().add(new Label("Item " + (i + 6)));
         }
         Label anchor = new Label("Anchor");
         anchor.setStyle("-fx-background-color: antiquewhite");

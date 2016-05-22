@@ -26,7 +26,7 @@ public class AsyncMessageFactory {
     }
 
     public static synchronized AsyncMessageFactory getInstance() {
-        if(asyncMessageFactory == null) {
+        if (asyncMessageFactory == null) {
             asyncMessageFactory = new AsyncMessageFactory();
         }
         return asyncMessageFactory;
@@ -43,17 +43,17 @@ public class AsyncMessageFactory {
         return (Class) asyncResponseMap.get(var2);
     }
 
-    private AsyncResponse a( Class<? extends AsyncResponse> responseClass, byte[] packet) {
-        if(responseClass == null) {
+    private AsyncResponse a(Class<? extends AsyncResponse> responseClass, byte[] packet) {
+        if (responseClass == null) {
             return new AsyncResponse(packet);
         } else {
             Constructor constructor = this.a(responseClass);
-            if(constructor == null) {
+            if (constructor == null) {
                 //DLog.w("Constructor was null for async message, creating base AsyncMessage...");
                 return new AsyncResponse(packet);
             } else {
                 AsyncResponse response = this.a(constructor, packet);
-                if(response == null) {
+                if (response == null) {
                     //DLog.w("Could not create an async message from the constructor, creating base AsyncMessage...");
                     return new AsyncResponse(packet);
                 } else {
@@ -63,7 +63,7 @@ public class AsyncMessageFactory {
         }
     }
 
-        private Constructor<? extends AsyncResponse> a(Class<? extends AsyncResponse> responseClass) {
+    private Constructor<? extends AsyncResponse> a(Class<? extends AsyncResponse> responseClass) {
         Constructor constructor = null;
 
         try {
@@ -74,8 +74,8 @@ public class AsyncMessageFactory {
         return constructor;
     }
 
-        private AsyncResponse a(Constructor<? extends AsyncResponse> responseClass, byte[] packet) {
-            AsyncResponse var3 = null;
+    private AsyncResponse a(Constructor<? extends AsyncResponse> responseClass, byte[] packet) {
+        AsyncResponse var3 = null;
 
         try {
             var3 = responseClass.newInstance(new Object[]{packet});
@@ -84,7 +84,7 @@ public class AsyncMessageFactory {
         } catch (InstantiationException var8) {
             //DLog.e("Could not build async message. Reason: %s", new Object[]{var8.getMessage()});
         } catch (IllegalAccessException var9) {
-            if(!responseClass.isAccessible()) {
+            if (!responseClass.isAccessible()) {
                 //DLog.w("Constructor of async message class is not accessible. Overriding access level and retrying...");
                 responseClass.setAccessible(true);
 

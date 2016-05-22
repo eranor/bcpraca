@@ -7,17 +7,14 @@ package com.akos.bluetooth.exception;
  * @author Nicklas Gavelin, nicklas.gavelin@gmail.com, Luleå University of Technology
  */
 
-public class RobotBluetoothException extends Exception
-{
+public class RobotBluetoothException extends Exception {
     private static final long serialVersionUID = -3192808568570050687L;
 
-    public RobotBluetoothException()
-    {
+    public RobotBluetoothException() {
         super();
     }
 
-    public RobotBluetoothException( String s )
-    {
-        super( s );
+    public RobotBluetoothException(String s) {
+        super(s);
     }
 }

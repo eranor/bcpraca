@@ -6,18 +6,18 @@ package com.akos.bluetooth.heartbeat;
 
 public abstract class HeartbeatListener implements Runnable {
 
-	private Heartbeat heartbeat = null;
-	
-	public final void setHeartbeat(Heartbeat aHeartbeat) {
-		heartbeat = aHeartbeat;
-	}
-	
-	@Override
-	public final void run() {
-		heartbeat.monitor();
-		onChange();
-	}
-	
-	public abstract void onChange();
+    private Heartbeat heartbeat = null;
+
+    public final void setHeartbeat(Heartbeat aHeartbeat) {
+        heartbeat = aHeartbeat;
+    }
+
+    @Override
+    public final void run() {
+        heartbeat.monitor();
+        onChange();
+    }
+
+    public abstract void onChange();
 
 }

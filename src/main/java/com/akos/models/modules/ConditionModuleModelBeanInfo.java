@@ -1,11 +1,6 @@
 package com.akos.models.modules;
 
-import com.akos.gui.controllers.right_panel.SliderPropertyEditor;
-import com.akos.gui.modules.beans.ValidatedPropertyDescriptor;
-import org.controlsfx.validation.*;
-
 import java.beans.*;
-import java.util.Objects;
 
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)

@@ -2,8 +2,6 @@ package com.akos.gui.jfx_components;
 
 
 import com.akos.bluetooth.BluetoothDevice;
-import com.akos.gui.controllers.ConnectionScreen;
-import com.akos.sphero.Robot;
 import javafx.event.*;
 import javafx.scene.control.*;
 

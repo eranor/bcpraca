@@ -9,7 +9,7 @@ import com.akos.sphero.common.internal.ids.*;
  */
 
 
-public class GetPermanentOptionFlagsCommand extends DeviceCommand{
+public class GetPermanentOptionFlagsCommand extends DeviceCommand {
     public GetPermanentOptionFlagsCommand() {
         super(VirtualDeviceId.ROBOT, RobotCommandId.GET_OPTION_FLAGS);
     }

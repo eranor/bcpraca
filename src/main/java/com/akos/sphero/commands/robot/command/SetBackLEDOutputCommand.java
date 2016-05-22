@@ -15,7 +15,7 @@ public class SetBackLEDOutputCommand extends DeviceCommand {
 
     public SetBackLEDOutputCommand(float brightness) {
         super(VirtualDeviceId.ROBOT, RobotCommandId.BACK_LED_OUTPUT);
-        this.a = (float) Utils.clamp((double)brightness, 0.0D, 1.0D);
+        this.a = (float) Utils.clamp((double) brightness, 0.0D, 1.0D);
     }
 
     public float getBrightness() {
@@ -23,6 +23,6 @@ public class SetBackLEDOutputCommand extends DeviceCommand {
     }
 
     public byte[] getData() {
-        return new byte[]{(byte)((int)(255.0D * (double) this.a))};
+        return new byte[]{(byte) ((int) (255.0D * (double) this.a))};
     }
 }

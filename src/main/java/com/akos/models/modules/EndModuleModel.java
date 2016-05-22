@@ -1,7 +1,5 @@
 package com.akos.models.modules;
 
-import com.akos.gui.modules.Type;
-
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)
  */

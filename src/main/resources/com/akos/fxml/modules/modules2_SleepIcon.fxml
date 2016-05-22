@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?><?import javafx.scene.paint.*?><?import javafx.scene.shape.*?>
+<?import javafx.scene.layout.*?>
 <Pane xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg" id='_root'>
     <children>
         <Pane opacity="1.0" id="Connector">
@@ -9,8 +9,8 @@
         <Pane opacity="1.0" id="Modules">
             <children>
                 <Pane opacity="1.0" id="RollModule">
-                <children></children>
-            </Pane>
+                    <children></children>
+                </Pane>
                 <Pane opacity="1.0" id="VariableModule">
                     <children></children>
                 </Pane>

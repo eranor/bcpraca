@@ -3,8 +3,8 @@ package com.akos;
 import com.akos.models.services.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
-import javafx.stage.*;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.junit.BeforeClass;
 
@@ -30,7 +30,7 @@ public class App extends Application {
         Constructor cstr = null;
         for (Constructor c : type.getDeclaredConstructors()) {
             for (Class<?> cls : c.getParameterTypes()) {
-                if (cls == MainService.class) cstr =  c;
+                if (cls == MainService.class) cstr = c;
             }
         }
         try {
@@ -43,7 +43,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource( "/com/akos/fxml/gui/Main.fxml"), localization);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/akos/fxml/gui/Main.fxml"), localization);
         loader.setControllerFactory(callback);
         Scene scene = new Scene(loader.load());
         primaryStage.setTitle(localization.getString("main.screenTitle"));

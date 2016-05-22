@@ -1,16 +1,12 @@
 package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.modules.beans.ValidatedPropertyDescriptor;
-import com.akos.models.modules.EnumProperty;
-import javafx.scene.control.*;
+import javafx.scene.control.Control;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.control.PropertySheet.Item;
 import org.controlsfx.property.BeanProperty;
 import org.controlsfx.property.editor.*;
 import org.controlsfx.validation.ValidationSupport;
-
-import java.beans.PropertyDescriptor;
-import java.util.*;
 
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)
@@ -24,7 +20,7 @@ public class CustomPropertyEditorFactory extends DefaultPropertyEditorFactory {
 
     public CustomPropertyEditorFactory(PropertySheet sheet, ValidationSupport support) {
         super();
-        this.sheet =  sheet;
+        this.sheet = sheet;
         this.support = support;
     }
 

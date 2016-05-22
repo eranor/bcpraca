@@ -3,8 +3,7 @@
 <?import com.akos.gui.modules.AbstractFunctionModule?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.*?>
 <fx:root type="AbstractFunctionModule" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <Pane opacity="1.0" id="StartIcon">
         <children>

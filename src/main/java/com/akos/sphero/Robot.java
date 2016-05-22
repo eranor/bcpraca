@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author: Ákos Hervay(akoshervay@gmail.com)
  */
 public class Robot extends BluetoothDevice {
-    private static final Logger logger = LogManager.getLogger(BluetoothDevice.class);
+    private static final Logger logger = LogManager.getLogger(Robot.class);
     private String identifier;
 
     public Robot(String address, String name, int sppChannel) {

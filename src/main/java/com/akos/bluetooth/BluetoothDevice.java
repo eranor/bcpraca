@@ -17,19 +17,19 @@ public class BluetoothDevice extends RemoteDevice {
     private static final Logger logger = LogManager.getLogger(BluetoothDevice.class);
     public static final int SPP_DEFAULT_CHANNEL = 1;
     private final String friendlyName;
-    private String deviceURL;
-    private boolean isConnected = false;
-    private StreamConnection connection = null;
-    public final int sppChannel;
-    public Channel dataChannel = null;
 
+    private boolean isConnected = false;
+    private String deviceURL;
+    private StreamConnection connection = null;
     private ExecutorService heartbeatService;
     private Heartbeat heartbeat = new Heartbeat();
-
 
     private final SimpleObjectProperty<BluetoothDevice> bd;
     private SimpleStringProperty address;
     private SimpleStringProperty name = null;
+
+    public final int sppChannel;
+    public Channel dataChannel = null;
 
     public BluetoothDevice(String address, String name, int sppChannel) {
         super(address);
@@ -43,7 +43,8 @@ public class BluetoothDevice extends RemoteDevice {
 
     public void setSpheroUrl(String url) {
         if (!isConnected) {
-            if (url.matches("btspp://" + this.getBluetoothAddress() + ":([1-9]|[1-3]?[0-9]);authenticate=(true|false);encrypt=(true|false);master=(true|false)")) {
+            if (url.matches("btspp://" + this.getBluetoothAddress() + ":" +
+                    "([1-9]|[1-3]?[0-9]);authenticate=(true|false);encrypt=(true|false);master=(true|false)")) {
                 deviceURL = url;
             } else {
                 logger.log(Level.WARN, "New Device service URL is not properly formatted.");
@@ -57,8 +58,8 @@ public class BluetoothDevice extends RemoteDevice {
         if (!isConnected) {
             try {
                 startHeartbeat();
-                connection = (StreamConnection) Connector.open(this.deviceURL);
-                dataChannel = new Channel(connection, heartbeat);
+                StreamConnectionNotifier connection = (StreamConnectionNotifier) Connector.open(this.deviceURL);
+                dataChannel = new Channel(connection.acceptAndOpen(), heartbeat);
                 dataChannel.open();
                 isConnected = true;
             } catch (IOException e) {

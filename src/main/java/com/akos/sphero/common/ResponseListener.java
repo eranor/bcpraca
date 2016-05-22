@@ -3,7 +3,6 @@ package com.akos.sphero.common;/**
  */
 
 
-
 import com.akos.sphero.Robot;
 import com.akos.sphero.common.internal.*;
 

@@ -22,6 +22,6 @@ public class SetHeadingCommand extends DeviceCommand {
     }
 
     public byte[] getData() {
-        return new byte[]{(byte)((int) this.heading >> 8), (byte)((int) this.heading)};
+        return new byte[]{(byte) ((int) this.heading >> 8), (byte) ((int) this.heading)};
     }
 }

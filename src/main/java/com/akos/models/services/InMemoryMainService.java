@@ -5,6 +5,7 @@ import com.akos.sphero.Robot;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.*;
 import javafx.geometry.Point2D;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -15,6 +16,8 @@ import java.util.*;
 
 
 public class InMemoryMainService implements MainService {
+
+    private static final Logger logger = LogManager.getLogger(InMemoryMainService.class);
 
     private Map<UUID, Program> programs;
     private SimpleObjectProperty<Program> currentProgram;
@@ -29,7 +32,7 @@ public class InMemoryMainService implements MainService {
 
 
     public InMemoryMainService() {
-        System.out.println("MainService initialized...");
+        logger.debug("MainService initialized...");
         programs = new HashMap<>();
         currentProgram = new SimpleObjectProperty<>(this, "currentProgram", null);
         robot = new SimpleObjectProperty<>(this, "robot", null);

@@ -25,5 +25,4 @@ public class ConditionFunctionModule extends AbstractFunctionModule {
     }
 
 
-
 }

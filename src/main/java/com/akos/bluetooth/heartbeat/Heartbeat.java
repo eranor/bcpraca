@@ -7,27 +7,27 @@ import java.util.concurrent.locks.*;
 
 public class Heartbeat {
 
-	private final Lock heartbeatLock = new ReentrantLock();
-	private final Condition heartbeatLost = heartbeatLock.newCondition();
-	
-	public void monitor() {
-		heartbeatLock.lock();
-		try {
-			heartbeatLost.await();
-		} catch (InterruptedException e) {
-			System.err.println("Monitoring heartbeat was interrupted.");
-		} finally {
-			heartbeatLock.unlock();
-		}
-	}
-	
-	public void kill() {
-		heartbeatLock.lock();
-		try {
-			heartbeatLost.signal();
-		} finally {
-			heartbeatLock.unlock();
-		}
-	}
-	
+    private final Lock heartbeatLock = new ReentrantLock();
+    private final Condition heartbeatLost = heartbeatLock.newCondition();
+
+    public void monitor() {
+        heartbeatLock.lock();
+        try {
+            heartbeatLost.await();
+        } catch (InterruptedException e) {
+            System.err.println("Monitoring heartbeat was interrupted.");
+        } finally {
+            heartbeatLock.unlock();
+        }
+    }
+
+    public void kill() {
+        heartbeatLock.lock();
+        try {
+            heartbeatLost.signal();
+        } finally {
+            heartbeatLock.unlock();
+        }
+    }
+
 }

@@ -11,7 +11,7 @@ import javafx.stage.*;
  * Created by Ákos on 2015. 11. 21.
  * Email: akoshervay@gmail.com
  */
-public class PopupDialog extends Stage{
+public class PopupDialog extends Stage {
     public PopupDialog(Window parent) {
         this.initModality(Modality.APPLICATION_MODAL);
         this.initStyle(StageStyle.UNDECORATED);
@@ -25,8 +25,6 @@ public class PopupDialog extends Stage{
         Scene dialogScene = new Scene(dialogVbox);
         this.setScene(dialogScene);
     }
-
-
 
 
 }

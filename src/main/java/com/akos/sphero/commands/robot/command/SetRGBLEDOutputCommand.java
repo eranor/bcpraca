@@ -28,7 +28,7 @@ public class SetRGBLEDOutputCommand extends DeviceCommand {
     }
 
     public SetRGBLEDOutputCommand(byte[] packet) {
-        this(packet[6],packet[7],packet[8], packet[9] == 1);
+        this(packet[6], packet[7], packet[8], packet[9] == 1);
     }
 
     public SetRGBLEDOutputCommand(int r, int g, int b, boolean userDefault) {

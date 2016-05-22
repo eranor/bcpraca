@@ -56,9 +56,9 @@ public enum RobotCommandId implements Id {
         return this.value;
     }
 
-    public static RobotCommandId getRobotCommandId(int value){
-        for (RobotCommandId id: values()){
-            if (id.value == value)return id;
+    public static RobotCommandId getRobotCommandId(int value) {
+        for (RobotCommandId id : values()) {
+            if (id.value == value) return id;
         }
         throw new RuntimeException("Illegal Argument - no such id");
     }

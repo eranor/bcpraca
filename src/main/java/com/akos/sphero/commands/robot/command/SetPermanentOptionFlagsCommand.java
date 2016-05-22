@@ -14,7 +14,9 @@ import com.orbotix.common.utilities.binary.BitMask;
 public class SetPermanentOptionFlagsCommand extends DeviceCommand {
     private final long flags;
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public SetPermanentOptionFlagsCommand(long optionFlags) {
         super(VirtualDeviceId.ROBOT, RobotCommandId.SET_OPTION_FLAGS);
@@ -31,7 +33,7 @@ public class SetPermanentOptionFlagsCommand extends DeviceCommand {
     }
 
     public byte[] getData() {
-        return new byte[]{(byte)((int)(this.flags >> 24)), (byte)((int)(this.flags >> 16)), (byte)((int)(this.flags >> 8)), (byte)((int) this.flags)};
+        return new byte[]{(byte) ((int) (this.flags >> 24)), (byte) ((int) (this.flags >> 16)), (byte) ((int) (this.flags >> 8)), (byte) ((int) this.flags)};
     }
 
     public String toString() {

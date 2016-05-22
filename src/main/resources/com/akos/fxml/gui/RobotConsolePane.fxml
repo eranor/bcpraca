@@ -6,8 +6,9 @@
             fx:controller="com.akos.gui.controllers.right_panel.RobotConsolePaneController">
     <content>
         <VBox fx:id="rightPaneTabBody">
-         <children>
-            <TextArea fx:id="consoleTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" />
-         </children></VBox>
+            <children>
+                <TextArea fx:id="consoleTextArea" editable="false" prefHeight="200.0" prefWidth="200.0"/>
+            </children>
+        </VBox>
     </content>
 </TitledPane>

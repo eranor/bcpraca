@@ -16,7 +16,7 @@ public class GetUserRGBColorResponse extends DeviceResponse {
 
     protected GetUserRGBColorResponse(byte[] packet, DeviceCommand command) {
         super(packet, command);
-        if(this.getResponseCode() == ResponseCode.OK) {
+        if (this.getResponseCode() == ResponseCode.OK) {
             this.redIntensity = ByteUtil.convertUnsignedToShort(packet[5]);
             this.greenIntensity = ByteUtil.convertUnsignedToShort(packet[6]);
             this.blueIntensity = ByteUtil.convertUnsignedToShort(packet[7]);

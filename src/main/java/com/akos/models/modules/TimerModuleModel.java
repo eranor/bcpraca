@@ -1,7 +1,5 @@
 package com.akos.models.modules;
 
-import com.akos.gui.modules.specialized.variables.VariableModuleType;
-
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)
  */

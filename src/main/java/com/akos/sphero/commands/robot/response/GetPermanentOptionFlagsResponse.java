@@ -23,11 +23,11 @@ public class GetPermanentOptionFlagsResponse extends DeviceResponse {
 
     protected void parseData() {
         super.parseData();
-        if(this.getResponseCode() == ResponseCode.OK) {
-            this.flags = ((long)this.getPacket()[5] & 255L) << 24;
-            this.flags += ((long)this.getPacket()[6] & 255L) << 16;
-            this.flags += ((long)this.getPacket()[7] & 255L) << 8;
-            this.flags += (long)this.getPacket()[8] & 255L;
+        if (this.getResponseCode() == ResponseCode.OK) {
+            this.flags = ((long) this.getPacket()[5] & 255L) << 24;
+            this.flags += ((long) this.getPacket()[6] & 255L) << 16;
+            this.flags += ((long) this.getPacket()[7] & 255L) << 8;
+            this.flags += (long) this.getPacket()[8] & 255L;
         }
 
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane fx:id="view" maxHeight="360" maxWidth="640" prefHeight="360" prefWidth="640" xmlns="http://javafx.com/javafx/8"
