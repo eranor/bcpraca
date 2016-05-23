@@ -2,17 +2,12 @@ package com.akos.gui.controllers.right_panel;
 
 
 import com.akos.gui.controllers.AbstractController;
-import com.akos.models.services.*;
-import com.akos.sphero.Robot;
-import com.akos.sphero.commands.robot.OrbBasicController;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.SetChangeListener;
-import javafx.concurrent.*;
-import javafx.event.ActionEvent;
+import com.akos.models.services.MainService;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TitledPane;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,10 +21,22 @@ import java.util.ResourceBundle;
 public class RobotJoyStickPaneController extends AbstractController implements Initializable {
     public TitledPane robotJoysickPaneView;
     public VBox rightPaneTabBody;
+    public Pane joystickMovePane;
+    public Circle joystickKnob;
 
 
     public RobotJoyStickPaneController(MainService mainService) {
         super(mainService);
+        joystickKnob.setOnDragDetected(event -> {
+            joystickKnob.startDragAndDrop(TransferMode.ANY);
+        });
+        joystickKnob.setOnDragOver(event -> {
+
+        });
+
+        joystickKnob.setOnDragDone(event -> {
+
+        });
     }
 
     @Override
