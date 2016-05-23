@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TitledPane fx:id="robotJoysickPaneView" text="Sphero robot status" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.akos.gui.controllers.right_panel.RobotJoyStickPaneController">
+    <content>
+        <VBox fx:id="rightPaneTabBody">
+
+
+        </VBox>
+    </content>
+</TitledPane>

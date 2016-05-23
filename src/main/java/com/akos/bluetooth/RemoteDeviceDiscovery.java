@@ -90,11 +90,9 @@ public class RemoteDeviceDiscovery extends Task<Map<String, List<String>>> {
         public void deviceDiscovered(RemoteDevice rd, DeviceClass deviceClass) {
             if (rd.getBluetoothAddress().startsWith(Robot.SPHERO_IEEE_OUI)) {
                 updateMessage(String.format("Found a Sphero nearby: %s", rd));
-                logger.log(Level.INFO, String.format("Found a Sphero nearby: %s", rd));
                 discoveredDevices.add(rd);
             } else {
-                updateMessage(String.format("Found some other Bluetooth device: %s", rd));
-                logger.log(Level.INFO, String.format("Found some other Bluetooth device: %s", rd));
+                updateMessage(String.format("Found other Bluetooth device: %s", rd));
                 discoveredDevices.add(rd);
             }
         }
