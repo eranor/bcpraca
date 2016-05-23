@@ -1,10 +1,14 @@
+
 ### Example user template template
 ### Example user template
 
 # IntelliJ project files
 .idea
 *.iml
+/icons
+/target
 out
+
 gen### Java template
 *.class
 
