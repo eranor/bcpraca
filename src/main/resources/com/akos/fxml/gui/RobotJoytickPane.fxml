@@ -1,28 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.PlusMinusSlider?>
 <?import org.controlsfx.control.ToggleSwitch?>
+
 <?import com.akos.gui.controllers.right_panel.Knob?>
 <TitledPane fx:id="robotJoysickPaneView" text="Sphero robot status" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.right_panel.RobotJoyStickPaneController">
     <content>
         <VBox fx:id="rightPaneTabBody">
-         <children>
-             <ToggleSwitch alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" text="asd">
-                 <VBox.margin>
-                     <Insets left="5.0" right="5.0" />
-                 </VBox.margin>
-             </ToggleSwitch>
-            <Pane fx:id="joystickMovePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgrey;">
+            <children>
+                <ToggleSwitch fx:id="connectoToRobot" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" text="Turn on manual drive">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font name="OCR A Extended" size="15.0" />
+                    </font>
+                </ToggleSwitch>
+            <HBox alignment="CENTER" spacing="5.0">
                <children>
-                  <Knob fx:id="joystickKnob" fill="DODGERBLUE" layoutX="100.0" layoutY="100.0" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox fx:id="calibrationPanel" alignment="CENTER" spacing="3.0">
+                     <children>
+                        <Label text="Calibrate">
+                           <font>
+                              <Font name="OCR A Extended" size="15.0" />
+                           </font>
+                        </Label>
+                        <PlusMinusSlider fx:id="calibrateSlider" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="calibrateButton" mnemonicParsing="false" text="Calibrate" />
                </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Pane>
-         </children></VBox>
+            </HBox>
+                <Pane fx:id="joystickMovePane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                    <children>
+                        <Circle fx:id="joystickBackground" centerX="-100.0" centerY="-100.0" layoutX="200.0" layoutY="200.0" opacity="0.3" radius="75.0" stroke="BLACK" strokeWidth="3.0">
+                            <fill>
+                                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                    <stops>
+                                        <Stop color="#0000001a" />
+                                        <Stop color="#0000007a" offset="0.8715092625508547" />
+                                        <Stop color="#ffffff4d" offset="0.9616858237547891" />
+                                        <Stop color="#0000004d" offset="1.0" />
+                                    </stops>
+                                </RadialGradient>
+                            </fill>
+                        </Circle>
+                        <Circle layoutX="100.0" layoutY="100.0" opacity="0.03" radius="35.0" stroke="BLACK" strokeType="INSIDE">
+                            <fill>
+                                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                    <stops>
+                                        <Stop color="#0000001a" />
+                                        <Stop color="#0000001a" offset="0.8715092625508549" />
+                                        <Stop color="#ffffff4d" offset="0.9616858237547891" />
+                                        <Stop color="#0000004d" offset="1.0" />
+                                    </stops>
+                                </RadialGradient>
+                            </fill>
+                        </Circle>
+                        <Knob fx:id="joystickKnob" layoutX="100.0" layoutY="100.0" opacity="0.5" radius="35.0" stroke="BLACK" strokeType="INSIDE">
+                            <fill>
+                                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5116279069767442">
+                                    <stops>
+                                        <Stop color="#00000066" />
+                                        <Stop color="#00000066" offset="0.04597701149425287" />
+                                        <Stop color="#000000a5" offset="1.0" />
+                                    </stops>
+                                </RadialGradient>
+                            </fill>
+                        </Knob>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </Pane>
+            </children>
+        </VBox>
     </content>
 </TitledPane>
