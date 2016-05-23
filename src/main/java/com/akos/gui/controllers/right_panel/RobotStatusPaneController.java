@@ -5,6 +5,7 @@ import com.akos.gui.controllers.AbstractController;
 import com.akos.models.services.*;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
+import com.akos.sphero.commands.robot.command.RollCommand;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.SetChangeListener;
@@ -78,12 +79,19 @@ public class RobotStatusPaneController extends AbstractController implements Ini
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
                 r.connect();
-                controller.eraseStorage();
+                r.send(new RollCommand(90, 100, RollCommand.State.GO));
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                r.send(new RollCommand(90, 100, RollCommand.State.STOP));
+                /*controller.eraseStorage();
                 String p = mainService.getCurrentProgram().compile();
                 System.out.println(p);
                 controller.setProgram(p.getBytes());
                 controller.loadProgram();
-                controller.executeProgram();
+                controller.executeProgram();   */
             });
         }
     }

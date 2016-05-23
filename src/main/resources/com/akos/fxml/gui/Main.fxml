@@ -46,7 +46,7 @@
                                                 <fx:include fx:id="modulePropertiesPane" source="ModulePropertiesPane.fxml"/>
                                                 <fx:include fx:id="robotStatusPane" source="RobotStatusPane.fxml"/>
                                                 <fx:include fx:id="robotConsolePane" source="RobotConsolePane.fxml"/>
-                                               <!-- <fx:include fx:id="robotJoystickPane" source="RobotJoytickPane.fxml"/>-->
+                                                <fx:include fx:id="robotJoystickPane" source="RobotJoytickPane.fxml"/>
                                             </children>
                                         </VBox>
                                     </children>
