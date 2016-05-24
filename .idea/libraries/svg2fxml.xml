@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="svg2fxml">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/svg2fxml.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
