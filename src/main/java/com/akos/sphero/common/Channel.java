@@ -3,12 +3,13 @@ package com.akos.sphero.common;
 import com.akos.bluetooth.heartbeat.Heartbeat;
 import com.akos.sphero.commands.*;
 import com.akos.sphero.common.internal.*;
-import com.akos.sphero.common.internal.ids.SOP;
 
 import javax.microedition.io.StreamConnection;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+
+import static com.akos.sphero.common.internal.ids.SOP.*;
 
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)
@@ -23,9 +24,6 @@ public class Channel {
     private BlockingQueue<DeviceResponse> incomingQueue = new LinkedBlockingQueue<>();
     private BlockingQueue<DeviceCommand> outgoingQueue = new LinkedBlockingQueue<>();
     private Map<Byte, DeviceCommand> sentCommands = new HashMap<>();
-
-    private DataOutputStream deviceCommandStream = null;
-    private DataInputStream deviceResponseStream = null;
 
     private final InboundProcessor inboundProcessor = new InboundProcessor(incomingQueue);
     private final OutboundProcessor outboundProcessor = new OutboundProcessor();
@@ -72,8 +70,8 @@ public class Channel {
     }
 
     public void open() throws IOException {
-        deviceResponseStream = connection.openDataInputStream();
-        deviceCommandStream = connection.openDataOutputStream();
+        inboundProcessor.deviceResponseStream = connection.openDataInputStream();
+        outboundProcessor.deviceCommandStream = connection.openDataOutputStream();
         if (!executorService.isShutdown()) {
             executorService.execute(inboundProcessor);
             executorService.execute(outboundProcessor);
@@ -82,14 +80,15 @@ public class Channel {
 
     public void close() throws IOException {
         executorService.shutdownNow();
-        deviceCommandStream.close();
-        deviceResponseStream.close();
+        outboundProcessor.close();
+        inboundProcessor.close();
     }
 
 
     private class InboundProcessor extends Processor {
 
         private BlockingQueue<DeviceResponse> incomingQueue;
+        private DataInputStream deviceResponseStream = null;
 
         public InboundProcessor(BlockingQueue<DeviceResponse> incomingQueue) {
             this.incomingQueue = incomingQueue;
@@ -99,35 +98,33 @@ public class Channel {
         public void run() {
             this.running = true;
             try {
-                while (!executorService.isShutdown()) {
+                while (!Thread.currentThread().isInterrupted()) {
                     ByteArrayOutputStream incomingByteStream = new ByteArrayOutputStream();
 
-                    incomingByteStream.write(deviceResponseStream.readByte());     // SOP1
-                    byte SOP2 = deviceResponseStream.readByte();
-                    incomingByteStream.write(SOP2);                                // SOP2
+                    incomingByteStream.write(readNextByte());
+                    byte SOP2 = readNextByte();
+                    incomingByteStream.write(SOP2);
 
                     int lengthOfData = 0;
                     boolean isAsync = false;
-                    if (SOP2 == SOP.DEFAULT.getValue()) {
-                        byte MSRP = deviceResponseStream.readByte();
-                        incomingByteStream.write(MSRP);                            // MSRP
-                        incomingByteStream.write(deviceResponseStream.readByte()); // SEQ
-                        byte DLEN = deviceResponseStream.readByte();
-                        incomingByteStream.write(DLEN);                            // DLEN
-                        lengthOfData = DLEN;
-                    } else if (SOP2 == SOP.ASYNC.getValue()) {
+                    if (SOP2 == DEFAULT.getValue()) {
+                        incomingByteStream.write(readNextByte());
+                        incomingByteStream.write(readNextByte());
+                        lengthOfData = readNextByte();
+                        incomingByteStream.write(lengthOfData);
+                    } else if (SOP2 == ASYNC.getValue()) {
                         isAsync = true;
-                        incomingByteStream.write(deviceResponseStream.readByte()); // ID CODE
-                        byte DLEN_MSB = deviceResponseStream.readByte();
-                        incomingByteStream.write(DLEN_MSB);                        // DLEN MSB
-                        byte DLEN_LSB = deviceResponseStream.readByte();
-                        incomingByteStream.write(DLEN_LSB);                        // DLEN LSB
+                        incomingByteStream.write(readNextByte());
+                        byte DLEN_MSB = readNextByte();
+                        incomingByteStream.write(DLEN_MSB);
+                        byte DLEN_LSB = readNextByte();
+                        incomingByteStream.write(DLEN_LSB);
                         lengthOfData = (DLEN_MSB << 8) | (DLEN_LSB);
                     }
                     for (int i = 0; i < (lengthOfData - 1); i++) {
-                        incomingByteStream.write(deviceResponseStream.readByte()); // DATA
+                        incomingByteStream.write(readNextByte());
                     }
-                    incomingByteStream.write(deviceResponseStream.readByte());     // CHK
+                    incomingByteStream.write(readNextByte());
                     DeviceResponse packet = null;
                     if (isAsync) {
                         packet = asyncMessageFactory.dataFromPacket(incomingByteStream.toByteArray());
@@ -138,7 +135,7 @@ public class Channel {
                     System.out.printf("Response => %s : %s%n", packet, packet.getSequenceNumber());
                     this.incomingQueue.put(packet);
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
                 heartbeat.kill();
@@ -146,26 +143,69 @@ public class Channel {
             }
 
         }
+
+        public byte readNextByte() {
+            boolean interrupted = false;
+            try {
+                while (true) {
+                    try {
+                        return deviceResponseStream.readByte();
+                    } catch (IOException e) {
+                        interrupted = true;
+                    }
+                }
+            } finally {
+                if (interrupted)
+                    Thread.currentThread().interrupt();
+            }
+        }
+
+        public void close() throws IOException {
+            deviceResponseStream.close();
+        }
     }
 
     private class OutboundProcessor extends Processor {
+
+        private DataOutputStream deviceCommandStream = null;
+
         @Override
         public void run() {
             this.running = true;
             try {
                 while (!executorService.isShutdown()) {
-                    DeviceCommand message = outgoingQueue.take();
+                    DeviceCommand message = getNextTask(outgoingQueue);
                     deviceCommandStream.write(message.getPacket());
                     deviceCommandStream.flush();
                     sentCommands.put(message.getSequenceNumber(), message);
                     System.out.printf("Command => %s : %s%n", message, message.getSequenceNumber());
                 }
-            } catch (InterruptedException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 heartbeat.kill();
                 this.running = false;
             }
+        }
+
+        public DeviceCommand getNextTask(BlockingQueue<DeviceCommand> queue) {
+            boolean interrupted = false;
+            try {
+                while (true) {
+                    try {
+                        return queue.take();
+                    } catch (InterruptedException e) {
+                        interrupted = true;
+                    }
+                }
+            } finally {
+                if (interrupted)
+                    Thread.currentThread().interrupt();
+            }
+        }
+
+        public void close() throws IOException {
+            deviceCommandStream.close();
         }
     }
 
