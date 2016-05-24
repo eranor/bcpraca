@@ -3,8 +3,11 @@ package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.controllers.AbstractController;
 import com.akos.models.services.MainService;
-import com.akos.sphero.commands.robot.command.RollCommand;
+import com.akos.sphero.Robot;
+import com.akos.sphero.commands.robot.command.*;
+import com.akos.sphero.utils.Utils;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.concurrent.*;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -16,6 +19,9 @@ import org.controlsfx.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+
+import static com.akos.sphero.commands.robot.command.SetRawMotorValuesCommand.MotorMode.MOTOR_MODE_BRAKE;
 
 /**
  * Created by Ákos on 2015. 12. 21.
@@ -23,7 +29,7 @@ import java.util.ResourceBundle;
  */
 
 
-public class RobotJoyStickPaneController extends AbstractController implements Initializable {
+public class RobotJoystickPaneController extends AbstractController implements Initializable {
     public TitledPane robotJoysickPaneView;
     public VBox rightPaneTabBody;
     public Pane joystickMovePane;
@@ -38,41 +44,94 @@ public class RobotJoyStickPaneController extends AbstractController implements I
     Point2D center = new Point2D(65, 65);
     double bgr;
     double r;
-    int heading;
+    int heading = 0;
+    boolean free = true;
 
 
-    public RobotJoyStickPaneController(MainService mainService) {
+    public RobotJoystickPaneController(MainService mainService) {
         super(mainService);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        calibrationPanel.setVisible(false);
         bgr = joystickBackground.getRadius();
         r = bgr - 15;
 
+        calibrateSlider.setOnValueChanged(event1 -> {
+            heading = Math.abs((int) (heading + event1.getValue() * 10)) % 360;
+            if (mainService.getRobot().isConnected()) {
+                System.out.println(heading);
+                mainService.getRobot().send(new RollCommand(heading, 0.0f, RollCommand.State.CALIBRATE));
+            }
+
+        });
+
+        calibrateButton.setOnAction(event -> {
+            final Robot robot = mainService.getRobot();
+            if (robot.isConnected()) {
+                Task t = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        robot.send(new SetBackLEDOutputCommand(0));
+                        robot.send(new SetRGBLEDOutputCommand(0, 255, 0));
+                        calibrationPanel.setVisible(false);
+                        return null;
+                    }
+                };
+                Platform.runLater(t);
+            }
+        });
+        Service<?> connection = new Service() {
+            @Override
+            protected Task createTask() {
+                return new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        final Robot robot = mainService.getRobot();
+                        return CompletableFuture.runAsync(robot::connect)
+                                .thenRun(() -> robot.send(new SetBackLEDOutputCommand(1)))
+                                .thenRun(() -> robot.send(new SetRGBLEDOutputCommand(0, 0, 0)))
+                                .thenRun(() -> {
+                                    calibrationPanel.setVisible(true);
+                                    robot.send(new SetStabilizationCommand(true));
+                                }).get();
+                    }
+
+                };
+            }
+        };
+
         connectoToRobot.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                mainService.getRobot().connect();
+                connection.reset();
+                connection.start();
             } else {
                 mainService.getRobot().disconnect();
             }
         });
+        joystickBackground.setOnMousePressed(event -> joystickKnob.fireEvent(event));
+        joystickBackground.setOnMouseReleased(event -> joystickKnob.fireEvent(event));
+        joystickBackground.setOnMouseDragged(event -> joystickKnob.fireEvent(event));
 
         joystickKnob.setOnMousePressed(event -> {
             orgScene = new Point2D(event.getSceneX(), event.getSceneY());
+            Point2D p = joystickMovePane.sceneToLocal(orgScene).subtract(35, 35);
+            joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
             fade(1);
         });
         joystickKnob.setOnMouseDragged(event -> {
             Point2D newScene = new Point2D(event.getSceneX(), event.getSceneY());
             Point2D p = joystickMovePane.sceneToLocal(newScene).subtract(35, 35);
-            double new_value = scaleToRange(center.distance(p), 0, bgr, 0, 100);
-            System.out.println(new_value);
+
+            float velocity = Utils.scaleToRange(center.distance(p), 0, bgr, 0, 1);
             heading = (int) get360Degree(getAngleFromCenter(p));
-            mainService.getRobot().send(new RollCommand(heading, (float) new_value));
+
+            CompletableFuture.runAsync(() -> mainService.getRobot().send(new RollCommand(heading, velocity)));
             joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
         });
         joystickKnob.setOnMouseReleased(event -> {
-            mainService.getRobot().send(new RollCommand(heading, 0, RollCommand.State.STOP));
+            mainService.getRobot().send(new RollCommand(heading, 1, RollCommand.State.STOP));
             joystickKnob.relocate(center);
             fade(0.5);
         });
@@ -83,12 +142,6 @@ public class RobotJoyStickPaneController extends AbstractController implements I
         a.getKeyFrames().clear();
         a.getKeyFrames().add(new KeyFrame(Duration.millis(200), new KeyValue(joystickKnob.opacityProperty(), opacity)));
         a.play();
-    }
-
-    private double scaleToRange(double oldValue, double oldMin, double oldMax, double newMin, double newMax) {
-        double oldRange = (oldMax - oldMin);
-        double r = (((oldValue - oldMin) * (newMax - newMin)) / oldRange) + newMin;
-        return oldRange == 0 ? newMin : r >= newMax ? newMax : r;
     }
 
     private Point2D getPointOnCircle(Point2D np) {
@@ -102,6 +155,6 @@ public class RobotJoyStickPaneController extends AbstractController implements I
     }
 
     private double get360Degree(double rad) {
-        return rad > 0 ? Math.toDegrees(rad) : 180 + Math.toDegrees(-rad);
+        return Math.abs(rad > 0 ? 360 - Math.toDegrees(rad) : -Math.toDegrees(rad));
     }
 }
