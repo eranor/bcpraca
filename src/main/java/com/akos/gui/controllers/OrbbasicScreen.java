@@ -5,13 +5,12 @@ import com.akos.models.services.MainService;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.application.Platform;
-import javafx.concurrent.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
+import org.controlsfx.control.NotificationPane;
 import org.fxmisc.richtext.*;
 import org.fxmisc.undo.UndoManagerFactory;
-import org.reactfx.EventSource;
 
 import java.net.URL;
 import java.util.*;
@@ -25,8 +24,8 @@ import java.util.regex.*;
 
 public class OrbbasicScreen extends AbstractController implements Initializable {
 
-    public BorderPane view;
     public CodeArea codeArea;
+    public NotificationPane notificationPane;
 
 
     public OrbbasicScreen(MainService mainService) {
@@ -128,7 +127,7 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
         if (mainService.getRobot() != null) {
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
-                r.connect();
+                if (!r.isConnected()) r.connect();
                 controller.eraseStorage();
                 controller.abortProgram();
                 try {
@@ -137,6 +136,18 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
                     e.printStackTrace();
                 }
                 r.disconnect();
+            });
+        }
+    }
+
+    public void runCommand(ActionEvent actionEvent) {
+        Robot r = mainService.getRobot();
+        if (mainService.getRobot() != null) {
+            Platform.runLater(() -> {
+                OrbBasicController controller = new OrbBasicController(r);
+                if (!r.isConnected()) r.connect();
+                controller.loadProgram();
+                controller.executeProgram();
             });
         }
     }

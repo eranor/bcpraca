@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.controlsfx.control.NotificationPane;
 
 import java.net.URL;
 import java.util.*;
@@ -124,6 +125,10 @@ public class MenuController extends AbstractController implements Initializable 
             orbbasicStage = new Stage();
             orbbasicStage.setTitle("Sphero OrbBasic Console");
             orbbasicStage.setScene(new Scene(CFXMLLoader.loadWithCallback("com/akos/fxml/gui/OrbbasicScreen.fxml", this)));
+            orbbasicStage.setOnShown(event -> {
+                ((NotificationPane) orbbasicStage.getScene().getRoot())
+                        .show("You don't need to write line numbers, just use the one on the side.");
+            });
             orbbasicStage.show();
         } else {
             orbbasicStage.show();

@@ -10,7 +10,7 @@ import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.concurrent.*;
 import javafx.fxml.Initializable;
-import javafx.geometry.*;
+import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
