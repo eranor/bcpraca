@@ -2,10 +2,13 @@ package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.controllers.AbstractController;
 import com.akos.gui.modules.AbstractFunctionModule;
+import com.akos.gui.modules.beans.ValidatedPropertyDescriptor;
 import com.akos.models.services.MainService;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import org.controlsfx.control.PropertySheet;
+import org.controlsfx.property.BeanProperty;
+import org.controlsfx.property.editor.*;
 import org.controlsfx.validation.ValidationSupport;
 
 import java.net.URL;
@@ -42,6 +45,28 @@ public class ModulePropertiesPaneController extends AbstractController implement
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        modulePropertySheet.setPropertyEditorFactory(new CustomPropertyEditorFactory(modulePropertySheet, support));
+        final ValidationSupport support1 = support;
+        modulePropertySheet.setPropertyEditorFactory(new DefaultPropertyEditorFactory() {
+            private final ValidationSupport support = support1;
+
+            @Override
+            public PropertyEditor<?> call(PropertySheet.Item item) {
+                BeanProperty bp;
+
+                if (item instanceof BeanProperty) {
+                    bp = (BeanProperty) item;
+                    if (bp.getValue() instanceof Integer) {
+                        PropertyEditor<?> editor = Editors.createNumericEditor(item);
+                        if (bp.getPropertyDescriptor() instanceof ValidatedPropertyDescriptor) {
+                            support.registerValidator((Control) editor.getEditor(), true,
+                                    ((ValidatedPropertyDescriptor) bp.getPropertyDescriptor()).getValidator());
+                        }
+                        return editor;
+                    }
+
+                }
+                return super.call(item);
+            }
+        });
     }
 }

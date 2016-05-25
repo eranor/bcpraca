@@ -6,12 +6,10 @@ import com.akos.gui.modules.CFXMLLoader;
 import com.akos.models.services.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.*;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -109,36 +107,26 @@ public class MenuController extends AbstractController implements Initializable 
 
     }
 
-    public void fileLogMenuButtonClick(ActionEvent actionEvent) {
-        if (fileLogStage == null) {
-            fileLogStage = new Stage();
-            fileLogStage.setTitle("Window title");
-            fileLogStage.setScene(new Scene(new Group(), 260, 230, Color.LIGHTCYAN));
-            fileLogStage.show();
-        } else {
-            fileLogStage.toFront();
-        }
-    }
-
-    public void spheroConnectionScreenMenuButtonClick(ActionEvent actionEvent) throws IOException {
+    public void showConnectionScreen(ActionEvent actionEvent) {
         if (connectionStage == null) {
             connectionStage = new Stage();
             connectionStage.setTitle("Sphero Connection Screen");
             connectionStage.setScene(new Scene(CFXMLLoader.loadWithCallback("com/akos/fxml/gui/ConnectionScreen.fxml", this)));
             connectionStage.show();
         } else {
+            connectionStage.show();
             connectionStage.toFront();
         }
     }
 
-
-    public void spheroOrbbasicWindowClick(ActionEvent actionEvent) {
+    public void showOrbbasicConsole(ActionEvent actionEvent) {
         if (orbbasicStage == null) {
             orbbasicStage = new Stage();
-            orbbasicStage.setTitle("Sphero Connection Screen");
+            orbbasicStage.setTitle("Sphero OrbBasic Console");
             orbbasicStage.setScene(new Scene(CFXMLLoader.loadWithCallback("com/akos/fxml/gui/OrbbasicScreen.fxml", this)));
             orbbasicStage.show();
         } else {
+            orbbasicStage.show();
             orbbasicStage.toFront();
         }
     }

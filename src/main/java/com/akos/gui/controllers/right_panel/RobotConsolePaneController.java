@@ -3,6 +3,7 @@ package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.controllers.AbstractController;
 import com.akos.models.services.*;
+import com.akos.sphero.commands.async.orbbasic.*;
 import com.akos.sphero.common.internal.DeviceResponse;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.*;
@@ -42,11 +43,18 @@ public class RobotConsolePaneController extends AbstractController implements In
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-
                         if (mainService.getRobot() != null) {
                             ArrayList<DeviceResponse> responses = mainService.getRobot().getAllPackets();
                             if (responses.size() > 0) {
-                                responses.forEach(deviceResponse -> consoleTextArea.appendText(deviceResponse.toString() + "\n"));
+                                responses.forEach(deviceResponse -> {
+                                    if (deviceResponse instanceof OrbBasicPrintMessageAsyncData) {
+                                        consoleTextArea.appendText(((OrbBasicPrintMessageAsyncData) deviceResponse).getMessage() + "\n");
+                                    } else if (deviceResponse instanceof OrbBasicErrorASCIIAsyncData) {
+                                        consoleTextArea.appendText(((OrbBasicErrorASCIIAsyncData) deviceResponse).getErrorASCII() + "\n");
+                                    } else if (deviceResponse instanceof OrbBasicErrorBinaryAsyncData) {
+                                        consoleTextArea.appendText(Arrays.toString(((OrbBasicErrorBinaryAsyncData) deviceResponse).getErrorBinary()) + "\n");
+                                    }
+                                });
                             }
                         }
                         return null;

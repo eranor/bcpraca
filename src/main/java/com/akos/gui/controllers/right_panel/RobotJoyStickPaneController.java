@@ -10,7 +10,7 @@ import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.concurrent.*;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
+import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-import static com.akos.sphero.commands.robot.command.SetRawMotorValuesCommand.MotorMode.MOTOR_MODE_BRAKE;
 
 /**
  * Created by Ákos on 2015. 12. 21.
@@ -40,12 +39,11 @@ public class RobotJoystickPaneController extends AbstractController implements I
     public PlusMinusSlider calibrateSlider;
     public Button calibrateButton;
 
-    Point2D orgScene;
-    Point2D center = new Point2D(65, 65);
-    double bgr;
-    double r;
-    int heading = 0;
-    boolean free = true;
+    private Point2D orgScene;
+    private Point2D center = new Point2D(65, 65);
+    private double bgr;
+    private double r;
+    private int heading = 0;
 
 
     public RobotJoystickPaneController(MainService mainService) {
@@ -64,7 +62,6 @@ public class RobotJoystickPaneController extends AbstractController implements I
                 System.out.println(heading);
                 mainService.getRobot().send(new RollCommand(heading, 0.0f, RollCommand.State.CALIBRATE));
             }
-
         });
 
         calibrateButton.setOnAction(event -> {
@@ -90,9 +87,9 @@ public class RobotJoystickPaneController extends AbstractController implements I
                     protected Object call() throws Exception {
                         final Robot robot = mainService.getRobot();
                         return CompletableFuture.runAsync(robot::connect)
-                                .thenRun(() -> robot.send(new SetBackLEDOutputCommand(1)))
-                                .thenRun(() -> robot.send(new SetRGBLEDOutputCommand(0, 0, 0)))
                                 .thenRun(() -> {
+                                    robot.send(new SetBackLEDOutputCommand(1));
+                                    robot.send(new SetRGBLEDOutputCommand(0, 0, 0));
                                     calibrationPanel.setVisible(true);
                                     robot.send(new SetStabilizationCommand(true));
                                 }).get();
@@ -103,11 +100,13 @@ public class RobotJoystickPaneController extends AbstractController implements I
         };
 
         connectoToRobot.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                connection.reset();
-                connection.start();
-            } else {
-                mainService.getRobot().disconnect();
+            if (ConnectionUtils.hasRobotSelected(mainService)) {
+                if (newValue) {
+                    connection.reset();
+                    connection.start();
+                } else {
+                    mainService.getRobot().disconnect();
+                }
             }
         });
         joystickBackground.setOnMousePressed(event -> joystickKnob.fireEvent(event));

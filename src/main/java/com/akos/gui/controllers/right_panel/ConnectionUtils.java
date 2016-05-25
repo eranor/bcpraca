@@ -1,6 +1,10 @@
 package com.akos.gui.controllers.right_panel;
 
+import com.akos.App;
 import com.akos.models.services.MainService;
+import javafx.geometry.Pos;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 public class ConnectionUtils {
     public static boolean hasRobotSelected(MainService mainService) {
