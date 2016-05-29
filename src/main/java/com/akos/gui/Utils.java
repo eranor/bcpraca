@@ -1,7 +1,7 @@
 package com.akos.gui;
 
 import com.akos.App;
-import com.akos.models.services.MainService;
+import com.akos.services.MainService;
 import javafx.animation.*;
 import javafx.concurrent.*;
 import javafx.geometry.Pos;
@@ -62,5 +62,19 @@ public class Utils {
         s.reset();
         s.start();
         return s;
+    }
+
+    public static <T extends Comparable<T>> T limit(T val, T min, T max) {
+        if (val.compareTo(min) < 0) return min;
+        else if (val.compareTo(max) > 0) return max;
+        else return val;
+    }
+
+    public static <T extends Number> float scaleToRange(T val, T oldMin, T oldMax, T newMin, T newMax) {
+        final float oldRange = (oldMax.floatValue() - oldMin.floatValue());
+        final float v = val.floatValue() - oldMin.floatValue();
+        final float v1 = newMax.floatValue() - newMin.floatValue();
+        float r = (((v * v1) / oldRange) + newMin.floatValue());
+        return (oldRange == 0 ? newMin.floatValue() : r >= newMax.floatValue() ? newMax.floatValue() : r);
     }
 }

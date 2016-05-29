@@ -1,7 +1,7 @@
 package com.akos;
 
-import com.akos.models.services.*;
-import javafx.application.Application;
+import com.akos.services.*;
+import javafx.application.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -52,6 +52,11 @@ public class App extends Application {
         scene.getStylesheets().add(getCSS(getClass(), "com/akos/css/gui/Main.css"));
         stage.setScene(scene);
         stage.show();
+
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     public static String getCSS(Class clazz, String uri) {

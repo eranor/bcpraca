@@ -1,9 +1,9 @@
 package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.controllers.AbstractController;
-import com.akos.gui.modules.AbstractFunctionModule;
-import com.akos.gui.modules.beans.ValidatedPropertyDescriptor;
-import com.akos.models.services.MainService;
+import com.akos.modules.AbstractFunctionModule;
+import com.akos.modules.ValidatedPropertyDescriptor;
+import com.akos.services.MainService;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.controlsfx.control.PropertySheet;

@@ -2,7 +2,7 @@ package com.akos.gui.controllers.right_panel;
 
 
 import com.akos.gui.controllers.AbstractController;
-import com.akos.models.services.*;
+import com.akos.services.*;
 import com.akos.sphero.commands.async.orbbasic.*;
 import com.akos.sphero.common.internal.DeviceResponse;
 import javafx.beans.property.SimpleObjectProperty;

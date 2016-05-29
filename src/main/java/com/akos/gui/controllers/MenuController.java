@@ -1,7 +1,7 @@
 package com.akos.gui.controllers;
 
-import com.akos.gui.modules.CFXMLLoader;
-import com.akos.models.services.*;
+import com.akos.modules.CFXMLLoader;
+import com.akos.services.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;

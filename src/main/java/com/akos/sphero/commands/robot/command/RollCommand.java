@@ -2,7 +2,6 @@ package com.akos.sphero.commands.robot.command;
 
 import com.akos.sphero.common.internal.DeviceCommand;
 import com.akos.sphero.common.internal.ids.*;
-import com.akos.sphero.utils.Utils;
 
 /**
  * @author: Orbotix
@@ -22,7 +21,7 @@ public class RollCommand extends DeviceCommand {
         if (state == State.STOP) {
             this.velocity = 0.0F;
         } else {
-            this.velocity = Utils.limit(velocity, 0.0f, 1.0f);
+            this.velocity = com.akos.gui.Utils.limit(velocity, 0.0f, 1.0f);
         }
 
         this.state = state;

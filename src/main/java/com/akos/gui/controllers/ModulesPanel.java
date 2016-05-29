@@ -1,7 +1,7 @@
 package com.akos.gui.controllers;
 
-import com.akos.gui.modules.*;
-import com.akos.models.modules.ModuleType;
+import com.akos.modules.*;
+import com.akos.models.ModuleType;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;

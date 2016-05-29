@@ -1,8 +1,8 @@
 package com.akos.gui.controllers.canvas;
 
 
-import com.akos.gui.modules.*;
-import com.akos.models.services.*;
+import com.akos.modules.*;
+import com.akos.services.*;
 import javafx.beans.property.*;
 import javafx.fxml.*;
 import javafx.geometry.Point2D;
