@@ -1,6 +1,6 @@
 package com.akos.gui.controllers;
 
-import com.akos.models.services.MainService;
+import com.akos.services.MainService;
 
 /**
  * @author: Ákos Hervay(akoshervay@gmail.com)

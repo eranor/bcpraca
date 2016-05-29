@@ -5,7 +5,7 @@ import com.akos.App;
 import com.akos.bluetooth.*;
 import com.akos.gui.dialogs.PopupDialog;
 import com.akos.gui.jfx_components.TableViewButtonCell;
-import com.akos.models.services.MainService;
+import com.akos.services.MainService;
 import com.akos.sphero.Robot;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;

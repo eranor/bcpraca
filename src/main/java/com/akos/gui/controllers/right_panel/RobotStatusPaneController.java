@@ -3,7 +3,7 @@ package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.Utils;
 import com.akos.gui.controllers.AbstractController;
-import com.akos.models.services.*;
+import com.akos.services.*;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.beans.property.SimpleObjectProperty;

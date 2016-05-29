@@ -2,7 +2,6 @@ package com.akos.sphero.commands.robot.command;
 
 import com.akos.sphero.common.internal.DeviceCommand;
 import com.akos.sphero.common.internal.ids.*;
-import com.akos.sphero.utils.Utils;
 
 /**
  * @author: Orbotix
@@ -16,7 +15,7 @@ public class SetRGBLEDOutputCommand extends DeviceCommand {
     private final boolean userDefault;
 
     public SetRGBLEDOutputCommand(float red, float green, float blue) {
-        this((int) (Utils.limit(red, 0.0F, 1.0F) * 255.0F), (int) (Utils.limit(green, 0.0F, 1.0F) * 255.0F), (int) (Utils.limit(blue, 0.0F, 1.0F) * 255.0F));
+        this((int) (com.akos.gui.Utils.limit(red, 0.0F, 1.0F) * 255.0F), (int) (com.akos.gui.Utils.limit(green, 0.0F, 1.0F) * 255.0F), (int) (com.akos.gui.Utils.limit(blue, 0.0F, 1.0F) * 255.0F));
     }
 
     /**
@@ -33,9 +32,9 @@ public class SetRGBLEDOutputCommand extends DeviceCommand {
 
     public SetRGBLEDOutputCommand(int r, int g, int b, boolean userDefault) {
         super(VirtualDeviceId.ROBOT, RobotCommandId.RGB_LED_OUTPUT);
-        this.red = Utils.limit(r, 0, 255);
-        this.green = Utils.limit(g, 0, 255);
-        this.blue = Utils.limit(b, 0, 255);
+        this.red = com.akos.gui.Utils.limit(r, 0, 255);
+        this.green = com.akos.gui.Utils.limit(g, 0, 255);
+        this.blue = com.akos.gui.Utils.limit(b, 0, 255);
         this.userDefault = userDefault;
         this.setResponseRequested(false);
     }

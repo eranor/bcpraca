@@ -1,6 +1,6 @@
 package com.akos.gui.controllers.right_panel;
 
-import com.akos.gui.modules.Draggable;
+import com.akos.modules.Draggable;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Circle;
 

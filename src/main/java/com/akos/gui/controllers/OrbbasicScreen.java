@@ -3,7 +3,7 @@ package com.akos.gui.controllers;
 
 import com.akos.gui.Utils;
 import com.akos.language.*;
-import com.akos.models.services.MainService;
+import com.akos.services.MainService;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.application.Platform;
