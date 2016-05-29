@@ -7,12 +7,11 @@ import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.*;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.*;
 import javafx.scene.control.TextField;
-import javafx.scene.input.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.control.PropertySheet.Item;
@@ -200,11 +199,10 @@ public abstract class AbstractFunctionModule extends AbstractModule {
 
     public static class ConnectorMap extends HashMap<Side, List<ModuleConnector>> {
 
-
-        public void addConnector(ModuleConnector.ConnectorType type, Side side) {
+        public void addConnector(ModuleConnector.ConnectorType type, Side side, int priority) {
             if (!containsKey(side))
                 put(side, new ArrayList<>());
-            get(side).add(new ModuleConnector(type, side));
+            get(side).add(new ModuleConnector(type, side, priority));
         }
 
     }

@@ -12,9 +12,10 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.PlusMinusSlider?>
-<?import org.controlsfx.control.ToggleSwitch?>
 
 <?import com.akos.gui.controllers.right_panel.Knob?>
+
+
 <?import javafx.scene.control.ToggleButton?>
 <TitledPane fx:id="robotJoystickPaneView" text="Sphero robot status" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.right_panel.RobotJoystickPaneController">
     <content>

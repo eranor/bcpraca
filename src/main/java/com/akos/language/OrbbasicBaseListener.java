@@ -1,4 +1,4 @@
-// Generated from D:/¡kos/Dropbox/bcpraca3/src/main/java/com/akos/language\Orbbasic.g4 by ANTLR 4.5.1
+// Generated from D:/√Åkos/Dropbox/bcpraca3/src/main/java/com/akos/language\Orbbasic.g4 by ANTLR 4.5.1
 package com.akos.language;
 
 import org.antlr.v4.runtime.ParserRuleContext;

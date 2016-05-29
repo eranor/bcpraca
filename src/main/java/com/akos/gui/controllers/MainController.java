@@ -187,22 +187,29 @@ public class MainController extends AbstractController implements Initializable 
 
                 if (srcConn != null && tarConn != null) {
                     if (srcConn.getConnectorType() != tarConn.getConnectorType())
-                        if (srcConn.getConnectorType().isInput() && !tarConn.getConnectorType().isInput())
-                            configureLink(link, tarMod, srcMod, tarConn, srcConn);
-                        else
-                            configureLink(link, srcMod, tarMod, srcConn, tarConn);
+                        if (!srcConn.isConnected() && !tarConn.isConnected())
+                            if (srcConn.getConnectorType().isInput() && !tarConn.getConnectorType().isInput())
+                                configureLink(link, tarMod, srcMod, tarConn, srcConn);
+                            else
+                                configureLink(link, srcMod, tarMod, srcConn, tarConn);
                 }
             }
         }
     }
 
-    private void configureLink(ModuleLink link, AbstractModule srcMod, AbstractModule tarMod, ModuleConnector srcConn, ModuleConnector tarConn) {
+    private void configureLink(ModuleLink link, AbstractModule srcMod,
+                               AbstractModule tarMod, ModuleConnector srcConn, ModuleConnector tarConn) {
         link.setStartConn(srcConn);
         link.setEndConn(tarConn);
         link.bindDirection();
         link.bindEnds();
-        srcConn.setOnMouseClicked(event -> tarMod.removeLink(link.getId()));
-        mainService.getCurrentProgram().makeConnection(srcMod.getModel(), tarMod.getModel());
+        srcConn.setOnMouseClicked(event -> {
+            tarMod.removeLink(link.getId());
+            srcConn.setConnected(false);
+            tarConn.setConnected(false);
+        });
+        mainService.getCurrentProgram().makeConnection(srcConn.getPriority(), srcMod.getModel(),
+                tarConn.getPriority(), tarMod.getModel());
     }
 
     public void collapseRightPanel(ActionEvent actionEvent) {

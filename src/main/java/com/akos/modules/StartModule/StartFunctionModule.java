@@ -21,7 +21,7 @@ public class StartFunctionModule extends AbstractFunctionModule {
         CFXMLLoader.load("com/akos/fxml/modules/StartModule.fxml", this);
         setBackgroundType(BackgroundType.BLUE);
 
-        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM, 1);
 
         buildConnectors();
         DragUtils.buildLinkDragHandlers(this);

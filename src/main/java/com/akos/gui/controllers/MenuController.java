@@ -1,17 +1,22 @@
 package com.akos.gui.controllers;
 
+import com.akos.App;
+import com.akos.gui.Utils;
 import com.akos.modules.CFXMLLoader;
 import com.akos.services.*;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.*;
+import org.apache.logging.log4j.*;
 import org.controlsfx.control.NotificationPane;
 import org.controlsfx.validation.*;
 import org.controlsfx.validation.decoration.*;
 
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -21,6 +26,9 @@ import java.util.*;
  */
 
 public class MenuController extends AbstractController implements Initializable {
+
+    private static final Logger logger = LogManager.getLogger(MenuController.class);
+
     public MenuItem newProjectMenuItem;
     public MenuItem saveProjectMenuItem;
     public MenuItem saveAsProjectMenuItem;
@@ -102,8 +110,25 @@ public class MenuController extends AbstractController implements Initializable 
     }
 
     public void onSaveProjectAction(ActionEvent actionEvent) {
-        Alert closeProgramDialog = new Alert(Alert.AlertType.CONFIRMATION);
-        closeProgramDialog.showAndWait();
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter ef = new FileChooser.ExtensionFilter("ORB files (*.orb)", "*.orb");
+        fileChooser.getExtensionFilters().add(ef);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File file = fileChooser.showSaveDialog(App.primaryStage);
+        Utils.doSingleTask(new Task<Void>() {
+            @Override
+            protected Void call() {
+                FileWriter writer = null;
+                try {
+                    writer = new FileWriter(file);
+                    writer.write("asd");
+                    writer.close();
+                } catch (IOException e) {
+                    logger.log(Level.ERROR, e);
+                }
+                return null;
+            }
+        });
     }
 
     public void onSaveAsProjectAction(ActionEvent actionEvent) {

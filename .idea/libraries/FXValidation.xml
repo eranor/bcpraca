@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="FXValidation">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/FXValidation.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
