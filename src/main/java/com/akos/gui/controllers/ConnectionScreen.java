@@ -55,7 +55,6 @@ public class ConnectionScreen extends AbstractController implements Initializabl
 
     public void discoverDeviceAction(ActionEvent actionEvent) {
         try {
-
             LocalDevice localDevice = LocalDevice.getLocalDevice();
             labelDeviceName.setText(localDevice.getFriendlyName());
             labelDeviceAddress.setText(localDevice.getBluetoothAddress());
@@ -114,6 +113,7 @@ public class ConnectionScreen extends AbstractController implements Initializabl
                         .hideCloseButton()
                         .darkStyle()
                         .showInformation();
+                view.getScene().getWindow().hide();
             });
             return t;
         });

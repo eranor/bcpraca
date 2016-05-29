@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.CubicCurve?>
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <CubicCurve fx:id="link" fill="#1f93ff00" mouseTransparent="true" stroke="#006b24" strokeWidth="6.0"/>
+        <CubicCurve fx:id="link" fill="#1f93ff00" mouseTransparent="true" strokeWidth="6.0">
+         <stroke>
+            <LinearGradient endX="1.0" endY="0.5714285714285714" startY="0.4714285714285714">
+               <stops>
+                  <Stop color="#ff6c04" />
+                  <Stop color="#006923" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </stroke></CubicCurve>
     </children>
 </fx:root>

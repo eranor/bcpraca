@@ -21,14 +21,17 @@ public class ModuleConnector extends Pane implements Initializable {
     @FXML
     Polygon connector;
 
+    private final ConnectorType connectorType;
     private final Side side;
-    private ConnectorType connectorType;
+    private final int priority;
+    private boolean connected = false;
 
-
-    public ModuleConnector(ConnectorType type, Side side) {
+    public ModuleConnector(ConnectorType type, Side side, int priority) {
         CFXMLLoader.load("com/akos/fxml/modules/modules2_Connector.fxml", this);
         this.connectorType = type;
         this.side = side;
+        this.priority = priority;
+
         Tooltip t = new Tooltip(connectorType.getTooltip());
         Utils.hackTooltipStartTiming(t);
         Tooltip.install(this, t);
@@ -45,6 +48,18 @@ public class ModuleConnector extends Pane implements Initializable {
 
     public Side getSide() {
         return side;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 
     @Override
@@ -67,6 +82,9 @@ public class ModuleConnector extends Pane implements Initializable {
         IN(new Color(0.6549019607843137, 0.8313725490196079, 0.5725490196078431, 1),
                 new Color(0.3764705882352941, 0.7137254901960784, 0.34509803921568627, 0.5),
                 true, "Input Connector"),
+        COLLECTOR(new Color(0.6549019607843137, 0.8313725490196079, 0.5725490196078431, 1),
+                new Color(0.3764705882352941, 0.7137254901960784, 0.34509803921568627, 0.5),
+                true, "Collector"),
         OUT(new Color(0.9411764705882353, 0.7568627450980392, 0.49019607843137253, 1),
                 new Color(0.9372549019607843, 0.19215686274509805, 0.06666666666666667, 0.5)
                 , false, "Output Connector"),

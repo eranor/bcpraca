@@ -10,9 +10,27 @@
     </properties>
     <groupId>com</groupId>
     <artifactId>bcpraca2</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.81</version>
+
+    <repositories>
+        <repository>
+            <id>bluecove-snapshot</id>
+            <name>bluecove-snapshot</name>
+            <url>http://www.pyx4me.com/maven2-snapshot/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>net.sf.bluecove</groupId>
+            <artifactId>bluecove</artifactId>
+            <version>2.1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -44,20 +62,19 @@
             <version>4.5.3</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>xmlgraphics-commons</artifactId>
-            <version>2.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-transcoder</artifactId>
-            <version>1.8</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.reactfx</groupId>
+            <artifactId>reactfx</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fxmisc.richtext</groupId>
+            <artifactId>richtextfx</artifactId>
+            <version>0.6.10</version>
         </dependency>
         <dependency>
             <groupId>org.fxmisc.flowless</groupId>
@@ -66,6 +83,48 @@
         </dependency>
     </dependencies>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.4.0</version>
+                <configuration>
+                    <vendor>YourCompany</vendor>
+                    <mainClass>com.akos.App</mainClass>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>com.orbotix</groupId>
+                            <artifactId>orbotix</artifactId>
+                            <version>3.1.159</version>
+                            <packaging>jar</packaging>
+                            <file>${project.basedir}/lib/RobotLibrary.jar</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
         <resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -97,3 +156,4 @@
         </resources>
     </build>
 </project>
+

@@ -16,10 +16,10 @@ public class ForLoopFunctionModule extends AbstractFunctionModule {
         CFXMLLoader.load("com/akos/fxml/modules/ForLoopModule.fxml", this);
         setBackgroundType(BackgroundType.BLUE);
 
-        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.RIGHT);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.RIGHT);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP, 0);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.RIGHT, 1);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.COLLECTOR, Side.RIGHT, 0);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM, 2);
 
         buildConnectors();
         DragUtils.buildLinkDragHandlers(this);

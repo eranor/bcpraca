@@ -43,8 +43,8 @@ public class Program implements Comparable {
         }
     }
 
-    public void makeConnection(IModuleModel element1, IModuleModel element2) {
-        moduleGraph.addEdge(element1, element2);
+    public void makeConnection(int prio1, IModuleModel element1, int prio2, IModuleModel element2) {
+        moduleGraph.addEdge(prio1, element1, prio2,element2);
     }
 
     public Pair<IModuleModel, IModuleModel> removeEdge(IModuleModel element1, IModuleModel element2) {
@@ -68,10 +68,10 @@ public class Program implements Comparable {
         String startCounter = String.valueOf(counter);
         boolean isLoop = startNode.getSetting() == StartSetting.LOOP;
 
-        List<IModuleModel> sorted = new ArrayList<>();
-        Set<ModuleGraph.Node<IModuleModel>> visited = new LinkedHashSet<>();
+        Set<ModuleGraph.Node<IModuleModel>> visited = new TreeSet<>();
+        moduleGraph.DFSUtil(moduleGraph.getNode(startNodes.get(0)),visited);
         //moduleGraph.compile(moduleGraph.getNode(startNodes.get(0)), visited, (ArrayList<IModuleModel>) sorted);
-        visited.forEach(iModuleModelNode -> append(iModuleModelNode.content.getCompiledValue(), sb));
+        //visited.forEach(iModuleModelNode -> append(iModuleModelNode.content.getCompiledValue(), sb));
 
         if (isLoop)
             append(new String[]{"goto " + startCounter}, sb);

@@ -127,6 +127,9 @@ public class ModuleLink extends AnchorPane implements Initializable {
         link.endXProperty().bind(Bindings.add(endConn.layoutXProperty(), (endConn.getWidth() / 2)).add(end.layoutXProperty()));
         link.endYProperty().bind(Bindings.add(endConn.layoutYProperty(), (endConn.getHeight() / 2)).add(end.layoutYProperty()));
 
+        startConn.setConnected(true);
+        if (endConn.getConnectorType() != ModuleConnector.ConnectorType.COLLECTOR)
+            endConn.setConnected(true);
         start.registerLink(getId());
         end.registerLink(getId());
     }

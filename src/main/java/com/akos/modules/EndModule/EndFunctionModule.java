@@ -16,7 +16,7 @@ public class EndFunctionModule extends AbstractFunctionModule {
         CFXMLLoader.load("com/akos/fxml/modules/EndModule.fxml", this);
         setBackgroundType(BackgroundType.BLUE);
 
-        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP, 0);
 
         buildConnectors();
         DragUtils.buildLinkDragHandlers(this);
