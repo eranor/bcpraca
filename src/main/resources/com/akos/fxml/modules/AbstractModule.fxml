@@ -17,7 +17,7 @@
                         <Insets left="5.0"/>
                     </StackPane.margin>
                     <font>
-                        <Font name="OCR A Extended" size="12.0"/>
+                        <Font fx:id="labelFont" name="OCR A Extended" size="26.0"/>
                     </font>
                 </Label>
             </children>

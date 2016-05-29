@@ -1,13 +1,18 @@
 package com.akos.gui.controllers;
 
 
+import com.akos.gui.Utils;
+import com.akos.language.*;
 import com.akos.models.services.MainService;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.application.Platform;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Alert;
+import javafx.stage.*;
+import org.antlr.v4.runtime.*;
 import org.controlsfx.control.NotificationPane;
 import org.fxmisc.richtext.*;
 import org.fxmisc.undo.UndoManagerFactory;
@@ -110,21 +115,53 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
 
     public void sendCommand(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (mainService.getRobot() != null) {
+        if (Utils.hasRobotSelected(mainService)) {
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
-                r.connect();
-                controller.eraseStorage();
-                controller.setProgram(codeArea.getText().getBytes());
-                controller.loadProgram();
-                controller.executeProgram();
+
+                final String text = codeArea.getText();
+                StringBuffer sb = new StringBuffer();
+                final String[] split = text.split("\n");
+                for (int i = 0; i < split.length; i++) {
+                    if (!split[i].matches("")) {
+                        sb.append(i).append(" ").append(split[i]).append("\n");
+                    }
+                }
+                OrbbasicLexer lexer = new OrbbasicLexer(new ANTLRInputStream(sb.toString()));
+                ObservableList<String> errors = FXCollections.emptyObservableList();
+                DescriptiveErrorListener errorListener = new DescriptiveErrorListener(errors);
+
+                lexer.removeErrorListeners();
+                lexer.addErrorListener(errorListener);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+                OrbbasicParser parser = new OrbbasicParser(tokens);
+                parser.removeErrorListeners();
+                parser.addErrorListener(errorListener);
+                OrbbasicParser.ProgContext c = parser.prog();
+                if (errors.size() > 0) {
+                    Alert dlg = new Alert(Alert.AlertType.ERROR, "");
+                    dlg.initModality(Modality.WINDOW_MODAL);
+                    final Window owner = codeArea.getScene().getWindow();
+                    dlg.initOwner(owner);
+                    dlg.setTitle("Error");
+                    dlg.getDialogPane().setHeaderText("Exception Encountered");
+                    dlg.getDialogPane().setContentText(errors.stream().reduce(String::concat).orElse("No Error"));
+                    dlg.show();
+                } else {
+                    r.connect();
+                    controller.eraseStorage();
+                    controller.setProgram(text.getBytes());
+                    controller.loadProgram();
+                    controller.executeProgram();
+                }
             });
         }
     }
 
     public void abortCommand(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (mainService.getRobot() != null) {
+        if (Utils.hasRobotSelected(mainService)) {
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
                 if (!r.isConnected()) r.connect();
@@ -142,7 +179,7 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
 
     public void runCommand(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (mainService.getRobot() != null) {
+        if (Utils.hasRobotSelected(mainService)) {
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
                 if (!r.isConnected()) r.connect();

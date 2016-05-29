@@ -89,25 +89,22 @@ public class DragUtils {
             module.getParent().setOnDragOver(module.mContextLinkDragOver);
             module.getParent().setOnDragDropped(module.mContextLinkDragDropped);
 
-            ModuleConnector source = (ModuleConnector) event.getSource();
-            Side side = module.connectorMap.entrySet().stream()
-                    .filter(sl -> sl.getValue().contains(source))
-                    .map(Map.Entry::getKey).findAny().orElse(null);
-            mLink.setStartSide(side);
+            ModuleConnector startConn = (ModuleConnector) event.getSource();
+            mLink.setStartConn(startConn);
             mLink.bindDirection();
 
             module.helper_pane.getChildren().add(0, mLink);
 
             mLink.setVisible(false);
 
-            Point2D p = module.localToParent(new Point2D(source.getLayoutX() + (source.getWidth() / 2.0),
-                    source.getLayoutY() + (source.getHeight() / 2.0)));
+            Point2D p = module.localToParent(new Point2D(startConn.getLayoutX() + (startConn.getWidth() / 2.0),
+                    startConn.getLayoutY() + (startConn.getHeight() / 2.0)));
             mLink.setStart(new Point2D(p.getX(), p.getY()));
 
             ClipboardContent content = new ClipboardContent();
             DragDropContainer container = new DragDropContainer();
 
-            container.addData("source", new String[]{module.getId(), source.getId()});
+            container.addData("source", new String[]{module.getId(), startConn.getId()});
 
             content.put(DragDropContainer.AddLink, container);
 

@@ -100,7 +100,7 @@ public class RobotJoystickPaneController extends AbstractController implements I
         };
 
         connectoToRobot.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ConnectionUtils.hasRobotSelected(mainService)) {
+            if (com.akos.gui.Utils.hasRobotSelected(mainService)) {
                 if (newValue) {
                     connection.reset();
                     connection.start();
@@ -130,7 +130,8 @@ public class RobotJoystickPaneController extends AbstractController implements I
             joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
         });
         joystickKnob.setOnMouseReleased(event -> {
-            mainService.getRobot().send(new RollCommand(heading, 1, RollCommand.State.STOP));
+            CompletableFuture.runAsync(() ->
+                    mainService.getRobot().send(new RollCommand(heading, 1, RollCommand.State.STOP)));
             joystickKnob.relocate(center);
             fade(0.5);
         });

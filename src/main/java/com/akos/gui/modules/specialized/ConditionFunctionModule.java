@@ -16,9 +16,9 @@ public class ConditionFunctionModule extends AbstractFunctionModule {
         CFXMLLoader.load("com/akos/fxml/modules/ConditionModule.fxml", this);
         setBackgroundType(BackgroundType.BLUE);
         connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.LEFT);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.RIGHT);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.TRUE, Side.BOTTOM);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.FALSE, Side.BOTTOM);
 
         buildConnectors();
         DragUtils.buildLinkDragHandlers(this);

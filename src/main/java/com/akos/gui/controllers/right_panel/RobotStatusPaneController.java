@@ -1,6 +1,7 @@
 package com.akos.gui.controllers.right_panel;
 
 
+import com.akos.gui.Utils;
 import com.akos.gui.controllers.AbstractController;
 import com.akos.models.services.*;
 import com.akos.sphero.Robot;
@@ -65,7 +66,7 @@ public class RobotStatusPaneController extends AbstractController implements Ini
 
     public void sendCurrentProgram(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (ConnectionUtils.hasRobotSelected(mainService)) {
+        if (Utils.hasRobotSelected(mainService)) {
             Service<?> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {
@@ -83,6 +84,10 @@ public class RobotStatusPaneController extends AbstractController implements Ini
                     };
                 }
             };
+            service.setOnSucceeded(event -> {
+                if (r.isConnected())
+                    r.disconnect();
+            });
             service.reset();
             service.start();
         }
@@ -90,7 +95,7 @@ public class RobotStatusPaneController extends AbstractController implements Ini
 
     public void abortCurrentProgram(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (ConnectionUtils.hasRobotSelected(mainService)) {
+        if (Utils.hasRobotSelected(mainService)) {
             Service<?> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {
@@ -119,7 +124,7 @@ public class RobotStatusPaneController extends AbstractController implements Ini
 
     public void runProgram(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (ConnectionUtils.hasRobotSelected(mainService)) {
+        if (Utils.hasRobotSelected(mainService)) {
             Service<?> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {

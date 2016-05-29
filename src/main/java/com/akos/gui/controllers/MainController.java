@@ -2,7 +2,6 @@ package com.akos.gui.controllers;
 
 import com.akos.gui.controllers.canvas.CanvasTab;
 import com.akos.gui.modules.*;
-import com.akos.gui.modules.ModuleConnector.ConnectorType;
 import com.akos.models.services.*;
 import javafx.collections.SetChangeListener;
 import javafx.event.*;
@@ -43,7 +42,6 @@ public class MainController extends AbstractController implements Initializable 
     public Button collapseRightPanelButton;
     public Button collapseLeftPanelButton;
     public Label cursorPosLabel;
-
 
 
     ModulePreview preview;
@@ -188,7 +186,7 @@ public class MainController extends AbstractController implements Initializable 
 
                 if (srcConn != null && tarConn != null) {
                     if (srcConn.getConnectorType() != tarConn.getConnectorType())
-                        if (srcConn.getConnectorType() == ConnectorType.IN && tarConn.getConnectorType() == ConnectorType.OUT)
+                        if (srcConn.getConnectorType().isInput() && !tarConn.getConnectorType().isInput())
                             configureLink(link, tarMod, srcMod, tarConn, srcConn);
                         else
                             configureLink(link, srcMod, tarMod, srcConn, tarConn);
@@ -198,10 +196,10 @@ public class MainController extends AbstractController implements Initializable 
     }
 
     private void configureLink(ModuleLink link, AbstractModule srcMod, AbstractModule tarMod, ModuleConnector srcConn, ModuleConnector tarConn) {
-        link.setStartSide(srcConn.getSide());
-        link.setEndSide(tarConn.getSide());
+        link.setStartConn(srcConn);
+        link.setEndConn(tarConn);
         link.bindDirection();
-        link.bindEnds(srcConn, tarConn);
+        link.bindEnds();
         srcConn.setOnMouseClicked(event -> tarMod.removeLink(link.getId()));
         mainService.getCurrentProgram().makeConnection(srcMod.getModel(), tarMod.getModel());
     }

@@ -2,7 +2,7 @@ package com.akos.sphero.commands.robot.command;
 
 import com.akos.sphero.common.internal.DeviceCommand;
 import com.akos.sphero.common.internal.ids.*;
-import com.sun.javafx.Utils;
+import com.sun.javafx.util.Utils;
 
 
 /**
