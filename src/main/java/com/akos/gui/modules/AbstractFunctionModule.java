@@ -14,6 +14,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.control.PropertySheet.Item;
 import org.controlsfx.property.*;
@@ -29,13 +30,11 @@ import java.util.*;
 @DefaultProperty("extension")
 public abstract class AbstractFunctionModule extends AbstractModule {
     public static final int MODULE_WIDTH = 256;
-    public static final double CONNECTOR_WIDTH = 37.25;
-    public static final double CONNECTOR_HEIGHT = 57.058;
     public static final double MODULE_HEIGHT = 188.892;
+    public static final double CONNECTOR_WIDTH = 41.79;
+    public static final double CONNECTOR_HEIGHT = 62.29;
     @FXML
     public AnchorPane view;
-    @FXML
-    public Label labelModuleName;
     @FXML
     public TextField labelTextField;
     @FXML

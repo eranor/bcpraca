@@ -17,8 +17,8 @@ public class ForLoopFunctionModule extends AbstractFunctionModule {
         setBackgroundType(BackgroundType.BLUE);
 
         connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP);
-        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.RIGHT);
         connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.RIGHT);
+        connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.RIGHT);
         connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.BOTTOM);
 
         buildConnectors();

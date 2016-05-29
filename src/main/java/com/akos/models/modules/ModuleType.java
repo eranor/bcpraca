@@ -18,8 +18,11 @@ public enum ModuleType implements Type {
     RollModule("Roll"),
     TimerModule("Timer"),
     SleepModule("Sleep"),
-    EndModule("End");
-
+    EndModule("End"),
+    //LocateModule("Set location"),
+    //ResetModule("Reset Program"),
+    //InputModule("Input");
+    ;
     private final String displayName;
 
     ModuleType(String displayName) {

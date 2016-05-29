@@ -25,8 +25,28 @@ statement
     | nextstmt
     | branchstmt
     | idxbranchstmt
+    | input
     | delay
+    | end
+    | rgb
+    | ledc
     | backled
+    | random
+    | goroll
+    | heading
+    | raw
+    | locate
+    | basflg
+    | data
+    | rstr
+    | read
+    | tron
+    | troff
+    | reset_
+    | sleep
+    | macrun
+    | mackill
+    | macstat
     | varassign
     ;
 
@@ -35,17 +55,20 @@ printstmt
     ;
 
 printlist
-   : expression COMMA? printlist*
-   ;
+    : expression COMMA? printlist*
+    ;
 
 conditionalstmt
-    : IF expression THEN statement (ELSE statement)?;
+    : IF expression THEN statement (ELSE statement)?
+    ;
+
 forstmt
     : FOR varassign TO expression (STEP expression)?
     ;
+
 nextstmt
-   : NEXT vardecl?
-   ;
+    : NEXT vardecl?
+    ;
 
 branchstmt
     : GOTO linenumber | GOSUB linenumber
@@ -55,12 +78,92 @@ idxbranchstmt
     : ON expression (GOTO|GOSUB) (COMMA linenumber)+
     ;
 
+input
+    : INPUT varname (COMMA expression COMMA expression)?
+    ;
+
 delay
     : DELAY expression
     ;
 
+end
+    : END
+    ;
+
+rgb
+    : RGB expression COMMA expression COMMA expression
+    ;
+
+ledc
+    : LEDC expression
+    ;
+
 backled
     : BACKLED expression
+    ;
+
+random
+    : RANDOM
+    ;
+
+goroll
+    : GOROLL expression COMMA expression COMMA expression
+    ;
+
+heading
+    : HEADING expression
+    ;
+
+raw
+    : RAW expression COMMA expression COMMA expression COMMA expression
+    ;
+
+locate
+    : LOCATE expression COMMA expression
+    ;
+
+basflg
+    : BASFLG expression
+    ;
+
+data
+    : DATA expression (COMMA expression)*
+    ;
+
+rstr
+    : RSTR
+    ;
+
+read
+    : READ vardecl (COMMA vardecl)*
+    ;
+
+tron
+    : TRON
+    ;
+
+troff
+    : TROFF
+    ;
+
+reset_
+    : RESET
+    ;
+
+sleep
+    : SLEEP expression COMMA expression COMMA linenumber
+    ;
+
+macrun
+    : MACRUN expression
+    ;
+
+mackill
+    : MACKILL
+    ;
+
+macstat
+    : MACSTAT
     ;
 
 vardecl
@@ -85,7 +188,8 @@ number
    ;
 
 func
-    : number
+    : STRINGLITERAL
+    | number
     | vardecl
     | sqrtfunc
     | rndfunc
@@ -166,8 +270,28 @@ LPAREN : '(';
 RPAREN : ')';
 
 PRINT : 'print';
+INPUT : 'input';
 DELAY : 'delay';
+END : 'end';
+RGB : 'RGB';
+LEDC : 'LEDC';
 BACKLED : 'backLED';
+RANDOM : 'random';
+GOROLL : 'goroll';
+HEADING : 'heading';
+RAW : 'raw';
+LOCATE : 'locate';
+BASFLG : 'x';
+DATA : 'data';
+RSTR : 'rstr';
+READ : 'read';
+TRON : 'tron';
+TROFF : 'troff';
+RESET : 'reset';
+SLEEP : 'sleep';
+MACRUN : 'macrun';
+MACKILL : 'mackill';
+MACSTAT : 'macstat';
 
 SYSVARNAME
     : 'timer'[ABC]
@@ -204,6 +328,11 @@ COMMENT
 fragment DIGIT
     : ('0' .. '9')
     ;
+
+STRINGLITERAL
+    : '"' ~ ["\r\n]* '"'
+    ;
+
 
 NUMBER
     : DIGIT + (('e' | 'E') NUMBER)*

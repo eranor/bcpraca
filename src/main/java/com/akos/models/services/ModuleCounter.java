@@ -15,7 +15,7 @@ public class ModuleCounter {
 
     public static int getNext(Type moduleType) {
         if (!moduleCountMap.containsKey(moduleType)) {
-            moduleCountMap.put(moduleType, 1);
+            moduleCountMap.put(moduleType, 0);
             return 1;
         } else {
             moduleCountMap.put(moduleType, moduleCountMap.get(moduleType) + 1);

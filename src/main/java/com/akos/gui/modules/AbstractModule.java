@@ -2,13 +2,21 @@ package com.akos.gui.modules;
 
 import com.akos.models.modules.*;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
 
 public abstract class AbstractModule extends AnchorPane implements IGraphicModule, Draggable {
+
+    @FXML
+    public Font labelFont;
+    @FXML
+    public Label labelModuleName;
 
     private Point2D dragOffset;
     private BackgroundType backgroundType;
