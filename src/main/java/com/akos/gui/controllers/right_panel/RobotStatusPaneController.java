@@ -1,23 +1,28 @@
 package com.akos.gui.controllers.right_panel;
 
 
+import com.akos.App;
 import com.akos.gui.Utils;
 import com.akos.gui.controllers.AbstractController;
+import com.akos.language.*;
 import com.akos.services.*;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.SetChangeListener;
+import javafx.collections.*;
 import javafx.concurrent.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.*;
+import org.antlr.v4.runtime.*;
 import org.controlsfx.glyphfont.Glyph;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ákos on 2015. 12. 21.
@@ -73,21 +78,45 @@ public class RobotStatusPaneController extends AbstractController implements Ini
                     return new Task<Void>() {
                         @Override
                         protected Void call() throws Exception {
-                            OrbBasicController controller = new OrbBasicController(r);
-                            r.connect();
-                            controller.eraseStorage();
+                            OrbBasicController controller = r.getOrbController();
                             String p = mainService.getCurrentProgram().compile();
                             System.out.println(p);
-                            controller.setProgram(p.getBytes());
+                            OrbbasicLexer lexer = new OrbbasicLexer(new ANTLRInputStream(p));
+                            ObservableList<String> errors = FXCollections.emptyObservableList();
+                            DescriptiveErrorListener errorListener = new DescriptiveErrorListener(errors);
+
+                            lexer.removeErrorListeners();
+                            lexer.addErrorListener(errorListener);
+                            CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+                            OrbbasicParser parser = new OrbbasicParser(tokens);
+                            parser.removeErrorListeners();
+                            parser.addErrorListener(errorListener);
+                            OrbbasicParser.ProgContext c = parser.prog();
+                            if (errors.size() > 0) {
+                                Alert dlg = new Alert(Alert.AlertType.ERROR, "");
+                                dlg.initModality(Modality.WINDOW_MODAL);
+                                final Window owner = App.primaryStage;
+                                dlg.initOwner(owner);
+                                dlg.setTitle("Error");
+                                dlg.getDialogPane().setHeaderText("Exception Encountered");
+                                String s = errors.stream().collect(Collectors.joining("\n"));
+                                dlg.getDialogPane().setContentText(s);
+                                dlg.show();
+
+                            } else {
+                                r.connect();
+                                controller.eraseStorage();
+                                controller.setProgram(p.getBytes());
+                                Thread.sleep(2000);
+                                if (r.isConnected())
+                                    r.disconnect();
+                            }
                             return null;
                         }
                     };
                 }
             };
-            service.setOnSucceeded(event -> {
-                if (r.isConnected())
-                    r.disconnect();
-            });
             service.reset();
             service.start();
         }
@@ -102,20 +131,19 @@ public class RobotStatusPaneController extends AbstractController implements Ini
                     return new Task<Void>() {
                         @Override
                         protected Void call() throws Exception {
-                            OrbBasicController controller = new OrbBasicController(r);
+                            OrbBasicController controller = r.getOrbController();
                             if (!r.isConnected())
                                 r.connect();
-                            controller.eraseStorage();
+                            Thread.sleep(2000);
                             controller.abortProgram();
+                            Thread.sleep(2000);
+                            if (r.isConnected())
+                                r.disconnect();
                             return null;
                         }
                     };
                 }
             };
-            service.setOnSucceeded(event -> {
-                if (r.isConnected())
-                    r.disconnect();
-            });
             service.reset();
             service.start();
         }
@@ -131,9 +159,10 @@ public class RobotStatusPaneController extends AbstractController implements Ini
                     return new Task<Void>() {
                         @Override
                         protected Void call() throws Exception {
-                            OrbBasicController controller = new OrbBasicController(r);
+                            OrbBasicController controller = r.getOrbController();
                             if (!r.isConnected())
                                 r.connect();
+                            Thread.sleep(2000);
                             controller.loadProgram();
                             controller.executeProgram();
                             return null;

@@ -10,7 +10,7 @@ import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.stage.*;
 import org.antlr.v4.runtime.*;
 import org.controlsfx.control.NotificationPane;
@@ -20,6 +20,7 @@ import org.fxmisc.undo.UndoManagerFactory;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ákos on 2015. 12. 06.
@@ -29,7 +30,7 @@ import java.util.regex.*;
 
 public class OrbbasicScreen extends AbstractController implements Initializable {
 
-    public CodeArea codeArea;
+    public TextArea codeArea;
     public NotificationPane notificationPane;
 
 
@@ -40,14 +41,14 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        /*codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
                 .subscribe(change -> {
                     codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
                     codeArea.getUndoManager().mark();
                 });
         codeArea.setUndoManager(UndoManagerFactory.unlimitedHistoryFactory());
-        codeArea.getStylesheets().add(getClass().getClassLoader().getResource("com/akos/css/code-style.css").toExternalForm());
+        codeArea.getStylesheets().add(getClass().getClassLoader().getResource("com/akos/css/code-style.css").toExternalForm());*/
     }
 
     private static final String[] VARIABLES = new String[]{
@@ -146,7 +147,8 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
                     dlg.initOwner(owner);
                     dlg.setTitle("Error");
                     dlg.getDialogPane().setHeaderText("Exception Encountered");
-                    dlg.getDialogPane().setContentText(errors.stream().reduce(String::concat).orElse("No Error"));
+                    String s = errors.stream().collect(Collectors.joining("\n"));
+                    dlg.getDialogPane().setContentText(s);
                     dlg.show();
                 } else {
                     r.connect();

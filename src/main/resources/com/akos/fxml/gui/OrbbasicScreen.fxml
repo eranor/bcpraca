@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.NotificationPane?>
-<?import org.fxmisc.richtext.CodeArea?>
 <NotificationPane  fx:id="notificationPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
                   fx:controller="com.akos.gui.controllers.OrbbasicScreen">
     <content>
@@ -17,7 +16,7 @@
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" valignment="CENTER" vgrow="NEVER"/>
             </rowConstraints>
             <children>
-                <CodeArea fx:id="codeArea" minHeight="400.0" minWidth="600.0"/>
+                <TextArea id="codeArea" fx:id="codeArea" minHeight="400.0" minWidth="600.0"/>
                 <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="-Infinity" prefHeight="50.0" spacing="10.0" GridPane.rowIndex="1">
                     <children>
                         <Button maxWidth="1.7976931348623157E308" onAction="#sendCommand" text="Download"/>

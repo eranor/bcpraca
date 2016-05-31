@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.*;
 import org.apache.logging.log4j.*;
-import org.controlsfx.control.NotificationPane;
 import org.controlsfx.validation.*;
 import org.controlsfx.validation.decoration.*;
 
@@ -87,9 +86,9 @@ public class MenuController extends AbstractController implements Initializable 
             boolean checkLength = value != null ? !(value.length() > 2 && value.length() < 40) : value == null;
             boolean nameExists = mainService.getPrograms().stream().anyMatch(program -> program != null && program.getName().equals(value));
             if (invChar)
-                return ValidationResult.fromMessageIf(control, "Invalid Character in name!", Severity.ERROR, invChar);
+                return ValidationResult.fromErrorIf(control, "Invalid Character in name!", invChar);
             else if (checkLength) {
-                return ValidationResult.fromMessageIf(control, "The length must be between 2 and 40!", Severity.ERROR, checkLength);
+                return ValidationResult.fromErrorIf(control, "The length must be between 2 and 40!", checkLength);
             } else if (nameExists) {
                 return ValidationResult.fromErrorIf(control, "Project with name already exists!", nameExists);
             }
@@ -101,9 +100,11 @@ public class MenuController extends AbstractController implements Initializable 
         validationSupport.setValidationDecorator(decorator);
 
         dlg.showAndWait().ifPresent(result -> {
-            Program p = new Program(result);
-            if (mainService.updatePrograms(p)) {
-                mainService.setCurrentProgram(p);
+            if (validationSupport.getValidationResult().getErrors().size() == 0) {
+                Program p = new Program(result);
+                if (mainService.updatePrograms(p)) {
+                    mainService.setCurrentProgram(p);
+                }
             }
         });
 
@@ -114,36 +115,38 @@ public class MenuController extends AbstractController implements Initializable 
         FileChooser.ExtensionFilter ef = new FileChooser.ExtensionFilter("ORB files (*.orb)", "*.orb");
         fileChooser.getExtensionFilters().add(ef);
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        File file = fileChooser.showSaveDialog(App.primaryStage);
-        Utils.doSingleTask(new Task<Void>() {
-            @Override
-            protected Void call() {
-                FileWriter writer = null;
-                try {
-                    writer = new FileWriter(file);
-                    writer.write("asd");
-                    writer.close();
-                } catch (IOException e) {
-                    logger.log(Level.ERROR, e);
+        if (mainService.getCurrentProgram() != null) {
+            File file = fileChooser.showSaveDialog(App.primaryStage);
+            Utils.doSingleTask(new Task<Void>() {
+                @Override
+                protected Void call() {
+                    FileWriter writer = null;
+                    try {
+                        writer = new FileWriter(file);
+                        writer.write(mainService.getCurrentProgram().compile());
+                        writer.close();
+                    } catch (IOException e) {
+                        logger.log(Level.ERROR, e);
+                    }
+                    return null;
                 }
-                return null;
-            }
-        });
+            });
+        }
     }
 
     public void onSaveAsProjectAction(ActionEvent actionEvent) {
-        Alert closeProgramDialog = new Alert(Alert.AlertType.CONFIRMATION);
-        closeProgramDialog.showAndWait();
+        Alert onSaveAsProjectDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        onSaveAsProjectDialog.showAndWait();
     }
 
     public void onLoadProjectAction(ActionEvent actionEvent) {
-        Alert closeProgramDialog = new Alert(Alert.AlertType.CONFIRMATION);
-        closeProgramDialog.showAndWait();
+        Alert onLoadProjectDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        onLoadProjectDialog.showAndWait();
     }
 
     public void onCloseProjectAction(ActionEvent actionEvent) {
-        Alert closeProgramDialog = new Alert(Alert.AlertType.CONFIRMATION);
-        closeProgramDialog.showAndWait();
+        Alert onCloseProjectDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        onCloseProjectDialog.showAndWait();
     }
 
     public void onExitProgramAction(ActionEvent actionEvent) {
@@ -174,10 +177,13 @@ public class MenuController extends AbstractController implements Initializable 
             orbbasicStage = new Stage();
             orbbasicStage.setTitle("Sphero OrbBasic Console");
             orbbasicStage.setScene(new Scene(CFXMLLoader.loadWithCallback("com/akos/fxml/gui/OrbbasicScreen.fxml", this)));
-
             orbbasicStage.setOnShown(event -> {
-                NotificationPane pane = ((NotificationPane) orbbasicStage.getScene().getRoot());
-                pane.show("You don't need to write line numbers, just use the one on the side.");
+                TextArea t = (TextArea) orbbasicStage.getScene().lookup("#codeArea");
+                if (mainService.getCurrentProgram() != null)
+                    t.setText(mainService.getCurrentProgram().compile());
+                /*NotificationPane pane = ((NotificationPane) orbbasicStage.getScene().getRoot());
+                pane.show("You don't need to write line numbers, just use the one on the side.");  */
+
             });
             orbbasicStage.show();
         } else {

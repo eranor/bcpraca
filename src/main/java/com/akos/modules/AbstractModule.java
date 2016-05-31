@@ -1,6 +1,5 @@
 package com.akos.modules;
 
-import com.akos.models.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
