@@ -1,14 +1,6 @@
 package com.akos.modules;
 
-import com.akos.modules.ConditionModule.*;
-import com.akos.modules.EndModule.*;
-import com.akos.modules.ForLoopModule.*;
-import com.akos.modules.RGBLedModule.*;
-import com.akos.modules.RollModule.*;
-import com.akos.modules.SleepModule.*;
-import com.akos.modules.StartModule.*;
-import com.akos.modules.TimerModule.*;
-import com.akos.models.*;
+import com.akos.modules.specific.*;
 import javafx.util.Pair;
 
 import java.lang.reflect.*;
@@ -93,11 +85,15 @@ public class ModuleFactory {
         registry.register(ModuleType.StartModule, StartFunctionModule.class, StartModuleModel.class);
         registry.register(ModuleType.ConditionModule, ConditionFunctionModule.class, ConditionModuleModel.class);
         registry.register(ModuleType.ForLoopModule, ForLoopFunctionModule.class, ForLoopModuleModel.class);
+        registry.register(ModuleType.WhileLoopModule, WhileLoopFunctionModule.class, WhileLoopModuleModel.class);
         registry.register(ModuleType.LEDModule, RGBLedFunctionModule.class, RGBLedModuleModel.class);
         registry.register(ModuleType.SleepModule, SleepFunctionModule.class, SleepModuleModel.class);
         registry.register(ModuleType.TimerModule, TimerFunctionModule.class, TimerModuleModel.class);
         registry.register(ModuleType.EndModule, EndFunctionModule.class, EndModuleModel.class);
-
-        //registry.register(VariableModuleType.VariableModule, VariableModule.class, VariableModuleModel.class);
+        registry.register(ModuleType.EndIfModule, EndIfFunctionModule.class, EndIfModuleModel.class);
+        registry.register(ModuleType.InputModule, InputFunctionModule.class, InputModuleModel.class);
+        registry.register(ModuleType.PrintModule, PrintFunctionModule.class, PrintModuleModel.class);
+        registry.register(ModuleType.LocateModule, LocateFunctionModule.class, LocateModuleModel.class);
+        registry.register(ModuleType.VariableModule, VariableFunctionModule.class, VariableModuleModel.class);
     }
 }

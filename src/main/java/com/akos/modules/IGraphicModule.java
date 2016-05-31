@@ -1,6 +1,5 @@
 package com.akos.modules;
 
-import com.akos.models.IModuleModel;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 

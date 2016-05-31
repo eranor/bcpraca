@@ -1,15 +1,17 @@
 package com.akos.gui.controllers.right_panel;
 
 
+import com.akos.gui.Utils;
 import com.akos.gui.controllers.AbstractController;
 import com.akos.services.*;
 import com.akos.sphero.commands.async.orbbasic.*;
+import com.akos.sphero.commands.robot.command.orbbasic.OrbBasicSubmitValueToInputStatementCommand;
 import com.akos.sphero.common.internal.DeviceResponse;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 import org.apache.logging.log4j.*;
 
@@ -28,6 +30,9 @@ public class RobotConsolePaneController extends AbstractController implements In
     public TitledPane robotConsoleView;
     public VBox rightPaneTabBody;
     public TextArea consoleTextArea;
+    public HBox inputPane;
+    public TextField inputField;
+    public Button confirmButton;
     private SimpleObjectProperty<Program> selectedProgram;
 
 
@@ -37,6 +42,20 @@ public class RobotConsolePaneController extends AbstractController implements In
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        confirmButton.setOnAction(event -> {
+            Utils.doSingleTask(new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    if (Utils.hasRobotSelected(mainService) && mainService.getRobot().isConnected()) {
+                        int i = Integer.valueOf(inputField.getText());
+                        mainService.getRobot().send(new OrbBasicSubmitValueToInputStatementCommand(i));
+                    }
+                    return null;
+                }
+            });
+        });
+
         ScheduledService<?> s = new ScheduledService<Void>() {
             @Override
             protected Task<Void> createTask() {

@@ -1,8 +1,7 @@
 package com.akos.modules;
 
 import com.akos.App;
-import com.akos.models.IModuleModel;
-import com.akos.modules.RollModule.EnumProperty;
+import com.akos.modules.specific.EnumProperty;
 import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.collections.ObservableList;

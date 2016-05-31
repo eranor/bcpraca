@@ -14,6 +14,7 @@ public class Robot extends BluetoothDevice {
 
     private static final Logger logger = LogManager.getLogger(Robot.class);
     public static final String SPHERO_IEEE_OUI = "000666"; // IEEE OUI for Roving Networks
+    private final OrbBasicController orbController;
 
     private String identifier;
 
@@ -23,6 +24,7 @@ public class Robot extends BluetoothDevice {
 
     public Robot(String name, String address, String url) {
         super(name, address);
+        this.orbController = new OrbBasicController(this);
         setSpheroUrl(url != null ? url : "btspp://" + address + ":1;authenticate=false;encrypt=false;master=false");
     }
 
@@ -76,4 +78,7 @@ public class Robot extends BluetoothDevice {
     }
 
 
+    public OrbBasicController getOrbController() {
+        return orbController;
+    }
 }

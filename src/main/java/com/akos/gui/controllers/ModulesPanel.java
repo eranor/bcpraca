@@ -1,7 +1,7 @@
 package com.akos.gui.controllers;
 
 import com.akos.modules.*;
-import com.akos.models.ModuleType;
+import com.akos.modules.ModuleType;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -25,7 +25,6 @@ public class ModulesPanel extends Accordion implements Initializable {
     public Accordion accordion;
     public ScrollPane scrollPane;
     public VBox modulesContainer;
-    public VBox variablesContainer;
 
     public ModulesPanel() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/akos/fxml/gui/ModulesPanel.fxml"), ResourceBundle.getBundle("Localization"));
@@ -53,14 +52,6 @@ public class ModulesPanel extends Accordion implements Initializable {
             module.setScaleY(module.getScaleY() * 2 / 3);
 
         }
-        /*for (VariableModuleType type : VariableModuleType.values()) {
-            AbstractModule module = factory.getModule(type);
-            variablesContainer.getChildren().add(module);
-            requestParentLayout();
-            module.deactivate();
-            module.setScaleX(module.getScaleX() * 3 / 4);
-            module.setScaleY(module.getScaleY() * 3 / 4);
-        }*/
 
     }
 }

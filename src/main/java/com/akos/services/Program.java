@@ -1,12 +1,11 @@
 package com.akos.services;
 
 
-import com.akos.models.*;
-import com.akos.modules.StartModule.StartModuleModel;
-import com.akos.modules.StartModule.StartModuleModel.StartSetting;
+import com.akos.modules.*;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ákos on 2015. 12. 07.
@@ -44,7 +43,7 @@ public class Program implements Comparable {
     }
 
     public void makeConnection(int prio1, IModuleModel element1, int prio2, IModuleModel element2) {
-        moduleGraph.addEdge(prio1, element1, prio2,element2);
+        moduleGraph.addEdge(prio2, element1, prio1, element2);
     }
 
     public Pair<IModuleModel, IModuleModel> removeEdge(IModuleModel element1, IModuleModel element2) {
@@ -52,30 +51,12 @@ public class Program implements Comparable {
         return new Pair<>(element1, element2);
     }
 
-    private void append(String[] sa, StringBuilder sb) {
-        for (String s : sa) {
-            sb.append(String.valueOf(counter++)).append(" ").append(s).append("\n");
-        }
-    }
-
     public String compile() {
-        counter = 1;
-        return compile((StartModuleModel) startNodes.get(0));
-    }
-
-    public String compile(StartModuleModel startNode) {
-        StringBuilder sb = new StringBuilder();
-        String startCounter = String.valueOf(counter);
-        boolean isLoop = startNode.getSetting() == StartSetting.LOOP;
-
-        Set<ModuleGraph.Node<IModuleModel>> visited = new TreeSet<>();
-        moduleGraph.DFSUtil(moduleGraph.getNode(startNodes.get(0)),visited);
-        //moduleGraph.compile(moduleGraph.getNode(startNodes.get(0)), visited, (ArrayList<IModuleModel>) sorted);
-        //visited.forEach(iModuleModelNode -> append(iModuleModelNode.content.getCompiledValue(), sb));
-
-        if (isLoop)
-            append(new String[]{"goto " + startCounter}, sb);
-        return sb.toString();
+        if (startNodes.size() > 0) {
+            List<String> compiled = moduleGraph.compile(moduleGraph.getNode(startNodes.get(0)));
+            return compiled.stream().collect(Collectors.joining("\n"));
+        }
+        return "";
     }
 
     public UUID getId() {

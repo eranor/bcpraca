@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<TitledPane fx:id="robotConsoleView" text="Sphero robot status" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.akos.gui.controllers.right_panel.RobotConsolePaneController">
+
+<TitledPane fx:id="robotConsoleView" text="Sphero robot status" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.right_panel.RobotConsolePaneController">
     <content>
         <VBox fx:id="rightPaneTabBody">
             <children>
-                <TextArea fx:id="consoleTextArea" editable="false" prefHeight="200.0" prefWidth="200.0"/>
+                <TextArea fx:id="consoleTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" />
+            <HBox fx:id="inputPane">
+               <children>
+                  <TextField fx:id="inputField" promptText="Send an integer to robot" />
+                  <Button fx:id="confirmButton" mnemonicParsing="false" text="Confirm" />
+               </children>
+            </HBox>
             </children>
         </VBox>
     </content>

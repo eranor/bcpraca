@@ -72,9 +72,6 @@ public class MainController extends AbstractController implements Initializable 
         for (Node module : modulesPanel.modulesContainer.getChildren()) {
             addDragDetection((IGraphicModule) module);
         }
-        for (Node module : modulesPanel.variablesContainer.getChildren()) {
-            addDragDetection((IGraphicModule) module);
-        }
 
         mainService.getSelectionModel().selectedNodeProperty().addListener((observable, oldValue, newValue) -> {
             splitPane.getDividers().get(1).setPosition(1);
@@ -174,15 +171,16 @@ public class MainController extends AbstractController implements Initializable 
                 ModuleConnector srcConn = null, tarConn = null;
 
                 for (Node n : tab.contentPane.getChildren()) {
-                    if (n.getId().equals(sourceId[0])) {
-                        srcMod = (AbstractFunctionModule) n;
-                        srcConn = (ModuleConnector) srcMod.getChildren().stream().filter(node -> node.getId().equals
-                                (sourceId[1])).findFirst().orElse(null);
-                    } else if (n.getId().equals(targetId[0])) {
-                        tarMod = (AbstractFunctionModule) n;
-                        tarConn = (ModuleConnector) tarMod.getChildren().stream().filter(node -> node.getId().equals
-                                (targetId[1])).findFirst().orElse(null);
-                    }
+                    if (n.getId() != null)
+                        if (n.getId().equals(sourceId[0])) {
+                            srcMod = (AbstractFunctionModule) n;
+                            srcConn = (ModuleConnector) srcMod.getChildren().stream().filter(node -> node.getId().equals
+                                    (sourceId[1])).findFirst().orElse(null);
+                        } else if (n.getId().equals(targetId[0])) {
+                            tarMod = (AbstractFunctionModule) n;
+                            tarConn = (ModuleConnector) tarMod.getChildren().stream().filter(node -> node.getId().equals
+                                    (targetId[1])).findFirst().orElse(null);
+                        }
                 }
 
                 if (srcConn != null && tarConn != null) {
