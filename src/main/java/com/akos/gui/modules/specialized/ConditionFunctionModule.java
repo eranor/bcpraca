@@ -15,11 +15,6 @@ public class ConditionFunctionModule extends AbstractFunctionModule {
         super();
         CFXMLLoader.load("com/akos/fxml/modules/ConditionModule.fxml", this);
         setBackgroundType(BackgroundType.BLUE);
-<<<<<<< HEAD
-        System.out.println("asd");
-=======
-        System.out.println("TempChange");
->>>>>>> 0.8
         connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.TOP);
         connectorMap.addConnector(ModuleConnector.ConnectorType.IN, Side.LEFT);
         connectorMap.addConnector(ModuleConnector.ConnectorType.OUT, Side.RIGHT);

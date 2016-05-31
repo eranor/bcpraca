@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.*?>
+<StackPane xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.akos.gui.controllers.ConnectionScreen">
+    <children>
+        <BorderPane fx:id="view" maxHeight="360" maxWidth="640" prefHeight="360" prefWidth="640">
+            <center>
+                <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+                            <children>
+                                <VBox alignment="TOP_CENTER" layoutX="67.0" layoutY="39.0" prefHeight="200.0" prefWidth="100.0" spacing="8.0"
+                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                      AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <HBox spacing="10.0">
+                                            <children>
+                                                <Label text="Device name:" underline="true"/>
+                                                <Label fx:id="labelDeviceName"/>
+                                            </children>
+                                        </HBox>
+                                        <HBox spacing="10.0">
+                                            <children>
+                                                <Label text="Device address:" underline="true"/>
+                                                <Label fx:id="labelDeviceAddress"/>
+                                            </children>
+                                        </HBox>
+                                        <HBox spacing="10.0">
+                                            <children>
+                                                <Label text="Status:" underline="true"/>
+                                                <Label fx:id="labelDeviceStatus"/>
+                                            </children>
+                                        </HBox>
+                                        <Button fx:id="buttonDiscoverDevice" alignment="TOP_LEFT" defaultButton="true" mnemonicParsing="false"
+                                                onAction="#discoverDeviceAction" text="Discover">
+                                            <VBox.margin>
+                                                <Insets top="30.0"/>
+                                            </VBox.margin>
+                                        </Button>
+                                        <ProgressIndicator id="progress-indicator" fx:id="searchProgressIndicator" prefHeight="31.0" prefWidth="182.0"
+                                                           visible="false"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" top="5.0"/>
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <TableView fx:id="tableDiscoveredDevices" layoutX="136.0" layoutY="44.0" prefHeight="200.0" prefWidth="200.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                           AnchorPane.topAnchor="0.0">
+                                    <columnResizePolicy>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    </columnResizePolicy>
+                                    <columns>
+                                        <TableColumn fx:id="numberingColumn" prefWidth="28.0" resizable="false" text="#"/>
+                                        <TableColumn fx:id="nameColumn" prefWidth="167.0" resizable="false" text="Name"/>
+                                        <TableColumn fx:id="addressColumn" prefWidth="166.0" resizable="false" text="Address"/>
+                                        <TableColumn fx:id="buttonColumn" minWidth="0.0" prefWidth="81.0" resizable="false"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </center>
+            <bottom>
+                <StatusBar fx:id="statusBar" prefHeight="8.0" prefWidth="640.0" text="" BorderPane.alignment="CENTER"/>
+            </bottom>
+        </BorderPane>
+        <MaskerPane fx:id="masker"/>
+    </children>
+</StackPane>

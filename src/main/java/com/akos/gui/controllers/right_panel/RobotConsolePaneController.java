@@ -3,12 +3,14 @@ package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.controllers.AbstractController;
 import com.akos.models.services.*;
+import com.akos.sphero.commands.async.orbbasic.*;
 import com.akos.sphero.common.internal.DeviceResponse;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.concurrent.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import org.apache.logging.log4j.*;
 
 import java.net.URL;
@@ -35,24 +37,34 @@ public class RobotConsolePaneController extends AbstractController implements In
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Thread t = new Thread(() -> {
-            logger.debug("Watcher started");
-            while (true) {
-                if (mainService.getRobot() != null) {
-                    ArrayList<DeviceResponse> responses = mainService.getRobot().getAllPackets();
-                    if (responses.size() > 0)
-                        responses.forEach(deviceResponse -> Platform.runLater(() ->
-                                consoleTextArea.appendText(deviceResponse.toString() + "\n")));
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        ScheduledService<?> s = new ScheduledService<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        if (mainService.getRobot() != null) {
+                            ArrayList<DeviceResponse> responses = mainService.getRobot().getAllPackets();
+                            if (responses.size() > 0) {
+                                responses.forEach(deviceResponse -> {
+                                    if (deviceResponse instanceof OrbBasicPrintMessageAsyncData) {
+                                        consoleTextArea.appendText(((OrbBasicPrintMessageAsyncData) deviceResponse).getMessage() + "\n");
+                                    } else if (deviceResponse instanceof OrbBasicErrorASCIIAsyncData) {
+                                        consoleTextArea.appendText(((OrbBasicErrorASCIIAsyncData) deviceResponse).getErrorASCII() + "\n");
+                                    } else if (deviceResponse instanceof OrbBasicErrorBinaryAsyncData) {
+                                        consoleTextArea.appendText(Arrays.toString(((OrbBasicErrorBinaryAsyncData) deviceResponse).getErrorBinary()) + "\n");
+                                    }
+                                });
+                            }
+                        }
+                        return null;
                     }
-                }
+                };
             }
-        });
-        t.setDaemon(true);
-        t.start();
+        };
+        s.setDelay(Duration.millis(100));
+        s.start();
+        logger.debug("Watcher started");
     }
 
 }

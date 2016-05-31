@@ -1,4 +1,6 @@
-package com.akos.bluetooth;/**
+package com.akos.bluetooth;
+
+/**
  * @author: Ákos Hervay(akoshervay@gmail.com)
  */
 
@@ -42,8 +44,8 @@ public class BluetoothDevice extends RemoteDevice {
         if (!isConnected) {
             try {
                 startHeartbeat();
-                final StreamConnection open = (StreamConnection) Connector.open(this.deviceURL);
-                dataChannel = new Channel(open, heartbeat);
+                connection = (StreamConnection) Connector.open(this.deviceURL);
+                dataChannel = new Channel(connection, heartbeat);
                 dataChannel.open();
                 isConnected = true;
                 logger.info(String.format("Connected to Device (%s) at %s", name, deviceURL));

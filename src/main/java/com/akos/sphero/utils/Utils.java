@@ -10,4 +10,12 @@ public class Utils {
         else if (val.compareTo(max) > 0) return max;
         else return val;
     }
+
+    public static <T extends Number> float scaleToRange(T val, T oldMin, T oldMax, T newMin, T newMax) {
+        final float oldRange = (oldMax.floatValue() - oldMin.floatValue());
+        final float v = val.floatValue() - oldMin.floatValue();
+        final float v1 = newMax.floatValue() - newMin.floatValue();
+        float r = (((v * v1) / oldRange) + newMin.floatValue());
+        return (oldRange == 0 ? newMin.floatValue() : r >= newMax.floatValue() ? newMax.floatValue() : r);
+    }
 }

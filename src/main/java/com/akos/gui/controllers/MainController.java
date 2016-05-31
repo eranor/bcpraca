@@ -38,10 +38,12 @@ public class MainController extends AbstractController implements Initializable 
     public TitledPane modulePropertiesPane;
     public TitledPane robotStatusPane;
     public TitledPane robotConsolePane;
+    public TitledPane robotJoystickPane;
 
     public Button collapseRightPanelButton;
     public Button collapseLeftPanelButton;
     public Label cursorPosLabel;
+
 
 
     ModulePreview preview;

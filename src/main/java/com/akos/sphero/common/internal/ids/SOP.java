@@ -18,5 +18,4 @@ public enum SOP {
     public byte getValue() {
         return byteCode;
     }
-
 }
