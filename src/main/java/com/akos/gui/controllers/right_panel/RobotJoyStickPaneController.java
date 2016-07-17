@@ -2,20 +2,19 @@ package com.akos.gui.controllers.right_panel;
 
 
 import com.akos.gui.controllers.AbstractController;
-import com.akos.models.services.MainService;
+import com.akos.services.MainService;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.command.*;
-import com.akos.sphero.utils.Utils;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.concurrent.*;
 import javafx.fxml.Initializable;
-import javafx.geometry.*;
+import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import org.controlsfx.control.*;
+import org.controlsfx.control.PlusMinusSlider;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,13 +28,13 @@ import java.util.concurrent.CompletableFuture;
 
 
 public class RobotJoystickPaneController extends AbstractController implements Initializable {
-    public TitledPane robotJoysickPaneView;
+    public TitledPane robotJoystickPaneView;
     public VBox rightPaneTabBody;
     public Pane joystickMovePane;
     public Knob joystickKnob;
     public Circle joystickBackground;
-    public ToggleSwitch connectoToRobot;
-    public VBox calibrationPanel;
+    public ToggleButton connectToRobot;
+    public HBox calibrationPanel;
     public PlusMinusSlider calibrateSlider;
     public Button calibrateButton;
 
@@ -52,7 +51,8 @@ public class RobotJoystickPaneController extends AbstractController implements I
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        calibrationPanel.setVisible(false);
+        rightPaneTabBody.getChildren().remove(calibrationPanel);
+        rightPaneTabBody.getChildren().remove(joystickMovePane);
         bgr = joystickBackground.getRadius();
         r = bgr - 15;
 
@@ -71,11 +71,12 @@ public class RobotJoystickPaneController extends AbstractController implements I
                     @Override
                     protected Object call() throws Exception {
                         robot.send(new SetBackLEDOutputCommand(0));
-                        robot.send(new SetRGBLEDOutputCommand(0, 255, 0));
-                        calibrationPanel.setVisible(false);
+                        robot.send(new SetRGBLEDOutputCommand(0f, 255f, 0f));
                         return null;
                     }
                 };
+                rightPaneTabBody.getChildren().add(joystickMovePane);
+                rightPaneTabBody.getChildren().remove(calibrationPanel);
                 Platform.runLater(t);
             }
         });
@@ -89,9 +90,9 @@ public class RobotJoystickPaneController extends AbstractController implements I
                         return CompletableFuture.runAsync(robot::connect)
                                 .thenRun(() -> {
                                     robot.send(new SetBackLEDOutputCommand(1));
-                                    robot.send(new SetRGBLEDOutputCommand(0, 0, 0));
-                                    calibrationPanel.setVisible(true);
+                                    robot.send(new SetRGBLEDOutputCommand(0f, 0f, 0f));
                                     robot.send(new SetStabilizationCommand(true));
+                                    connectToRobot.setText(connectToRobot.getText().replace("on", "off"));
                                 }).get();
                     }
 
@@ -99,41 +100,63 @@ public class RobotJoystickPaneController extends AbstractController implements I
             }
         };
 
-        connectoToRobot.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ConnectionUtils.hasRobotSelected(mainService)) {
-                if (newValue) {
-                    connection.reset();
-                    connection.start();
-                } else {
-                    mainService.getRobot().disconnect();
+        connectToRobot.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue) {
+                        if (com.akos.gui.Utils.hasRobotSelected(mainService)) {
+                            rightPaneTabBody.getChildren().add(0, calibrationPanel);
+                            connection.restart();
+                        } else {
+                            connectToRobot.setSelected(false);
+                        }
+                    } else {
+                        if (mainService.getRobot() != null && mainService.getRobot().isConnected()) {
+                            connectToRobot.setText(connectToRobot.getText().replace("off", "on"));
+                            rightPaneTabBody.getChildren().remove(calibrationPanel);
+                            rightPaneTabBody.getChildren().remove(joystickMovePane);
+                            mainService.getRobot().disconnect();
+                        }
+                    }
+
                 }
-            }
-        });
+        );
         joystickBackground.setOnMousePressed(event -> joystickKnob.fireEvent(event));
         joystickBackground.setOnMouseReleased(event -> joystickKnob.fireEvent(event));
         joystickBackground.setOnMouseDragged(event -> joystickKnob.fireEvent(event));
 
-        joystickKnob.setOnMousePressed(event -> {
-            orgScene = new Point2D(event.getSceneX(), event.getSceneY());
-            Point2D p = joystickMovePane.sceneToLocal(orgScene).subtract(35, 35);
-            joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
-            fade(1);
-        });
-        joystickKnob.setOnMouseDragged(event -> {
-            Point2D newScene = new Point2D(event.getSceneX(), event.getSceneY());
-            Point2D p = joystickMovePane.sceneToLocal(newScene).subtract(35, 35);
+        joystickKnob.setOnMousePressed(event ->
 
-            float velocity = Utils.scaleToRange(center.distance(p), 0, bgr, 0, 1);
-            heading = (int) get360Degree(getAngleFromCenter(p));
+                {
+                    orgScene = new Point2D(event.getSceneX(), event.getSceneY());
+                    Point2D p = joystickMovePane.sceneToLocal(orgScene).subtract(35, 35);
+                    joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
+                    fade(1);
+                }
 
-            CompletableFuture.runAsync(() -> mainService.getRobot().send(new RollCommand(heading, velocity)));
-            joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
-        });
-        joystickKnob.setOnMouseReleased(event -> {
-            mainService.getRobot().send(new RollCommand(heading, 1, RollCommand.State.STOP));
-            joystickKnob.relocate(center);
-            fade(0.5);
-        });
+        );
+        joystickKnob.setOnMouseDragged(event ->
+
+                {
+                    Point2D newScene = new Point2D(event.getSceneX(), event.getSceneY());
+                    Point2D p = joystickMovePane.sceneToLocal(newScene).subtract(35, 35);
+
+                    float velocity = com.akos.gui.Utils.scaleToRange(center.distance(p), 0, bgr, 0, 1);
+                    heading = (int) get360Degree(getAngleFromCenter(p));
+
+                    CompletableFuture.runAsync(() -> mainService.getRobot().send(new RollCommand(heading, velocity)));
+                    joystickKnob.relocate(center.distance(p) < r ? p : getPointOnCircle(p));
+                }
+
+        );
+        joystickKnob.setOnMouseReleased(event ->
+
+                {
+                    CompletableFuture.runAsync(() ->
+                            mainService.getRobot().send(new RollCommand(heading, 1, RollCommand.State.STOP)));
+                    joystickKnob.relocate(center);
+                    fade(0.5);
+                }
+
+        );
     }
 
     protected void fade(double opacity) {

@@ -1,7 +1,7 @@
 package com.akos.gui.controllers.right_panel;
 
 import com.akos.gui.jfx_components.NumericField;
-import com.akos.models.modules.SliderValue;
+import com.akos.modules.specific.SliderValue;
 import javafx.beans.property.*;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

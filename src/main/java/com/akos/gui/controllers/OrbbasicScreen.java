@@ -1,21 +1,26 @@
 package com.akos.gui.controllers;
 
 
-import com.akos.models.services.MainService;
+import com.akos.gui.Utils;
+import com.akos.language.*;
+import com.akos.services.MainService;
 import com.akos.sphero.Robot;
 import com.akos.sphero.commands.robot.OrbBasicController;
 import javafx.application.Platform;
-import javafx.concurrent.*;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
+import javafx.stage.*;
+import org.antlr.v4.runtime.*;
+import org.controlsfx.control.NotificationPane;
 import org.fxmisc.richtext.*;
 import org.fxmisc.undo.UndoManagerFactory;
-import org.reactfx.EventSource;
 
 import java.net.URL;
 import java.util.*;
 import java.util.regex.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ákos on 2015. 12. 06.
@@ -25,8 +30,8 @@ import java.util.regex.*;
 
 public class OrbbasicScreen extends AbstractController implements Initializable {
 
-    public BorderPane view;
-    public CodeArea codeArea;
+    public TextArea codeArea;
+    public NotificationPane notificationPane;
 
 
     public OrbbasicScreen(MainService mainService) {
@@ -36,14 +41,14 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        /*codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
                 .subscribe(change -> {
                     codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
                     codeArea.getUndoManager().mark();
                 });
         codeArea.setUndoManager(UndoManagerFactory.unlimitedHistoryFactory());
-        codeArea.getStylesheets().add(getClass().getClassLoader().getResource("com/akos/css/code-style.css").toExternalForm());
+        codeArea.getStylesheets().add(getClass().getClassLoader().getResource("com/akos/css/code-style.css").toExternalForm());*/
     }
 
     private static final String[] VARIABLES = new String[]{
@@ -111,24 +116,57 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
 
     public void sendCommand(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (mainService.getRobot() != null) {
+        if (Utils.hasRobotSelected(mainService)) {
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
-                r.connect();
-                controller.eraseStorage();
-                controller.setProgram(codeArea.getText().getBytes());
-                controller.loadProgram();
-                controller.executeProgram();
+
+                final String text = codeArea.getText();
+                StringBuffer sb = new StringBuffer();
+                final String[] split = text.split("\n");
+                for (int i = 0; i < split.length; i++) {
+                    if (!split[i].matches("")) {
+                        sb.append(i).append(" ").append(split[i]).append("\n");
+                    }
+                }
+                OrbbasicLexer lexer = new OrbbasicLexer(new ANTLRInputStream(sb.toString()));
+                ObservableList<String> errors = FXCollections.emptyObservableList();
+                DescriptiveErrorListener errorListener = new DescriptiveErrorListener(errors);
+
+                lexer.removeErrorListeners();
+                lexer.addErrorListener(errorListener);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+                OrbbasicParser parser = new OrbbasicParser(tokens);
+                parser.removeErrorListeners();
+                parser.addErrorListener(errorListener);
+                OrbbasicParser.ProgContext c = parser.prog();
+                if (errors.size() > 0) {
+                    Alert dlg = new Alert(Alert.AlertType.ERROR, "");
+                    dlg.initModality(Modality.WINDOW_MODAL);
+                    final Window owner = codeArea.getScene().getWindow();
+                    dlg.initOwner(owner);
+                    dlg.setTitle("Error");
+                    dlg.getDialogPane().setHeaderText("Exception Encountered");
+                    String s = errors.stream().collect(Collectors.joining("\n"));
+                    dlg.getDialogPane().setContentText(s);
+                    dlg.show();
+                } else {
+                    r.connect();
+                    controller.eraseStorage();
+                    controller.setProgram(text.getBytes());
+                    controller.loadProgram();
+                    controller.executeProgram();
+                }
             });
         }
     }
 
     public void abortCommand(ActionEvent actionEvent) {
         Robot r = mainService.getRobot();
-        if (mainService.getRobot() != null) {
+        if (Utils.hasRobotSelected(mainService)) {
             Platform.runLater(() -> {
                 OrbBasicController controller = new OrbBasicController(r);
-                r.connect();
+                if (!r.isConnected()) r.connect();
                 controller.eraseStorage();
                 controller.abortProgram();
                 try {
@@ -137,6 +175,18 @@ public class OrbbasicScreen extends AbstractController implements Initializable 
                     e.printStackTrace();
                 }
                 r.disconnect();
+            });
+        }
+    }
+
+    public void runCommand(ActionEvent actionEvent) {
+        Robot r = mainService.getRobot();
+        if (Utils.hasRobotSelected(mainService)) {
+            Platform.runLater(() -> {
+                OrbBasicController controller = new OrbBasicController(r);
+                if (!r.isConnected()) r.connect();
+                controller.loadProgram();
+                controller.executeProgram();
             });
         }
     }

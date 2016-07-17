@@ -5,7 +5,7 @@ import com.akos.App;
 import com.akos.bluetooth.*;
 import com.akos.gui.dialogs.PopupDialog;
 import com.akos.gui.jfx_components.TableViewButtonCell;
-import com.akos.models.services.MainService;
+import com.akos.services.MainService;
 import com.akos.sphero.Robot;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -55,7 +55,6 @@ public class ConnectionScreen extends AbstractController implements Initializabl
 
     public void discoverDeviceAction(ActionEvent actionEvent) {
         try {
-
             LocalDevice localDevice = LocalDevice.getLocalDevice();
             labelDeviceName.setText(localDevice.getFriendlyName());
             labelDeviceAddress.setText(localDevice.getBluetoothAddress());
@@ -114,6 +113,7 @@ public class ConnectionScreen extends AbstractController implements Initializabl
                         .hideCloseButton()
                         .darkStyle()
                         .showInformation();
+                view.getScene().getWindow().hide();
             });
             return t;
         });

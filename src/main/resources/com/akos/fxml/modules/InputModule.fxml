@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.akos.modules.AbstractFunctionModule?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<fx:root type="AbstractFunctionModule" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane opacity="1.0" id="InputIcon">
+        <children>
+            <SVGPath
+                    content="M126.863,1.05l-31.489,18.18L63.886,1.05    l-31.489,18.18v36.36h0L0.909,73.769v36.36l31.489,18.18l31.488-18.18l31.489,18.18l31.488-18.18v-36.36h0l31.488-18.18v-36.36    L126.863,1.05z"
+                    opacity="1" strokeMiterLimit="10.0" strokeWidth="1.818">
+                <fill>
+                    <Color red="0.5019607843137255" green="0.7686274509803922" blue="0.10980392156862745"/>
+                </fill>
+                <stroke>
+                    <Color red="0.8" green="0.9058823529411765" blue="0.043137254901960784"/>
+                </stroke>
+            </SVGPath>
+        </children>
+    </Pane>
+</fx:root>

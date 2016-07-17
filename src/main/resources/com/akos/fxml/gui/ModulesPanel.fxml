@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <fx:root fx:id="accordion" type="Accordion" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
     <panes>
-        <TitledPane text="Modules">
+        <TitledPane animated="true" text="Modules" expanded="true">
             <AnchorPane>
                 <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="-10.0"
                             AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="-10.0">
@@ -16,18 +16,5 @@
                 </ScrollPane>
             </AnchorPane>
         </TitledPane>
-        <TitledPane animated="true" text="Variables">
-            <AnchorPane>
-                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0"
-                            AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="-10.0">
-                    <AnchorPane>
-                        <VBox fx:id="variablesContainer" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        </VBox>
-                    </AnchorPane>
-                </ScrollPane>
-            </AnchorPane>
-        </TitledPane>
-
     </panes>
 </fx:root>

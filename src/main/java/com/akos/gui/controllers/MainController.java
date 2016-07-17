@@ -1,15 +1,15 @@
 package com.akos.gui.controllers;
 
 import com.akos.gui.controllers.canvas.CanvasTab;
-import com.akos.gui.modules.*;
-import com.akos.gui.modules.ModuleConnector.ConnectorType;
-import com.akos.models.services.*;
+import com.akos.modules.*;
+import com.akos.services.*;
 import javafx.collections.SetChangeListener;
 import javafx.event.*;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
@@ -45,7 +45,6 @@ public class MainController extends AbstractController implements Initializable 
     public Label cursorPosLabel;
 
 
-
     ModulePreview preview;
     ModuleFactory moduleFactory = ModuleFactory.getInstance();
 
@@ -71,9 +70,6 @@ public class MainController extends AbstractController implements Initializable 
         buildDragHandlers();
 
         for (Node module : modulesPanel.modulesContainer.getChildren()) {
-            addDragDetection((IGraphicModule) module);
-        }
-        for (Node module : modulesPanel.variablesContainer.getChildren()) {
             addDragDetection((IGraphicModule) module);
         }
 
@@ -175,35 +171,43 @@ public class MainController extends AbstractController implements Initializable 
                 ModuleConnector srcConn = null, tarConn = null;
 
                 for (Node n : tab.contentPane.getChildren()) {
-                    if (n.getId().equals(sourceId[0])) {
-                        srcMod = (AbstractFunctionModule) n;
-                        srcConn = (ModuleConnector) srcMod.getChildren().stream().filter(node -> node.getId().equals
-                                (sourceId[1])).findFirst().orElse(null);
-                    } else if (n.getId().equals(targetId[0])) {
-                        tarMod = (AbstractFunctionModule) n;
-                        tarConn = (ModuleConnector) tarMod.getChildren().stream().filter(node -> node.getId().equals
-                                (targetId[1])).findFirst().orElse(null);
-                    }
+                    if (n.getId() != null)
+                        if (n.getId().equals(sourceId[0])) {
+                            srcMod = (AbstractFunctionModule) n;
+                            srcConn = (ModuleConnector) srcMod.getChildren().stream().filter(node -> node.getId().equals
+                                    (sourceId[1])).findFirst().orElse(null);
+                        } else if (n.getId().equals(targetId[0])) {
+                            tarMod = (AbstractFunctionModule) n;
+                            tarConn = (ModuleConnector) tarMod.getChildren().stream().filter(node -> node.getId().equals
+                                    (targetId[1])).findFirst().orElse(null);
+                        }
                 }
 
                 if (srcConn != null && tarConn != null) {
                     if (srcConn.getConnectorType() != tarConn.getConnectorType())
-                        if (srcConn.getConnectorType() == ConnectorType.IN && tarConn.getConnectorType() == ConnectorType.OUT)
-                            configureLink(link, tarMod, srcMod, tarConn, srcConn);
-                        else
-                            configureLink(link, srcMod, tarMod, srcConn, tarConn);
+                        if (!srcConn.isConnected() && !tarConn.isConnected())
+                            if (srcConn.getConnectorType().isInput() && !tarConn.getConnectorType().isInput())
+                                configureLink(link, tarMod, srcMod, tarConn, srcConn);
+                            else
+                                configureLink(link, srcMod, tarMod, srcConn, tarConn);
                 }
             }
         }
     }
 
-    private void configureLink(ModuleLink link, AbstractModule srcMod, AbstractModule tarMod, ModuleConnector srcConn, ModuleConnector tarConn) {
-        link.setStartSide(srcConn.getSide());
-        link.setEndSide(tarConn.getSide());
+    private void configureLink(ModuleLink link, AbstractModule srcMod,
+                               AbstractModule tarMod, ModuleConnector srcConn, ModuleConnector tarConn) {
+        link.setStartConn(srcConn);
+        link.setEndConn(tarConn);
         link.bindDirection();
-        link.bindEnds(srcConn, tarConn);
-        srcConn.setOnMouseClicked(event -> tarMod.removeLink(link.getId()));
-        mainService.getCurrentProgram().makeConnection(srcMod.getModel(), tarMod.getModel());
+        link.bindEnds();
+        srcConn.setOnMouseClicked(event -> {
+            tarMod.removeLink(link.getId());
+            srcConn.setConnected(false);
+            tarConn.setConnected(false);
+        });
+        mainService.getCurrentProgram().makeConnection(srcConn.getPriority(), srcMod.getModel(),
+                tarConn.getPriority(), tarMod.getModel());
     }
 
     public void collapseRightPanel(ActionEvent actionEvent) {
@@ -239,5 +243,55 @@ public class MainController extends AbstractController implements Initializable 
                         ((CanvasTab) tab).getProgram() == program).forEach(tab -> canvasTabPane.getTabs().remove(tab));
             }
         }
+    }
+
+    /**
+     * Created by Ákos on 2015. 12. 11.
+     * Email: akoshervay@gmail.com
+     */
+    /*
+    *   Module preview class for moving between the module panel
+    *   and the canvas
+    * */
+    public static class ModulePreview extends ImageView {
+
+        ClipboardContent content;
+
+        public ModulePreview() {
+            super();
+            this.setVisible(false);
+            this.setOpacity(0.65);
+            this.setId("preview-module");
+        }
+
+        public void show(IGraphicModule module, Point2D point) {
+            this.setImage(module.getView().snapshot(null, null));
+            this.setManaged(false);
+            this.relocateToPoint(point);
+
+            ClipboardContent content = new ClipboardContent();
+            DragDropContainer container = new DragDropContainer();
+
+            container.addData("type", module.getType());
+            content.put(DragDropContainer.AddNode, container);
+
+            this.startDragAndDrop(TransferMode.ANY).setContent(content);
+            this.setVisible(true);
+            this.setMouseTransparent(true);
+        }
+
+
+        public void hide() {
+            this.setImage(null);
+            this.setVisible(false);
+        }
+
+        public void relocateToPoint(Point2D point) {
+            Point2D localCoords = getParent().sceneToLocal(point);
+
+            relocate((int) (localCoords.getX() - (getBoundsInLocal().getWidth() / 2)),
+                    (int) (localCoords.getY() - (getBoundsInLocal().getHeight() / 2)));
+        }
+
     }
 }

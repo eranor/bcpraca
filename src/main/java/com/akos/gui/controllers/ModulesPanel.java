@@ -1,12 +1,12 @@
 package com.akos.gui.controllers;
 
-import com.akos.gui.modules.*;
-import com.akos.gui.modules.specialized.variables.VariableModuleType;
-import com.akos.models.modules.ModuleType;
+import com.akos.modules.*;
+import com.akos.modules.ModuleType;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +25,6 @@ public class ModulesPanel extends Accordion implements Initializable {
     public Accordion accordion;
     public ScrollPane scrollPane;
     public VBox modulesContainer;
-    public VBox variablesContainer;
 
     public ModulesPanel() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/akos/fxml/gui/ModulesPanel.fxml"), ResourceBundle.getBundle("Localization"));
@@ -44,23 +43,14 @@ public class ModulesPanel extends Accordion implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         for (ModuleType type : ModuleType.values()) {
             AbstractModule module = factory.getModule(type);
-            if (module instanceof AbstractFunctionModule)
-                ((AbstractFunctionModule) module).labelModuleName.setText(type.toString());
+            module.labelModuleName.setText(type.getDisplayName());
+            module.labelModuleName.setFont(new Font(module.labelFont.getName(), 26));
             module.deactivate();
             modulesContainer.getChildren().add(module);
             VBox.setMargin(module, new Insets(-20, -30, -10, -30));
-
             module.setScaleX(module.getScaleX() * 2 / 3);
             module.setScaleY(module.getScaleY() * 2 / 3);
 
-        }
-        for (VariableModuleType type : VariableModuleType.values()) {
-            AbstractModule module = factory.getModule(type);
-            variablesContainer.getChildren().add(module);
-            requestParentLayout();
-            module.deactivate();
-            module.setScaleX(module.getScaleX() * 3 / 4);
-            module.setScaleY(module.getScaleY() * 3 / 4);
         }
 
     }

@@ -1,7 +1,7 @@
 package com.akos.gui.controllers.canvas;
 
-import com.akos.gui.modules.AbstractFunctionModule;
-import com.akos.models.services.SelectionModel;
+import com.akos.modules.AbstractFunctionModule;
+import com.akos.services.SelectionModel;
 import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;

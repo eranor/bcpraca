@@ -1,8 +1,8 @@
 package com.akos.gui.controllers.canvas;
 
 
-import com.akos.gui.modules.*;
-import com.akos.models.services.*;
+import com.akos.modules.*;
+import com.akos.services.*;
 import javafx.beans.property.*;
 import javafx.fxml.*;
 import javafx.geometry.Point2D;
@@ -85,7 +85,6 @@ public class CanvasTab extends Tab implements Initializable {
         getTabPane().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ALT)
                 setAltStatus(true);
-            event.consume();
         });
         getTabPane().addEventFilter(KeyEvent.KEY_RELEASED, event -> {
             if (event.getCode() == KeyCode.ALT)
@@ -99,7 +98,6 @@ public class CanvasTab extends Tab implements Initializable {
                     contentPane.getChildren().remove(node);
                 });
             }
-            event.consume();
         });
 
         contentGroup.setOnMouseMoved(event1 -> {
